@@ -4,6 +4,7 @@
   "description": "Group Huy Phat Triet GCS0905A",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
