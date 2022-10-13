@@ -9,7 +9,7 @@ const path = require('path');
 const bodyParser = require("body-parser");
 // ---- 
 //view engine setup
-appServer.set("views", path.join(__dirname, "view")); //setting views directory for views.
+appServer.set("views", path.join(__dirname, "view/userPage")); //setting views directory for views.
 appServer.set("view engine", "hbs"); //setting view engine as handlebars
 
 
