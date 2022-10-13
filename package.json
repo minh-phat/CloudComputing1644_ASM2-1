@@ -17,8 +17,13 @@
   },
   "homepage": "https://github.com/mrshine4k/CloudComputing1644_ASM1#readme",
   "dependencies": {
+    "body-parser": "^1.20.1",
+    "crypto": "^1.0.1",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "hbs": "^4.2.0",
-    "mongoose": "^6.6.5"
+    "mongodb": "^4.10.0",
+    "mongoose": "^6.6.5",
+    "redis": "^4.3.1"
   }
 }
