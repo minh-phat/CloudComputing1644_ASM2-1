@@ -12,7 +12,6 @@ const bodyParser = require("body-parser");
 appServer.set("views", path.join(__dirname, "view")); //setting views directory for views.
 appServer.set("view engine", "hbs"); //setting view engine as handlebars
 
-s
 // Config
 appServer.use(express.static("public"));
 
