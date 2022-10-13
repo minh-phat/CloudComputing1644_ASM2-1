@@ -45,7 +45,7 @@ router.use( (error, req, rep, next) => {
 
 // ------------------- Routing
 router.get( "/" , (yeucau, trave) => {
-    trave.render("home", {TenTrang: "Main Chinh !!!"} );
+    trave.render("home.hbs", {TenTrang: "Main Chinh !!!"} );
 });
 
 router.get( "/home" , (yeucau, trave) => {
