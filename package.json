@@ -1,7 +1,7 @@
 {
-  "name": "express",
+  "name": "appserver",
   "version": "1.0.0",
-  "description": "a",
+  "description": "Group Huy Phat Triet GCS0905A",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
