@@ -4,9 +4,10 @@ const appServer = express();
 const router = express.Router();
 const fs = require("fs");
 const path = require('path');
+const mongoose = require("mongoose");
+const hbs = require("hbs");
 
 //Partials
-const hbs = require("hbs");
 hbs.registerPartials('view/userPage');
 
 // Middleware
@@ -14,14 +15,13 @@ const bodyParser = require("body-parser");
 const { CLIENT_RENEG_LIMIT } = require("tls");
 // ---- 
 //view engine setup
-appServer.set("views", path.join(__dirname, "view/userPage")); //setting views directory for views.
+appServer.set("views", path.join(__dirname, "view")); //setting views directory for views.
 appServer.set("view engine", "hbs"); //setting view engine as handlebars
 
 // Config
 appServer.use(express.static("public"));
 
 // Connect database
-const mongoose = require("mongoose");
 const DB_USERNAME = "trietnfriends";
 const DB_PASSWORD = "trietnfriends";
 const DB_SERVER = "atn-shop.c7pvv4i.mongodb.net";
@@ -50,12 +50,12 @@ router.use((loixayra, yeucau, trave, ketiep) => {
 // ------------------- Routing
 router.get("/", (yeucau, trave) => {
 
-    trave.render("home");
+    trave.render("userPage/home");
 });
 
 router.get("/shop", (yeucau, trave) => {
 
-    trave.render("shop");
+    trave.render("userPage/shop");
 });
 
 appServer.use("/", router);
