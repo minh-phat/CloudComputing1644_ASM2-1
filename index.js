@@ -18,9 +18,9 @@ appServer.use(express.static("public"));
 
 // Connect database
 const mongoose = require("mongoose");
-const DB_USERNAME = trietnfriends;
-const DB_PASSWORD = trietnfriends;
-const DB_SERVER = atn-shop.c7pvv4i.mongodb.net;
+const DB_USERNAME = "trietnfriends";
+const DB_PASSWORD = "trietnfriends";
+const DB_SERVER = "atn-shop.c7pvv4i.mongodb.net";
 const uri = `mongodb+srv://` + DB_USERNAME + `:` + DB_PASSWORD + `@` + DB_SERVER + `/?retryWrites=true&w=majority`;
 mongoose.connect(uri, { 
     useNewUrlParser: true, 
