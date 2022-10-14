@@ -7,6 +7,7 @@ const path = require('path');
 
 // Middleware
 const bodyParser = require("body-parser");
+const { CLIENT_RENEG_LIMIT } = require("tls");
 // ---- 
 //view engine setup
 appServer.set("views", path.join(__dirname, "view/userPage")); //setting views directory for views.
@@ -15,21 +16,20 @@ appServer.set("view engine", "hbs"); //setting view engine as handlebars
 // Config
 appServer.use(express.static("public"));
 
-///// -------------------Database
-// const mongoose = require('mongoose');
-
-// const accUN = "minhphat"; //account username to connect database
-// const accPW = "060802"; //account password to connect database
-// const dnsServer = "cluster0.pmi9h7n.mongodb.net"; //link to database
-
-// const uri = "mongodb+srv://" // avalable link of mongodb
-// + accUN + ":" + accPW
-// + "@" + dnsServer + "/?retryWrites=true&w=majority";
-
-// const db = mongoose.connect(uri, { 
-//     useNewUrlParser: true, 
-//     useUnifiedTopology: true, 
-// });
+// Connect database
+const mongoose = require("mongoose");
+const DB_USERNAME = trietnfriends;
+const DB_PASSWORD = trietnfriends;
+const DB_SERVER = atn-shop.c7pvv4i.mongodb.net;
+const uri = `mongodb+srv://` + DB_USERNAME + `:` + DB_PASSWORD + `@` + DB_SERVER + `/?retryWrites=true&w=majority`;
+mongoose.connect(uri, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true, 
+});
+const db = mongoose.connection;
+db.once("open", _ => {
+    console.log("Connected to Database");
+})
 
 // ------------------- Middleware - kiem soat tinh huong
 router.use( (yeucau, trave, ketiep) => { 
