@@ -40,16 +40,16 @@ router.use( (req, rep, next) => {
 router.use( (error, req, rep, next) => { 
     console.log("ERROR: ", Date.now(), yeucau.url);
     console.log(error);
-    trave.status(500).send("Dang co loi xay ra, chua biet o dau !!!");
+    rep.status(500).send("Dang co loi xay ra, chua biet o dau !!!");
 });
 
 // ------------------- Routing
-router.get( "/" , (yeucau, trave) => {
-    trave.render("home.hbs", {TenTrang: "Main Chinh !!!"} );
+router.get( "/" , (req, rep) => {
+    rep.render("home", {TenTrang: "Main Chinh !!!"} );
 });
 
 router.get( "/home" , (yeucau, trave) => {
-    trave.render("home", {TenTrang: "Home Nha !!!"});
+    rep.render("home", {TenTrang: "Home Nha !!!"});
 });
 
 
