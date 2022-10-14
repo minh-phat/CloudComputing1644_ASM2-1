@@ -32,24 +32,24 @@ appServer.use(express.static("public"));
 // });
 
 // ------------------- Middleware - kiem soat tinh huong
-router.use( (req, rep, next) => { 
-    console.log("REQ: ", Date.now(), req.url);
-    next();
+router.use( (yeucau, trave, ketiep) => { 
+    console.log("REQ: ", Date.now(), yeucau.url);
+    ketiep();
 });
 
-router.use( (error, req, rep, next) => { 
+router.use( (loixayra, yeucau, trave, ketiep) => { 
     console.log("ERROR: ", Date.now(), yeucau.url);
-    console.log(error);
-    rep.status(500).send("Dang co loi xay ra, chua biet o dau !!!");
+    console.log(loixayra);
+    trave.status(500).send("Dang co loi xay ra, chua biet o dau !!!");
 });
 
 // ------------------- Routing
-router.get( "/" , (req, rep) => {
-    rep.render("home", {TenTrang: "Main Chinh !!!"} );
+router.get( "/" , (yeucau, trave) => {
+    trave.render("home", {TenTrang: "Main Chinh !!!"} );
 });
 
 router.get( "/home" , (yeucau, trave) => {
-    rep.render("home", {TenTrang: "Home Nha !!!"});
+    trave.render("home", {TenTrang: "Home Nha !!!"});
 });
 
 
