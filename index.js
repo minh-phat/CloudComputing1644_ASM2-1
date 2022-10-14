@@ -52,6 +52,7 @@ router.get( "/home" , (yeucau, trave) => {
     trave.render("home", {TenTrang: "Home Nha !!!"});
 });
 
+appServer.use("/", router);
 
 //--- Add middleware
 //const session = express.session();
