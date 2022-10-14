@@ -26,9 +26,9 @@ const DB_USERNAME = "trietnfriends";
 const DB_PASSWORD = "trietnfriends";
 const DB_SERVER = "atn-shop.c7pvv4i.mongodb.net";
 const uri = `mongodb+srv://` + DB_USERNAME + `:` + DB_PASSWORD + `@` + DB_SERVER + `/?retryWrites=true&w=majority`;
-mongoose.connect(uri, { 
-    useNewUrlParser: true, 
-    useUnifiedTopology: true, 
+mongoose.connect(uri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
 });
 const db = mongoose.connection;
 db.once("open", _ => {
@@ -36,25 +36,25 @@ db.once("open", _ => {
 })
 
 // ------------------- Middleware - kiem soat tinh huong
-router.use( (yeucau, trave, ketiep) => { 
+router.use((yeucau, trave, ketiep) => {
     console.log("REQ: ", Date.now(), yeucau.url);
     ketiep();
 });
 
-router.use( (loixayra, yeucau, trave, ketiep) => { 
+router.use((loixayra, yeucau, trave, ketiep) => {
     console.log("ERROR: ", Date.now(), yeucau.url);
     console.log(loixayra);
     trave.status(500).send("Dang co loi xay ra, chua biet o dau !!!");
 });
 
 // ------------------- Routing
-router.get( "/" , (yeucau, trave) => {
-    
+router.get("/", (yeucau, trave) => {
+
     trave.render("home");
 });
 
-router.get( "/shop" , (yeucau, trave) => {
-    
+router.get("/shop", (yeucau, trave) => {
+
     trave.render("shop");
 });
 
@@ -77,6 +77,6 @@ appServer.use(bodyParser.urlencoded({ extended: true }));
 // appServer.use("/login", LoginRouter);
 
 // ----------- RUN / Launching !!! 
-appServer.listen( PORT );
+appServer.listen(PORT);
 
 console.log("Web da mo tai " + PORT);
