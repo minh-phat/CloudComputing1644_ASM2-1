@@ -58,6 +58,11 @@ router.get("/shop", (yeucau, trave) => {
     trave.render("userPage/shop");
 });
 
+router.get("/login", (yeucau, trave) => {
+
+    trave.render("login");
+});
+
 appServer.use("/", router);
 
 //--- Add middleware
