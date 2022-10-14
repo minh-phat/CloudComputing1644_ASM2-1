@@ -9,7 +9,7 @@ const path = require('path');
 const bodyParser = require("body-parser");
 // ---- 
 //view engine setup
-appServer.set("views", path.join(__dirname, "view")); //setting views directory for views.
+appServer.set("views", path.join(__dirname, "view/userPage")); //setting views directory for views.
 appServer.set("view engine", "hbs"); //setting view engine as handlebars
 
 // Config
@@ -32,26 +32,27 @@ appServer.use(express.static("public"));
 // });
 
 // ------------------- Middleware - kiem soat tinh huong
-router.use( (req, rep, next) => { 
-    console.log("REQ: ", Date.now(), req.url);
-    next();
+router.use( (yeucau, trave, ketiep) => { 
+    console.log("REQ: ", Date.now(), yeucau.url);
+    ketiep();
 });
 
-router.use( (error, req, rep, next) => { 
+router.use( (loixayra, yeucau, trave, ketiep) => { 
     console.log("ERROR: ", Date.now(), yeucau.url);
-    console.log(error);
+    console.log(loixayra);
     trave.status(500).send("Dang co loi xay ra, chua biet o dau !!!");
 });
 
 // ------------------- Routing
 router.get( "/" , (yeucau, trave) => {
-    trave.render("home.hbs", {TenTrang: "Main Chinh !!!"} );
+    trave.render("home", {TenTrang: "Main Chinh !!!"} );
 });
 
 router.get( "/home" , (yeucau, trave) => {
     trave.render("home", {TenTrang: "Home Nha !!!"});
 });
 
+appServer.use("/", router);
 
 //--- Add middleware
 //const session = express.session();
