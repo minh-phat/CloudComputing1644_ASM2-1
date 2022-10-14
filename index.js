@@ -45,11 +45,13 @@ router.use( (loixayra, yeucau, trave, ketiep) => {
 
 // ------------------- Routing
 router.get( "/" , (yeucau, trave) => {
-    trave.render("home", {TenTrang: "Main Chinh !!!"} );
+    trave.render("headerUserPage");
+    trave.render("home");
 });
 
-router.get( "/home" , (yeucau, trave) => {
-    trave.render("home", {TenTrang: "Home Nha !!!"});
+router.get( "/shop" , (yeucau, trave) => {
+    trave.render("headerUserPage");
+    trave.render("shop");
 });
 
 appServer.use("/", router);
