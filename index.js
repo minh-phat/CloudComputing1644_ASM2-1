@@ -63,6 +63,21 @@ router.get("/shopDetail", (yeucau, trave) => {
     trave.render("userPage/shopDetail");
 });
 
+router.get("/cart", (yeucau, trave) => {
+
+    trave.render("userPage/cart");
+});
+
+router.get("/checkout", (yeucau, trave) => {
+
+    trave.render("userPage/checkout");
+});
+
+router.get("/contact", (yeucau, trave) => {
+
+    trave.render("userPage/contact");
+});
+
 router.get("/login", (yeucau, trave) => {
 
     trave.render("login");
