@@ -50,6 +50,7 @@ router.get( "/" , (yeucau, trave) => {
 });
 
 router.get( "/shop" , (yeucau, trave) => {
+    trave.render("headerUserPage");
     trave.render("shop");
 });
 
