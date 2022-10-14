@@ -5,6 +5,10 @@ const router = express.Router();
 const fs = require("fs");
 const path = require('path');
 
+//Partials
+const hbs = require("hbs");
+hbs.registerPartials('view/userPage');
+
 // Middleware
 const bodyParser = require("body-parser");
 const { CLIENT_RENEG_LIMIT } = require("tls");
