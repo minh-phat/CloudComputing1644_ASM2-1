@@ -78,9 +78,9 @@ router.get("/contact", (yeucau, trave) => {
     trave.render("userPage/contact");
 });
 
-router.get("/doashboard", (yeucau, trave) => {
+router.get("/dashboard", (yeucau, trave) => {
 
-    trave.render("adminPage/doashboard");
+    trave.render("adminPage/dashboard");
 });
 
 router.get("/login", (yeucau, trave) => {
