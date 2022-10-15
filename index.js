@@ -78,6 +78,11 @@ router.get("/contact", (yeucau, trave) => {
     trave.render("userPage/contact");
 });
 
+router.get("/doashboard", (yeucau, trave) => {
+
+    trave.render("adminPage/doashboard");
+});
+
 router.get("/login", (yeucau, trave) => {
 
     trave.render("login");
