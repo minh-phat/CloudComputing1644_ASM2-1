@@ -6,4 +6,4 @@ const CategoriesSchema = new Schema({
     image: Text
 }, {timestamps: true});
 
-module.exports = mongoose.model("Categories", CategoriesSchema);
+module.exports = mongoose.model("categories", CategoriesSchema);
