@@ -38,14 +38,14 @@ db.once("open", _ => {
 })
 
 //Middleware|===============================================
-router.use((req, res, ketiep) => {
+router.use((req, res, next) => {
     console.log("REQ: ", Date.now(), req.url);
-    ketiep();
+    next();
 });
 
-router.use((loixayra, req, res, ketiep) => {
+router.use((err, req, res, next) => {
     console.log("ERROR: ", Date.now(), req.url);
-    console.log(loixayra);
+    console.log(err);
     res.status(500).send("Uh oh stinky error! No clue where it is from tho !");
 });
 
