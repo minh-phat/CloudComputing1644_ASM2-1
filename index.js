@@ -89,6 +89,10 @@ router.get("/formImplement", (yeucau, trave) => {
 
     trave.render("adminPage/formImplement");
 });
+router.get("/table", (yeucau, trave) => {
+
+    trave.render("adminPage/table");
+});
 
 router.get("/login", (yeucau, trave) => {
 
