@@ -1,25 +1,26 @@
 const express = require("express");
+const router = express.Router();
 const PORT = process.env.PORT || 8080;
 const appServer = express();
-const router = express.Router();
 const fs = require("fs");
 const path = require('path');
 const mongoose = require("mongoose");
 const hbs = require("hbs");
 
-//Partials
-hbs.registerPartials('view/userPage');
-hbs.registerPartials('view/adminPage');
 
-// Middleware
+// Middleware|==============================================
 const bodyParser = require("body-parser");
 const { CLIENT_RENEG_LIMIT } = require("tls");
-// ---- 
-//view engine setup
+
+//view engine setup|========================================
 appServer.set("views", path.join(__dirname, "view")); //setting views directory for views.
 appServer.set("view engine", "hbs"); //setting view engine as handlebars
 
-// Config
+//Partials|=================================================
+hbs.registerPartials('view/userPage');
+hbs.registerPartials('view/adminPage');
+
+// Config|==================================================
 appServer.use(express.static("public"));
 
 // Connect database
@@ -36,80 +37,76 @@ db.once("open", _ => {
     console.log("Connected to Database");
 })
 
-// ------------------- Middleware - kiem soat tinh huong
-router.use((yeucau, trave, ketiep) => {
-    console.log("REQ: ", Date.now(), yeucau.url);
+//Middleware|===============================================
+router.use((req, res, ketiep) => {
+    console.log("REQ: ", Date.now(), req.url);
     ketiep();
 });
 
-router.use((loixayra, yeucau, trave, ketiep) => {
-    console.log("ERROR: ", Date.now(), yeucau.url);
+router.use((loixayra, req, res, ketiep) => {
+    console.log("ERROR: ", Date.now(), req.url);
     console.log(loixayra);
-    trave.status(500).send("Dang co loi xay ra, chua biet o dau !!!");
+    res.status(500).send("Uh oh stinky error! No clue where it is from tho !");
 });
 
-// ------------------- Routing
-//---------------------user page routing
-router.get("/", (yeucau, trave) => {
+//Routing|===================================================
 
-    trave.render("userPage/home");
+//User page routing|=========================================
+
+router.get("/", (req, res) => {
+    res.render("userPage/home");
 });
 
-router.get("/shop", (yeucau, trave) => {
-
-    trave.render("userPage/shop");
+router.get("/shop", (req, res) => {
+    res.render("userPage/shop");
 });
 
-router.get("/shopDetail", (yeucau, trave) => {
-
-    trave.render("userPage/shopDetail");
+router.get("/shopDetail", (req, res) => {
+    res.render("userPage/shopDetail");
 });
 
-router.get("/cart", (yeucau, trave) => {
-
-    trave.render("userPage/cart");
+router.get("/cart", (req, res) => {
+    res.render("userPage/cart");
 });
 
-router.get("/checkout", (yeucau, trave) => {
-
-    trave.render("userPage/checkout");
+router.get("/checkout", (req, res) => {
+    res.render("userPage/checkout");
 });
 
-router.get("/contact", (yeucau, trave) => {
-
-    trave.render("userPage/contact");
+router.get("/contact", (req, res) => {
+    res.render("userPage/contact");
 });
 
-//---------------admin page routing
-router.get("/dashboard", (yeucau, trave) => {
-
-    trave.render("adminPage/dashboard");
+//Admin page routing|=========================================
+router.get("/dashboard", (req, res) => {
+    res.render("adminPage/dashboard");
 });
-router.get("/formImplement", (yeucau, trave) => {
-
-    trave.render("adminPage/formImplement");
+router.get("/formImplement", (req, res) => {
+    res.render("adminPage/formImplement");
 });
 router.get("/table", (yeucau, trave) => {
 
     trave.render("adminPage/table");
 });
 
-router.get("/login", (yeucau, trave) => {
-
-    trave.render("login");
+router.get("/login", (req, res) => {
+    res.render("login");
 });
 
 appServer.use("/", router);
 
-//--- Add middleware
-//const session = express.session();
+//Add middleware|============================================
 appServer.use(bodyParser.json());
 appServer.use(bodyParser.urlencoded({ extended: true }));
+
+//Sessiions|=================================================
+//const session = express.session();
 //appServer.use(session({secret: "id-session-Mr.Tu"​}));
 
-
-// ------------------------- Add Router / Controller
+//Specific router
 // appServer.use("/", router);
+
+//Controller
 
 // const ProductRouter = require("./controller/productController").ProductRouter;
 // appServer.use("/products", ProductRouter);
@@ -117,7 +114,10 @@ appServer.use(bodyParser.urlencoded({ extended: true }));
 // const LoginRouter = require("./controller/loginController").LoginRouter;
 // appServer.use("/login", LoginRouter);
 
-// ----------- RUN / Launching !!! 
-appServer.listen(PORT);
+//!Launch|=======================================================
 
-console.log("Web da mo tai " + PORT);
+appServer.listen(PORT);
+console.log("||Web da mo tai " + PORT + "||=====================================");
+
+//!Launch|=======================================================
+
