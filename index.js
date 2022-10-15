@@ -84,6 +84,10 @@ router.get("/dashboard", (req, res) => {
 router.get("/formImplement", (req, res) => {
     res.render("adminPage/formImplement");
 });
+router.get("/table", (yeucau, trave) => {
+
+    trave.render("adminPage/table");
+});
 
 router.get("/login", (req, res) => {
     res.render("login");
