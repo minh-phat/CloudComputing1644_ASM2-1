@@ -9,6 +9,7 @@ const hbs = require("hbs");
 
 //Partials
 hbs.registerPartials('view/userPage');
+hbs.registerPartials('view/adminPage');
 
 // Middleware
 const bodyParser = require("body-parser");
@@ -48,6 +49,7 @@ router.use((loixayra, yeucau, trave, ketiep) => {
 });
 
 // ------------------- Routing
+//---------------------user page routing
 router.get("/", (yeucau, trave) => {
 
     trave.render("userPage/home");
@@ -78,9 +80,14 @@ router.get("/contact", (yeucau, trave) => {
     trave.render("userPage/contact");
 });
 
+//---------------admin page routing
 router.get("/dashboard", (yeucau, trave) => {
 
     trave.render("adminPage/dashboard");
+});
+router.get("/formImplement", (yeucau, trave) => {
+
+    trave.render("adminPage/formImplement");
 });
 
 router.get("/login", (yeucau, trave) => {
