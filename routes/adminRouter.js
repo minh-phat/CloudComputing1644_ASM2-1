@@ -5,9 +5,9 @@ const fs = require("fs");
 
 //Setting routes in module|================================================
 
-if (req.session.class === admin) {
-    console.log("session for admin available!!=================================");
-}   //!test for admin login via session.
+// if (req.session.class === admin) {
+//     console.log("session for admin available!!=================================");
+// }   //!test for admin login via session.
 
 router.get("/login", (req, res) => {
     res.render("login");

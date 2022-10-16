@@ -93,10 +93,10 @@ body {
 }
 
 a {
-  color: var(--anchorColor);
-  outline: 0;
-  text-decoration: none;
-  color: #7fad39 ;
+  color: var(--anchorColor) !important;
+  outline: 0 !important;
+  text-decoration: none !important;
+  color: #7fad39 !important;
 }
 
 a:focus,
@@ -167,7 +167,9 @@ input[type="submit"] {
 .login label,
 .login input[type="text"],
 .login input[type="password"],
-.login input[type="submit"] {
+.login input[type="date"],
+.login input[type="submit"],
+.login input[type="gender"] {
   border-radius: var(--loginBorderRadus);
   padding: 1rem;
 }
@@ -177,10 +179,13 @@ input[type="submit"] {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
   padding-inline: 1.25rem;
+  height: 100%;
 }
 
 .login input[type="password"],
-.login input[type="text"] {
+.login input[type="text"],
+.login input[type="date"],
+.login input[type="gender"] {
   background-color: var(--loginInputBackgroundColor);
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
@@ -189,7 +194,11 @@ input[type="submit"] {
 .login input[type="password"]:focus,
 .login input[type="password"]:hover,
 .login input[type="text"]:focus,
-.login input[type="text"]:hover {
+.login input[type="text"]:hover,
+.login input[type="date"]:focus,
+.login input[type="date"]:hover,
+.login input[type="gender"]:focus,
+.login input[type="gender"]:hover {
   background-color: var(--loginInputHoverBackgroundColor);
 }
 
@@ -213,4 +222,8 @@ p {
 
 .text--center {
   text-align: center;
+}
+
+.radio {
+  background-color: var(--loginInputBackgroundColor) !important;
 }

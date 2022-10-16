@@ -8,26 +8,26 @@ const mongoose = require("mongoose");
 const hbs = require("hbs");
 
 
-// Middleware|==============================================
+//Middleware|=======================================================================
 
 const bodyParser = require("body-parser");
 const { CLIENT_RENEG_LIMIT } = require("tls");
 
-//view engine setup|========================================
+//View engine setup|=================================================================
 
 appServer.set("views", path.join(__dirname, "view")); //setting views directory for views.
 appServer.set("view engine", "hbs"); //setting view engine as handlebars
 
-//Partials|=================================================
+//Page partials|==========================================================================
 
 hbs.registerPartials('view/userPage');
 hbs.registerPartials('view/adminPage');
 
-//Config|===================================================
+//Config|============================================================================
 
 appServer.use(express.static("public"));
 
-//Connect database|=========================================
+//Connect database|==================================================================
 
 const DB_USERNAME = "trietnfriends";
 const DB_PASSWORD = "trietnfriends";
@@ -42,7 +42,7 @@ db.once("open", _ => {
     console.log("Connected to Database");
 })
 
-//Middleware|===============================================
+//Middleware|========================================================================
 
 router.use((req, res, next) => {
     console.log("REQ: ", Date.now(), req.url);
@@ -55,37 +55,42 @@ router.use((err, req, res, next) => {
     res.status(500).send("Uh oh stinky error! No clue where it is from tho !");
 });
 
-//Routing|===================================================
+//Routing|============================================================================
 //! routes cannot have spaces in them else they will not be able to run
-//User routing|=========================================
+//User routing|==================================================================
 
 const UserRouter = require("./routes/userRouter").UserRouter;
 appServer.use("/", UserRouter);
 
-//Admin routing|=========================================
+//Admin routing|==================================================================
 
 const AdminRouter = require("./routes/adminRouter").AdminRouter;
 appServer.use("/", AdminRouter);
 
-//Add middleware|============================================
+//Add middleware|=====================================================================
 
 appServer.use("/", router);
 appServer.use(bodyParser.json());
 appServer.use(bodyParser.urlencoded({ extended: true }));
 
-//Sessions|=================================================
+//Sessions|==========================================================================
 //const session = express.session();
 //appServer.use(session({secret: "id-session-Mr.Tu"​}));
-
 // appServer.use("/", router);
 
-//Controller
+//Controller|==============================================================
 
 // const ProductRouter = require("./controller/productController").ProductRouter;
 // appServer.use("/products", ProductRouter);
 
 // const LoginRouter = require("./controller/loginController").LoginRouter;
 // appServer.use("/login", LoginRouter);
+
+//? trying out signup
+
+appServer.post("/newAccount", (req, res) => {
+    console.log(req.body);
+});
 
 //!Launch|=======================================================
 

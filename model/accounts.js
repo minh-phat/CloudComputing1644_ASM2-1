@@ -16,7 +16,7 @@ const AccountsSchema = new Schema({
     fullname: String,
     birth_year: Int32,
     gender: String,
-    account_class: String,
+    account_class: { String, default: "User"},
     orders: [OrdersSchema],
 });
 
