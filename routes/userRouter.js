@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 
-//-------------------------------------------
+//Setting routes in module|================================================
 
 router.get("/signup", (req, res) => {
     res.render("signup");
@@ -36,5 +36,6 @@ router.get("/contact", (req, res) => {
     res.render("userPage/contact");
 });
 
-//-------------------------------------------
+//!Exporting router module|================================================
+
 exports.UserRouter = router;

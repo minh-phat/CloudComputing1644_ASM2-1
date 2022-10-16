@@ -1,8 +1,13 @@
 const express = require("express");
 const router = express.Router();
+const sessions = require('express-session');
 const fs = require("fs");
 
-//-------------------------------------------
+//Setting routes in module|================================================
+
+if (req.session.class === admin) {
+    console.log("session for admin available!!=================================");
+}   //!test for admin login via session.
 
 router.get("/login", (req, res) => {
     res.render("login");
@@ -19,5 +24,6 @@ router.get("/table", (req, res) => {
     res.render("adminPage/table");
 });
 
-//-------------------------------------------
+//!Exporting router module|================================================
+
 exports.AdminRouter = router;
