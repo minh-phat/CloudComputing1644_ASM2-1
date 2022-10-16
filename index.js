@@ -77,6 +77,10 @@ router.get("/contact", (req, res) => {
     res.render("userPage/contact");
 });
 
+router.get("/login ", (req, res) => {
+    res.render("login");
+});
+
 //Admin page routing|=========================================
 router.get("/dashboard", (req, res) => {
     res.render("adminPage/dashboard");
@@ -84,13 +88,9 @@ router.get("/dashboard", (req, res) => {
 router.get("/formImplement", (req, res) => {
     res.render("adminPage/formImplement");
 });
-router.get("/table", (yeucau, trave) => {
+router.get("/table", (req, res) => {
 
-    trave.render("adminPage/table");
-});
-
-router.get("/login", (req, res) => {
-    res.render("login");
+    res.render("adminPage/table");
 });
 
 appServer.use("/", router);
@@ -104,6 +104,10 @@ appServer.use(bodyParser.urlencoded({ extended: true }));
 //appServer.use(session({secret: "id-session-Mr.Tu"​}));
 
 //Specific router
+
+const UserRouter = require("./routes/userRouter").UserRouter;   //? login and signup routing.
+appServer.use("/", UserRouter);
+
 // appServer.use("/", router);
 
 //Controller
