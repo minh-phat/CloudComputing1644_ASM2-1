@@ -67,6 +67,11 @@ appServer.use("/", UserRouter);
 const AdminRouter = require("./routes/adminRouter").AdminRouter;
 appServer.use("/", AdminRouter);
 
+//Product routing|==================================================================
+
+const ProductRouter = require("./routes/productRouter").ProductRouter;
+appServer.use("/product", ProductRouter);
+
 //Add middleware|=====================================================================
 
 appServer.use("/", router);
