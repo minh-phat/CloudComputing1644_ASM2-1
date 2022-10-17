@@ -4,12 +4,12 @@ const Schema = mongoose.Schema;
 const ConfigurationSchema = new Schema({
     color: String,
     stock: Number,
-    image: Text
+    image: String
 });
 
 const ProductsSchema = new Schema({
     product_name: String,
-    description: Text,
+    description: String,
     price: Number,
     configuration: [ConfigurationSchema],
 }, {timestamps: true});

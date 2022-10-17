@@ -1,0 +1,54 @@
+{{>headerAdmin}}
+<div class="col-md-9 grid-margin stretch-card" style="margin: auto;">
+    <div class="card">
+        <div class="card-body">
+            <h2 style="text-align: center;">Insert new product</h4>
+            <form class="forms-sample" enctype="multipart/form-data">
+                <div class="form-group">
+                <i class="fa-solid fa-teddy-bear"></i><label for="name">Product Name</label>
+                <input type="text" class="form-control" id="name" placeholder="Enter product name">
+                </div>
+
+                <div class="form-group">
+                <label for="des"><i class="fa-solid fa-input-text"></i>Description</label>
+                <input type="text" class="form-control" id="des" placeholder="Enter description">
+                </div>
+
+                <div class="form-group">
+                <label for="price">Price</label>
+                <input type="number" class="form-control" id="price" placeholder="Enter price">
+                </div>
+
+                <div class="form-group">
+                <label for="color">Color</label>
+                <input type="text" class="form-control" id="color" placeholder="Enter color">
+                </div>
+
+                <div class="form-group">
+                <label for="stock">Stock</label>
+                <input type="number" class="form-control" id="stock" placeholder="Enter stock">
+                </div>
+
+                <div class="form-group">
+                 <label for="image">Image</label>
+                <input type="file" name="img[]" class="file-upload-default">
+                <div class="input-group col-xs-12">
+                    <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                    <span class="input-group-append">
+                    <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                    </span>
+                </div>
+                </div>
+
+                <div class="form-group">
+                <button type="button" class="addService file-upload-browse btn btn-info">
+                    <i class="fa-regular fa-circle-plus"></i> Add more color
+                </button>
+                </div>
+
+                <button type="submit" class="btn btn-success mr-2">Submit</button>
+                <button class="btn btn-light">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>
