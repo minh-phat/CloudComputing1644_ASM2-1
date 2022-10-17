@@ -23,6 +23,10 @@ router.get("/table", (req, res) => {
 
     res.render("adminPage/table");
 });
+router.get("/category", (req, res) => {
+
+    res.render("adminPage/categoryInsert");
+});
 
 //!Exporting router module|================================================
 
