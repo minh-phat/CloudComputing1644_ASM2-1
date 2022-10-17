@@ -74,23 +74,15 @@ appServer.use(bodyParser.json());
 appServer.use(bodyParser.urlencoded({ extended: true }));
 
 //Sessions|==========================================================================
+
 //const session = express.session();
 //appServer.use(session({secret: "id-session-Mr.Tu"​}));
-// appServer.use("/", router);
+//appServer.use("/", router);
 
-//Controller|==============================================================
+//Controller routers|==============================================================
 
-// const ProductRouter = require("./controller/productController").ProductRouter;
-// appServer.use("/products", ProductRouter);
-
-// const LoginRouter = require("./controller/loginController").LoginRouter;
-// appServer.use("/login", LoginRouter);
-
-//? trying out signup
-
-appServer.post("/newAccount", (req, res) => {
-    console.log(req.body);
-});
+const AuthRouter = require("./routes/authRouter").authRouter;
+appServer.use("/", AuthRouter);
 
 //!Launch|=======================================================
 
