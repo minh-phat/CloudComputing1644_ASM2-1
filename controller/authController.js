@@ -38,15 +38,14 @@ exports.newAccount = (req, res) => {
                 res.redirect('/');
                 return;
             }
-        }
+        }       /*TODO: add check to see if account is in system already as well as email, etc,  */
+                /* return the error to the signup page with the old content being parsed there as well. */
 
     );
     // }
-
-
 }
 
-exports.accountAuth = (req, res) => {
+exports.accountAuth = (req, res) => {                       //TODO: Add session to this. session[username, role, key(date & generated)]
 
     console.log(req.body.username);
 
@@ -68,13 +67,13 @@ exports.accountAuth = (req, res) => {
             console.log('username ' + user.username + ' found, checking password..');
         }
 
-        if (user.password === req.body.password) {
-            console.log('user ' + user.username + ' logged in successfully');
+        if (user.password !== req.body.password) {
+            console.log('password "' + req.body.password + '" for user ' + user.username + ' does not match !');
             return;
         }
 
-        if (user.password !== req.body.password) {
-            console.log('password "' + req.body.password + '" for user ' + user.username + ' does not match !');
+        if (user.password === req.body.password) {
+            console.log('user ' + user.username + ' logged in successfully');
             return;
         }
 
