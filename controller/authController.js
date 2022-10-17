@@ -11,6 +11,7 @@ exports.newAccount = (req, res) => {
         fullname: req.body.login__fullname,
         email: req.body.login__email,
         gender: req.body.gender,
+        birthday: req.body.login__birthday
     });
 
     // //validate email type, i.e. 'a@b.c' instead of 'ab.c' or 'a@b .c'
@@ -26,16 +27,60 @@ exports.newAccount = (req, res) => {
 
     //save the newly created account
     // if (password === confirm_password) {
-        newAccount.save(
-            (err, document) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log("Data:", document);
-                }
+    newAccount.save(
+        (err, document) => {
+            if (err) {
+                console.log(err);
+                res.redirect('/signup');
+                return;
+            } else {
+                console.log("Data:", document);
+                res.redirect('/');
+                return;
             }
-        );
+        }
+
+    );
     // }
+
+
+}
+
+exports.accountAuth = (req, res) => {
+
+    console.log(req.body.username);
+
+    accounts.findOne({
+        username: req.body.username
+    }).exec((err, user) => {
+
+        if (err) {
+            console.log(err);
+            return;
+        }
+
+        if (!user) {
+            console.log('username ' + req.body.username + ' not found !');
+            return;
+        }
+
+        if (user) {
+            console.log('username ' + user.username + ' found, checking password..');
+        }
+
+        if (user.password === req.body.password) {
+            console.log('user ' + user.username + ' logged in successfully');
+            return;
+        }
+
+        if (user.password !== req.body.password) {
+            console.log('password "' + req.body.password + '" for user ' + user.username + ' does not match !');
+            return;
+        }
+
+    });
+
+    res.redirect('/login');
 
 }
 

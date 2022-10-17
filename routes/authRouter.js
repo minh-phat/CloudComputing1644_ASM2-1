@@ -7,6 +7,8 @@ const controller = require("../controller/authController");
 
 router.post("/signup/newAccount", controller.newAccount);
 
+router.post("/login/accountAuth", controller.accountAuth);
+
 //Export module|========================================
 
 exports.authRouter = router;
