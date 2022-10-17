@@ -7,7 +7,6 @@ const path = require('path');
 const mongoose = require("mongoose");
 const hbs = require("hbs");
 
-
 //Middleware|=======================================================================
 
 const bodyParser = require("body-parser");
@@ -70,7 +69,7 @@ appServer.use("/", AdminRouter);
 //Product routing|==================================================================
 
 const ProductRouter = require("./routes/productRouter").ProductRouter;
-appServer.use("/product", ProductRouter);
+appServer.use("/", ProductRouter);
 
 //Add middleware|=====================================================================
 
