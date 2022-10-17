@@ -64,7 +64,7 @@ appServer.use("/", UserRouter);
 //Admin routing|==================================================================
 
 const AdminRouter = require("./routes/adminRouter").AdminRouter;
-appServer.use("/admin", AdminRouter);
+appServer.use("/", AdminRouter);
 
 //Product routing|==================================================================
 
