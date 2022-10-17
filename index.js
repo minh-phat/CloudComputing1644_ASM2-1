@@ -7,6 +7,7 @@ const path = require('path');
 const mongoose = require("mongoose");
 const hbs = require("hbs");
 
+
 //Middleware|=======================================================================
 
 const bodyParser = require("body-parser");
@@ -31,7 +32,8 @@ appServer.use(express.static("public"));
 const DB_USERNAME = "trietnfriends";
 const DB_PASSWORD = "trietnfriends";
 const DB_SERVER = "atn-shop.c7pvv4i.mongodb.net";
-const uri = `mongodb+srv://` + DB_USERNAME + `:` + DB_PASSWORD + `@` + DB_SERVER + `/?retryWrites=true&w=majority`;
+const DB_NAME = "atn-toy-shop";
+const uri = `mongodb+srv://` + DB_USERNAME + `:` + DB_PASSWORD + `@` + DB_SERVER + `/` + DB_NAME +`?retryWrites=true&w=majority`;
 mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -65,11 +67,6 @@ appServer.use("/", UserRouter);
 
 const AdminRouter = require("./routes/adminRouter").AdminRouter;
 appServer.use("/", AdminRouter);
-
-//Product routing|==================================================================
-
-const ProductRouter = require("./routes/productRouter").ProductRouter;
-appServer.use("/", ProductRouter);
 
 //Add middleware|=====================================================================
 

@@ -13,16 +13,19 @@ exports.newAccount = (req, res) => {
         gender: req.body.gender,
     });
 
-    function validateEmail(email) {
-        var re = /\S+@\S+\.\S+/;
-        return re.test(email);
-    }
+    // //validate email type, i.e. 'a@b.c' instead of 'ab.c' or 'a@b .c'
+    // function validateEmail(email) {
+    //     var re = /\S+@\S+\.\S+/;
+    //     return re.test(email);
+    // }
 
-    if (!validateEmail(email)) {
+    // //using the validate function
+    // if (!validateEmail(email)) {
+    //     //TODO: add email validation and return error to user page.
+    // }
 
-    }
-
-    if (password === confirm_password) {
+    //save the newly created account
+    // if (password === confirm_password) {
         newAccount.save(
             (err, document) => {
                 if (err) {
@@ -32,7 +35,7 @@ exports.newAccount = (req, res) => {
                 }
             }
         );
-    }
+    // }
 
 }
 
