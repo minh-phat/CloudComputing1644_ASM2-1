@@ -38,8 +38,9 @@ exports.newAccount = (req, res) => {
                 res.redirect('/');
                 return;
             }
-        }       /*TODO: add check to see if account is in system already as well as email, etc,  */
-                /* return the error to the signup page with the old content being parsed there as well. */
+        }       /*
+                TODO: add check to see if account is in system already as well as email, etc,
+                TODO: return the error to the signup page with the old content being parsed there as well. */
 
     );
     // }
