@@ -3,7 +3,7 @@ const  router = express.Router();
 const fs = require("fs");
 
 ////// - Model
-const Product = require("../model/categories");
+const Category = require("../model/categories");
 
 
 //-------------------------------------<<handle upload file img
@@ -45,7 +45,7 @@ const upload = multer({
 router.get( "/categoryView" , categoryView);
 async function categoryView(yeucau, trave) {
     try {
-        let CategoryList = await Product.find({});
+        let CategoryList = await Category.find({});
         console.log(CategoryList);
         trave.render("adminPage/categoryView", {Categories: CategoryList});
     } catch (error) {
@@ -65,12 +65,12 @@ router.post( "/categoryInsert" , upload.single("image"), (yeucau, trave, ketiep)
     console.log("\n File: ", yeucau.file);
 
     
-    yeucau.body.image = "/img/categories" + yeucau.file.filename; //gán Imagelink bằng đường link tới ảnh trong document
+    yeucau.body.image = yeucau.file.filename; //gán Imagelink bằng đường link tới ảnh trong document
 
     oneCategory = new Category(yeucau.body);
     oneCategory.save(); //save data into database
 
-    trave.render("adminPage/categoryView",  {Categories: CategoryList});
+    trave.redirect('./categoryView');
     //trave.render("categoryView",  {sanpham: yeucau.body}); //check dữ liệu trả về
 });
 
