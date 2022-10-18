@@ -74,6 +74,8 @@ appServer.use("/", AdminRouter);
 const ProductRouter = require("./routes/productRouter").ProductRouter;
 appServer.use("/", ProductRouter);
 
+//Category routing|==================================================================
+
 const categoryController = require("./controller/categoryController").categoryController;
 appServer.use("/", categoryController);
 
