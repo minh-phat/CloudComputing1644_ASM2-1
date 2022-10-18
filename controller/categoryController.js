@@ -137,6 +137,7 @@ router.get('/categoryEdit:id', async (yeucau, trave) => {
     console.log("\n Params: ", yeucau.params);
     console.log("\n Query: ", yeucau.query);
 
+
     try {
         let CategoryID = await Category.findOne({ _id: yeucau.params.id });
         console.log(CategoryID );
@@ -145,25 +146,49 @@ router.get('/categoryEdit:id', async (yeucau, trave) => {
         console.log(error);
     }
 
-    // Category.findById(req.params.id, (err, doc) => {
-    // if (!err) {
-    //     res.render("adminPage/categoryEdit", {
-    //         title: "Update User Details",
-    //         data: doc
-    //     });
-    // }else{
-    //     req.flash('error', 'User not found with id = ' + req.params.id)
-    //     res.redirect('/users/list')
-    // }
 });
 
 
-router.post( "/categoryUpdate:id" , (yeucau, trave) => {
+// router.post( "/categoryEdit:id" , (yeucau, trave) => {
 
-    var updateId= yeucau.params.id; //take id on link http
 
+//     console.log("\n BODY: ", yeucau.body);
+//     console.log("\n Params: ", yeucau.params);
+//     console.log("\n Query: ", yeucau.query);
+
+//     var updateId= yeucau.params.id; //take id on link http
+
+//     //use to delete item have id like which id on http
+//     Category.findByIdAndUpdate(updateId, {category_name:yeucau.query.category_name} ,{image:yeucau.query.image}, function(err){
+//         if(err) {
+//             console.log(err);
+//             return trave.status(500).send();
+//         }
+//         return trave.status(200).send();
+//     });
+
+//     trave.redirect('../categoryView');
+// });
+
+
+router.post( "/categoryEdit:id" , upload.single("image"), (yeucau, trave, ketiep) =>  {
+
+
+    console.log("\n BODY: ", yeucau.body);
+    console.log("\n Params: ", yeucau.params);
+    console.log("\n Query: ", yeucau.query);
+    console.log("\n File: ", yeucau.file);
+    
+    yeucau.body.image = yeucau.file.filename; //gán Imagelink bằng đường link tới ảnh trong documents
+    
+    //var updateId= yeucau.params.id; //take id on link http
+
+    var myquery = { _id: yeucau.params.id };
+    var newvalues = { $set: { category_name: yeucau.body.category_name, image: yeucau.body.image } };
+
+    
     //use to delete item have id like which id on http
-    Category.findByIdAndUpdate(updateId, {category_name:yeucau.body.category_name} ,{image:yeucau.body.image}, function(err){
+    Category.updateOne(myquery, newvalues, function(err){
         if(err) {
             console.log(err);
             return trave.status(500).send();
