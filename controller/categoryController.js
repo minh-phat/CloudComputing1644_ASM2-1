@@ -1,9 +1,30 @@
 const  express = require("express");
 const  router = express.Router();
 const fs = require("fs");
+const appServer = express();
+const hbs = require("hbs");
 
 ////// - Model
 const Category = require("../model/categories");
+
+//Middleware|=======================================================================
+
+const bodyParser = require("body-parser");
+const { CLIENT_RENEG_LIMIT } = require("tls");
+
+//View engine setup|=================================================================
+
+
+appServer.set("view engine", "hbs"); //setting view engine as handlebars
+
+//Page partials|==========================================================================
+
+hbs.registerPartials('view/userPage');
+hbs.registerPartials('view/adminPage');
+
+//Config|============================================================================
+
+appServer.use(express.static("public"));
 
 
 //-------------------------------------<<handle upload file img
@@ -71,8 +92,112 @@ router.post( "/categoryInsert" , upload.single("image"), (yeucau, trave, ketiep)
     oneCategory.save(); //save data into database
 
     trave.redirect('./categoryView');
-    //trave.render("categoryView",  {sanpham: yeucau.body}); //check dữ liệu trả về
+    
 });
+
+//----------------------<<Delete one Category
+router.get( "/categoryDelete/:id" , (yeucau, trave) => {
+
+    var deleteId= yeucau.params.id; //take id on link http
+
+    //use to delete item have id like which id on http
+    Category.findOneAndRemove({_id: deleteId}, function(err){
+        if(err) {
+            console.log(err);
+            return trave.status(500).send();
+        }
+        return trave.status(200).send();
+    });
+
+    trave.redirect('../categoryView');
+});
+//----------------------Delete one Category>>
+
+
+// router.get( "/categoryUpdate/:id" , (yeucau, trave) => {
+
+//     var updateId= yeucau.params.id; //take id on link http
+
+//     //use to delete item have id like which id on http
+//     Category.findByIdAndUpdate({_id: updateId}, function(err){
+//         if(err) {
+//             console.log(err);
+//             return trave.status(500).send();
+//         }
+//         return trave.status(200).send();
+//     });
+
+//     trave.redirect('../categoryView');
+// });
+
+// SHOW EDIT USER FORM
+router.get('/categoryEdit:id', async (yeucau, trave) => {
+   
+    console.log("\n BODY: ", yeucau.body);
+    console.log("\n Params: ", yeucau.params);
+    console.log("\n Query: ", yeucau.query);
+
+
+    try {
+        let CategoryID = await Category.findOne({ _id: yeucau.params.id });
+        console.log(CategoryID );
+        trave.render("adminPage/categoryEdit", {Categories: CategoryID});
+    } catch (error) {
+        console.log(error);
+    }
+
+});
+
+
+// router.post( "/categoryEdit:id" , (yeucau, trave) => {
+
+
+//     console.log("\n BODY: ", yeucau.body);
+//     console.log("\n Params: ", yeucau.params);
+//     console.log("\n Query: ", yeucau.query);
+
+//     var updateId= yeucau.params.id; //take id on link http
+
+//     //use to delete item have id like which id on http
+//     Category.findByIdAndUpdate(updateId, {category_name:yeucau.query.category_name} ,{image:yeucau.query.image}, function(err){
+//         if(err) {
+//             console.log(err);
+//             return trave.status(500).send();
+//         }
+//         return trave.status(200).send();
+//     });
+
+//     trave.redirect('../categoryView');
+// });
+
+
+router.post( "/categoryUpdate:id" , upload.single("image"), (yeucau, trave, ketiep) =>  {
+
+
+    console.log("\n BODY: ", yeucau.body);
+    console.log("\n Params: ", yeucau.params);
+    console.log("\n Query: ", yeucau.query);
+    console.log("\n File: ", yeucau.file);
+
+    yeucau.body.image = yeucau.file.filename; //gán Imagelink bằng đường link tới ảnh trong documents
+    
+    var myquery = { _id: yeucau.params.id };
+    var newvalues = { $set: { category_name: yeucau.body.category_name, image: yeucau.body.image } };
+
+    
+    //use to delete item have id like which id on http
+    Category.updateOne(myquery, newvalues, function(err){
+        if(err) {
+            console.log(err);
+            return trave.status(500).send();
+        }
+        return trave.status(200).send();
+    });
+
+    trave.redirect('../categoryView');
+});
+
+
 
 //-------------------------------------------
 exports.categoryController = router;
