@@ -2,7 +2,7 @@
 <div class="col-md-9 grid-margin" style="margin: auto;">
     <div class="card">
         <div class="card-body">
-            <h2 style="text-align: center;">Insert new product</h4>
+            <h2 style="text-align: center;">New ATN Toy</h4>
             <form class="forms-sample" enctype="multipart/form-data" method="post">
                 <div class="form-group">
                 <label for="name">Product Name</label>
@@ -30,26 +30,39 @@
 
                 {{!-- Image upload and preview --}}
                 <div class="form-group">
-                    <label for="image">Image</label>
+                    <label for="image">Upload image or enter image link</label>
                     <div class="input-group col-xs-12">
                         <input type="file" name="image" id="image" class="default" onchange="loadFile(event)">
                     </div>
                     <br>
                     <h4>Image preview here</h4>
                     <img id="output">
+                    <br>
+                    <input type="text" class="form-control" id="image-link" name="image-link" placeholder="Enter image URL">
 
                     <script>
+                        //Disable input URL if file is uploaded
                         var loadFile = function(event) {
                             var output = document.getElementById('output');
                             output.src = URL.createObjectURL(event.target.files[0]);
                             output.onload = function() {
                                 URL.revokeObjectURL(output.src) // free memory
                             }
+                            const input = document.getElementById('image-link');
+                            input.disabled = true;
                         };
+
+                        //Disable file upload if URL is entered
+                        const input = document.getElementById('image-link');
+                        const file = document.getElementById('image');
+                        input.addEventListener('input', updateValue);
+                        function updateValue(e) {
+                            file.disabled = true;
+                        }       
                     </script>
                 </div>
 
-                <hr style="height: 2px;color:gray;background-color:gray;border-width:0;">
+                {{!-- <hr style="height: 2px;color:gray;background-color:gray;border-width:0;">
                 <div class="form-group">
                 <label for="color">Color 1</label>
                 <input type="text" class="form-control" id="color-1" name="color-1" placeholder="Enter color 1">
@@ -65,7 +78,7 @@
                 <button type="button" class="addColor file-upload-browse btn btn-info" id="addColor" style="padding:12px 10px">
                     <i class="fa-solid fa-circle-plus"></i> Add more color
                 </button>
-                </div>
+                </div> --}}
 
                 <div>
                     <button type="submit" class="btn btn-success mr-2" style="padding:12px 10px"><i class="fa-solid fa-circle-check"></i> Submit</button>
