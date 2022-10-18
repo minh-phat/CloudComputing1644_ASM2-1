@@ -6,6 +6,7 @@ const fs = require("fs");
 const path = require('path');
 const mongoose = require("mongoose");
 const hbs = require("hbs");
+var session = require('express-session');
 
 
 //Middleware|=======================================================================
@@ -33,7 +34,7 @@ const DB_USERNAME = "trietnfriends";
 const DB_PASSWORD = "trietnfriends";
 const DB_SERVER = "atn-shop.c7pvv4i.mongodb.net";
 const DB_NAME = "atn-toy-shop";
-const uri = `mongodb+srv://` + DB_USERNAME + `:` + DB_PASSWORD + `@` + DB_SERVER + `/` + DB_NAME +`?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://` + DB_USERNAME + `:` + DB_PASSWORD + `@` + DB_SERVER + `/` + DB_NAME + `?retryWrites=true&w=majority`;
 mongoose.connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -84,9 +85,13 @@ appServer.use(bodyParser.urlencoded({ extended: true }));
 
 //Sessions|==========================================================================
 
-//const session = express.session();
-//appServer.use(session({secret: "id-session-Mr.Tu"​}));
-//appServer.use("/", router);
+var appSession = {
+    secret: 'atnSecret',
+    resave: false,
+    saveUninitialized: false
+}
+
+appServer.use(session(appSession));
 
 //Controller routers|==============================================================
 

@@ -5,7 +5,7 @@ const fs = require("fs");
 //Setting routes in module|================================================
 
 router.get("/signup", (req, res) => {
-    res.render("signup");
+    res.render('signup');
 });
 
 router.get("/login", (req, res) => {
