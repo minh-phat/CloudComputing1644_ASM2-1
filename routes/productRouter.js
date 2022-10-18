@@ -47,18 +47,26 @@ const upload = multer({
 })
 
 //Save product to database
-router.post( "/newProduct" , upload.single("image"), (request, response, next) => {
+router.post( "/newProduct" , upload.single("image"), async (request, response, next) => {
+    try{
+        console.log("\n BODY: ", request.body);
+        console.log("\n File: ", request.file);
 
-    console.log("\n BODY: ", request.body);
-    console.log("\n Params: ", request.params);
-    console.log("\n Query: ", request.query);
-    console.log("\n File: ", request.file);
-
-    request.body.image = request.file.filename; //gán Imagelink bằng đường link tới ảnh trong document
-
-    newProduct = new products(request, response);
-    newProduct.save(); //save data into database
-    //!Add render to view page
+        request.body.image = "img/products/" + request.file.filename; //gán Imagelink bằng đường link tới ảnh trong document
+        const toy = new products({
+            product_name: request.body.product_name,
+            category: request.body.category,
+            description: request.body.description,
+            price: request.body.price,
+            image: request.body.image,
+            color: request.body.color1,
+            stock: request.body.stock1
+        });
+        toy.save(); //save data into database
+        response.redirect('/newProduct');
+    }catch(error){
+        console.log(error);
+    }
 });
 
 //!Exporting router module|================================================
