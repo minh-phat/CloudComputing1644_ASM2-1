@@ -71,6 +71,9 @@ appServer.use("/", AdminRouter);
 const ProductRouter = require("./routes/productRouter").ProductRouter;
 appServer.use("/", ProductRouter);
 
+const categoryController = require("./controller/categoryController").categoryController;
+appServer.use("/", categoryController);
+
 //Add middleware|=====================================================================
 
 appServer.use("/", router);

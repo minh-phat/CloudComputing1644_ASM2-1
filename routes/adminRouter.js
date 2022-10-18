@@ -23,11 +23,27 @@ router.get("/table", (req, res) => {
 
     res.render("adminPage/table");
 });
-router.get("/category", (req, res) => {
 
-    res.render("adminPage/categoryInsert");
-});
 
-//!Exporting router module|================================================
+// router.get( "/category" , categoryView);
+// async function categoryView(req, res) {
+//     try {
+//         let CategoryList = await Product.find({});
+//         console.log(dssp);
+//         res.render("adminPage/categoryView", {Categories: CategoryList});
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+
+// const categoryController = require("../controller/categoryController").categoryController;
+// appServer.use("/category", categoryController);
+
+
+// router.get("/category", (req, res) => {
+
+    
+//     //res.render("adminPage/categoryView");
+// });
 
 exports.AdminRouter = router;
