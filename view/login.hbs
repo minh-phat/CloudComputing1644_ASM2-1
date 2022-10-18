@@ -42,9 +42,9 @@
         <input id="login__password" type="password" name="password" class="form__input" placeholder="Password" required>
       </div>
 
-{{#if req.session.message}}
+{{#if message}}
       <div class="form__field">
-        <h3>{{req.session.message}}</h3>
+        <h3>{{message}}</h3>
       </div>
 {{/if}}
 

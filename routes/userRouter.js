@@ -9,14 +9,19 @@ router.get("/signup", (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-    res.render("login");
+    if (req.session.message) {
+        res.render("login", { message: req.session.message });
+    } else {
+        res.render("login");
+    }
 });
 
 router.get("/", (req, res) => {
-    if (req.session) {
-        console.log('available');
+    if (req.session.username) {
+        res.render("userPage/home", { username: req.session.username })
+    } else {
+        res.render("userPage/home");
     }
-    res.render("userPage/home");
 });
 
 router.get("/shop", (req, res) => {

@@ -94,7 +94,9 @@ exports.accountAuth = async (req, res) => {                       //TODO: Add se
         }
 
         if (!user) {
-            console.log('username ' + req.body.username + ' not found !');
+            errorMsg = 'username ' + req.body.username + ' not found !';
+            console.log(errorMsg);
+            req.session.message = errorMsg;
             return res.redirect('/login');
         }
 
@@ -103,14 +105,16 @@ exports.accountAuth = async (req, res) => {                       //TODO: Add se
         }
 
         if (user.password !== req.body.password) {
-            console.log('password "' + req.body.password + '" for user ' + user.username + ' does not match !');
+            errorMsg = 'password "' + req.body.password + '" for user ' + user.username + ' does not match !';
+            console.log(errorMsg);
+            req.session.message = errorMsg;
             res.redirect('/login');
         }
 
         if (user.password === req.body.password) {
             console.log('user ' + user.username + ' logged in successfully');
+            req.session.message = undefined;
             req.session.username = user.username;
-            console.log("SESSION: "+req.session.username);
             return res.redirect('/');
         }
     });
