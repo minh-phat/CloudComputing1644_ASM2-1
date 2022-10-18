@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 const categories = require("../model/categories");
+const products = require("../model/products");
 const multer = require("multer");
-const product = require("../model/products");
 
 //Setting routes in module|================================================
 router.get( "/newProduct" , loadCategories);
@@ -47,25 +47,26 @@ const upload = multer({
 })
 
 //Save product to database
-router.post( "/newProduct" , upload.single("image"), (request, response, next) => {
+router.post( "/newProduct" , upload.single("image"), async (request, response, next) => {
+    try{
+        console.log("\n BODY: ", request.body);
+        console.log("\n File: ", request.file);
 
-    console.log("\n BODY: ", request.body);
-    // console.log("\n Params: ", request.params);
-    // console.log("\n Query: ", request.query);
-    console.log("\n File: ", request.file);
-
-    request.body.image = "img/products/" + request.file.filename; //gán Imagelink bằng đường link tới ảnh trong document
-
-    newProduct = new product({
-        product_name: request.body.product_name,
-        category: request.body.category,
-        description: request.body.description,
-        price: request.body.price,
-        image: request.body.image
-    });
-    newProduct.save(); //save data into database
-    response.redirect('/newProduct');
-    //!Add render to view page
+        request.body.image = "img/products/" + request.file.filename; //gán Imagelink bằng đường link tới ảnh trong document
+        const toy = new products({
+            product_name: request.body.product_name,
+            category: request.body.category,
+            description: request.body.description,
+            price: request.body.price,
+            image: request.body.image,
+            color: request.body.color1,
+            stock: request.body.stock1
+        });
+        toy.save(); //save data into database
+        response.redirect('/newProduct');
+    }catch(error){
+        console.log(error);
+    }
 });
 
 //!Exporting router module|================================================
