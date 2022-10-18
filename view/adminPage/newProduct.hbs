@@ -28,24 +28,33 @@
 
                 <div class="form-group">
                     <label for="image">Image</label>
-                    <input type="file" name="img[]" class="file-upload-default">
                     <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                        <span class="input-group-append">
-                        <button class="file-upload-browse btn btn-info" type="button">Upload</button>
-                        </span>
+                        <input type="file" name="img" class="default" onchange="loadFile(event)">
                     </div>
+                    <br>
+                    <h4>Image preview here</h4>
+                    <img id="output">
+
+                    <script>
+                        var loadFile = function(event) {
+                            var output = document.getElementById('output');
+                            output.src = URL.createObjectURL(event.target.files[0]);
+                            output.onload = function() {
+                                URL.revokeObjectURL(output.src) // free memory
+                            }
+                        };
+                    </script>
                 </div>
 
                 <hr style="height: 2px;color:gray;background-color:gray;border-width:0;">
                 <div class="form-group">
-                <label for="color">Color</label>
-                <input type="text" class="form-control" id="color" placeholder="Enter color">
+                <label for="color">Color 1</label>
+                <input type="text" class="form-control" id="color-1" placeholder="Enter color 1">
                 </div>
 
                 <div class="form-group">
-                <label for="stock">Stock</label>
-                <input type="number" class="form-control" id="stock" placeholder="Enter stock">
+                <label for="stock">Stock 1</label>
+                <input type="number" class="form-control" id="stock" placeholder="Enter stock 1">
                 </div>
 
                 <div class="form-group">
@@ -65,14 +74,21 @@
 
 {{!-- Click to add more color --}}
 <script>
+    let count = 2
     $(document).on('click', '.addColor', function(){
-        var html = '<hr style="height: 2px;color:gray;background-color:gray;border-width:0;">'
-        + '<div class="form-group"><label for="color">Color</label><input type="text" class="form-control" id="color" placeholder="Enter color">'
-        + '</div><div class="form-group"><label for="stock">Stock</label><input type="number" class="form-control" id="stock" placeholder="Enter stock">'
-        + '</div><div class="form-group"><button type="button" class="addColor file-upload-browse btn btn-info" id="addColor" style="padding:12px 10px">'
-        + '<i class="fa-solid fa-circle-plus"></i> Add more color</button></div>';
-        var element = document.getElementById("addColor");
-        $(this).parent().append(html);
-        element.remove();
+        if(count<=5){            
+            var html = '<hr style="height: 2px;color:gray;background-color:gray;border-width:0;">'
+            + '<div class="form-group"><label for="color">Color ' + count + '</label><input type="text" class="form-control" id="color-' + count + '" placeholder="Enter color">'
+            + '</div><div class="form-group"><label for="stock">Stock ' + count + '</label><input type="number" class="form-control" id="stock-' + count + '" placeholder="Enter stock">'
+            + '</div><div class="form-group"><button type="button" class="addColor file-upload-browse btn btn-info" id="addColor" style="padding:12px 10px">'
+            + '<i class="fa-solid fa-circle-plus"></i> Add more color</button></div>';
+            var element = document.getElementById("addColor");
+            $(this).parent().append(html);
+            element.remove();
+            count++;
+        }else {
+            document.getElementById("addColor").disabled = true;
+            $(this).parent().append("<h4 style='color:red;'><i class='fa-solid fa-triangle-exclamation'></i> You can only insert 5 colors</h4>");
+        }
     });
 </script>
