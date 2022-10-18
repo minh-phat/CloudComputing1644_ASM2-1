@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 const categories = require("../model/categories");
-const products = require("../model/products");
+const Product = require("../model/products");
 const multer = require("multer");
 
 //Setting routes in module|================================================
@@ -47,26 +47,115 @@ const upload = multer({
 })
 
 //Save product to database
-router.post( "/newProduct" , upload.single("image"), async (request, response, next) => {
-    try{
-        console.log("\n BODY: ", request.body);
-        console.log("\n File: ", request.file);
+router.post( "/newProduct" , upload.single("image"), (request, response, next) => {
+    console.log("\n BODY: ", request.body);
+    console.log("\n File: ", request.file);
 
-        request.body.image = "img/products/" + request.file.filename; //gán Imagelink bằng đường link tới ảnh trong document
-        const toy = new products({
+    request.body.image = request.file.filename; //gán Imagelink bằng đường link tới ảnh trong document
+
+    //This is stupid
+    let toy = {};
+    if(request.body.counter == 1){
+        toy = {
             product_name: request.body.product_name,
             category: request.body.category,
             description: request.body.description,
             price: request.body.price,
             image: request.body.image,
-            color: request.body.color1,
-            stock: request.body.stock1
-        });
-        toy.save(); //save data into database
-        response.redirect('/newProduct');
-    }catch(error){
-        console.log(error);
+            configurations: [{
+                color: request.body.color1,
+                stock: request.body.stock1
+            }]
+        }
+    }else if(request.body.counter == 2){
+        toy = {
+            product_name: request.body.product_name,
+            category: request.body.category,
+            description: request.body.description,
+            price: request.body.price,
+            image: request.body.image,
+            configurations: [{
+                color: request.body.color1,
+                stock: request.body.stock1
+            }, {
+                color: request.body.color2,
+                stock: request.body.stock2
+            }]
+        }
+    }else if(request.body.counter == 3){
+        toy = {
+            product_name: request.body.product_name,
+            category: request.body.category,
+            description: request.body.description,
+            price: request.body.price,
+            image: request.body.image,
+            configurations: [{
+                color: request.body.color1,
+                stock: request.body.stock1
+            }, {
+                color: request.body.color2,
+                stock: request.body.stock2
+            }, {
+                color: request.body.color3,
+                stock: request.body.stock3
+            }]
+        }
+    }else if(request.body.counter == 4){
+        toy = {
+            product_name: request.body.product_name,
+            category: request.body.category,
+            description: request.body.description,
+            price: request.body.price,
+            image: request.body.image,
+            configurations: [{
+                color: request.body.color1,
+                stock: request.body.stock1
+            }, {
+                color: request.body.color2,
+                stock: request.body.stock2
+            }, {
+                color: request.body.color3,
+                stock: request.body.stock3
+            },{
+                color: request.body.color4,
+                stock: request.body.stock4
+            }]
+        }
+    }else {
+        toy = {
+            product_name: request.body.product_name,
+            category: request.body.category,
+            description: request.body.description,
+            price: request.body.price,
+            image: request.body.image,
+            configurations: [{
+                color: request.body.color1,
+                stock: request.body.stock1
+            }, {
+                color: request.body.color2,
+                stock: request.body.stock2
+            }, {
+                color: request.body.color3,
+                stock: request.body.stock3
+            },{
+                color: request.body.color4,
+                stock: request.body.stock4
+            }, {
+                color: request.body.color5,
+                stock: request.body.stock5
+            }]
+        }
     }
+
+    const newToy = new Product(toy)
+    newToy.save(function (error, document) {
+        if (error) {
+            console.error(error)
+        }else{
+            console.log(document)
+            response.redirect("./newProduct")
+        }
+    })
 });
 
 //!Exporting router module|================================================
