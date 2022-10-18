@@ -10,12 +10,12 @@ const OrdersSchema = new Schema({
 });
 
 const AccountsSchema = new Schema({
-    username: String,
-    password: String,
-    fullname: String,
-    email: String,
-    birthday: Date,
-    gender: String,
+    username: { type: String, unique: true, required: true },
+    password: { type: String, required: true },
+    fullname: { type: String, required: true },
+    email: { type: String, unique: true },
+    birthday: { type: String, required: true },
+    gender: { type: String, required: true },
     account_class: { type: String, default: 'User' },
     orders: [OrdersSchema],
 });

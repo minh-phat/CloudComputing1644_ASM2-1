@@ -26,7 +26,12 @@
 
   <div class="grid">
 
-    <form action="/newAccount" method="POST" class="form login">
+    <h1 style="text-align: center;">New
+      <a style="color: #f94144;">A</a><a style="color: #f8961e;">T</a><a style="color:#f9c74f;">N</a> <a
+        style="color:#43aa8b;">T</a><a style="color: #577590;">o</a><a style="color: #277da1;">y</a>
+    account</h1>
+
+    <form action="signup/newAccount" method="POST" class="form login">
 
       <div class="form__field">
         <label for="login__username"><i class="fa-solid fa-user"></i><span class="hidden">Username</span></label>
@@ -35,7 +40,7 @@
       </div>
 
       <div class="form__field">
-        <label for="login__email"><i class="fa-solid fa-user"></i><span class="hidden">Email</span></label>
+        <label for="login__email"><i class="fa-solid fa-envelope"></i><span class="hidden">Email</span></label>
         <input id="login__email" type="text" name="login__email" class="form__input" placeholder="Email" required>
       </div>
 
@@ -46,20 +51,24 @@
       </div>
 
       <div class="form__field">
-        <label for="login__birthday"><i class="fa-solid fa-user"></i><span class="hidden">Birthday</span></label>
+        <label for="login__birthday"><i class="fa-solid fa-cake-candles"></i><span class="hidden">Birthday</span></label>
         <input id="login__birthday" type="date" name="login__birthday" class="form__input" placeholder="Birthday"
           required>
       </div>
 
-      <div class="form__field">
+      <div class="form__field" >
         <label for="gender"><i class="fa-solid fa-user"></i><span class="hidden">Gender</span></label>
         <input class="" type="radio" name="gender" id="male" value="male">
-        <label class="form__label" for="male" style="background-color: #cecece92;">
+        <label id="gender" class="form__label" for="male" style="background-color: #cecece92; align-self:">
           Male
         </label>
         <input class="" type="radio" name="gender" id="female" value="female">
-        <label class="form__label" for="female" style="background-color: #cecece92;">
+        <label id="gender" class="form__label" for="female" style="background-color: #cecece92;">
           Female
+        </label>
+        <input class="" type="radio" name="gender" id="other" value="other">
+        <label id="gender" class="form__label" for="other" style="background-color: #cecece92;">
+          Other
         </label>
       </div>
 
@@ -76,18 +85,33 @@
       </div>
 
       <div class="form__field">
+        <button value='Home' style="width: 60px; margin-right: 5px; background; border: none" onclick="location.href = '/';"><i class="fa-solid fa-house"></i></button>
         <input type="submit" value="Sign up">
       </div>
 
     </form>
 
-    <p class="text--center">Already have an account? <a href="login">Login now</a> <svg class="icon">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#arrow-right">
-      </svg></p>
+    <p class="text--center">Already have an account? <a href="login">Login now</a></p>
 
   </div>
 
   <script src="assets/js/script.js"></script>
+  <script>
+    var password = document.getElementById("password")
+      , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+      if (password.value != confirm_password.value) {
+        confirm_password.setCustomValidity("Passwords Don't Match");
+      } else {
+        confirm_password.setCustomValidity('');
+      }
+    }
+
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+  </script>
+  <script src="https://kit.fontawesome.com/65c934ed02.js" crossorigin="anonymous"></script>
 
 </body>
 
