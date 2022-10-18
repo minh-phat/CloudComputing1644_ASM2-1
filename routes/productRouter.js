@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const fs = require("fs");
-const categories = require("../model/categories");
+const Category = require("../model/categories");
 const Product = require("../model/products");
 const multer = require("multer");
 
@@ -9,7 +8,7 @@ const multer = require("multer");
 router.get( "/newProduct" , loadCategories);
 async function loadCategories(request, response) {
     try {
-        let categoriesList = await categories.find({});
+        let categoriesList = await Category.find({});
         console.log(categoriesList);
         response.render("adminPage/newProduct", {categories: categoriesList});
     } catch (error) {
