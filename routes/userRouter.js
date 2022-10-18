@@ -13,6 +13,9 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/", (req, res) => {
+    if (req.session) {
+        console.log('available');
+    }
     res.render("userPage/home");
 });
 
