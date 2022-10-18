@@ -171,18 +171,16 @@ router.get('/categoryEdit:id', async (yeucau, trave) => {
 // });
 
 
-router.post( "/categoryEdit:id" , upload.single("image"), (yeucau, trave, ketiep) =>  {
+router.post( "/categoryUpdate:id" , upload.single("image"), (yeucau, trave, ketiep) =>  {
 
 
     console.log("\n BODY: ", yeucau.body);
     console.log("\n Params: ", yeucau.params);
     console.log("\n Query: ", yeucau.query);
     console.log("\n File: ", yeucau.file);
-    
+
     yeucau.body.image = yeucau.file.filename; //gán Imagelink bằng đường link tới ảnh trong documents
     
-    //var updateId= yeucau.params.id; //take id on link http
-
     var myquery = { _id: yeucau.params.id };
     var newvalues = { $set: { category_name: yeucau.body.category_name, image: yeucau.body.image } };
 
