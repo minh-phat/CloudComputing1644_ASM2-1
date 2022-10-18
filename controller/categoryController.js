@@ -74,5 +74,22 @@ router.post( "/categoryInsert" , upload.single("image"), (yeucau, trave, ketiep)
     //trave.render("categoryView",  {sanpham: yeucau.body}); //check dữ liệu trả về
 });
 
+
+router.get( "/categoryDelete/:id" , (yeucau, trave) => {
+
+    var deleteId= yeucau.params.id;
+    Category.findOneAndRemove({_id: deleteId}, function(err){
+        if(err) {
+            console.log(err);
+            return trave.status(500).send();
+        }
+        return trave.status(200).send();
+    });
+
+    trave.redirect('../categoryView');
+});
+
+
+
 //-------------------------------------------
 exports.categoryController = router;

@@ -28,7 +28,15 @@
                                     <img src="/img/categories/{{this.image}}" alt="image" />
                                 </td>
                                 <td> {{this.category_name}} </td>
-                                <td></td>
+                                <td>
+                                    <a href="" class="btn btn-info">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="/categoryDelete/{{this.id}}"
+                                        class="btn btn-danger" onclick="return confirm('Confirm delete?')">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
                                 </tr>
                             {{/each}}
                         </tbody>                      
