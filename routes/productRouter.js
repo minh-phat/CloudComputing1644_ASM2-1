@@ -4,19 +4,18 @@ const Category = require("../model/categories");
 const Product = require("../model/products");
 const multer = require("multer");
 
-//Setting routes in module|================================================
+//Direct to create product page
 router.get( "/newProduct" , loadCategories);
 async function loadCategories(request, response) {
     try {
         let categoriesList = await Category.find({});
-        console.log(categoriesList);
         response.render("adminPage/newProduct", {categories: categoriesList});
     } catch (error) {
         console.log(error);
     }
 }
 
-//! Save image to database
+//Save product to database
 //Setting storage engine
 const storageEngine = multer.diskStorage({
     destination: "public/img/products",
@@ -156,6 +155,18 @@ router.post( "/newProduct" , upload.single("image"), (request, response, next) =
         }
     })
 });
+
+//Direct to product view page
+router.get( "/viewProducts" , viewProducts);
+async function viewProducts(request, response) {
+    try {
+        let categoriesList = await Product.find({}).populate('Category');
+        console.log(categoriesList);
+        //response.render("adminPage/newProduct", {categories: categoriesList});
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 //!Exporting router module|================================================
 
