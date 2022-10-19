@@ -9,6 +9,7 @@ const hbs = require("hbs");
 const session = require('express-session');
 
 
+
 //Middleware|=======================================================================
 
 const bodyParser = require("body-parser");
@@ -108,3 +109,7 @@ appServer.listen(PORT);
 console.log("||Server running at " + PORT + "||=====================================");
 
 //!Launch|=======================================================
+
+// const Category =[1,2,3];
+// const filterDoe = Category.filter(Category => Category > 1 );
+// console.log(filterDoe);
