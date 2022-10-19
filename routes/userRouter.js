@@ -4,18 +4,6 @@ const fs = require("fs");
 
 //Setting routes in module|================================================
 
-router.get("/signup", (req, res) => {
-    res.render('signup');
-});
-
-router.get("/login", (req, res) => {
-    if (req.session.message) {
-        res.render("login", { message: req.session.message });
-    } else {
-        res.render("login");
-    }
-});
-
 router.get("/", (req, res) => {
     if (req.session.username) {
         res.render("userPage/home", { username: req.session.username })

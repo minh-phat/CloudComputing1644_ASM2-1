@@ -59,7 +59,7 @@ db.once("open", _ => {
 //Middleware|========================================================================
 
 router.use((req, res, next) => {
-    console.log("SESSION: "+req.session.message+"||USER: "+req.session.username+"| REQ: ", Date.now(), req.url);
+    console.log("MESSAGE: "+req.session.message+"||USER: "+req.session.username+"||CLASS: "+req.session.class+"| REQ: ", Date.now(), req.url);
     next();
 });
 
