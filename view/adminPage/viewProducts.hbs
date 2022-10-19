@@ -1,0 +1,41 @@
+{{>headerAdmin}}
+
+<div class="col-lg-9 stretch-card" style="margin: auto;">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title" style="text-align:center">Product list</h3>
+                <table class="table table-striped" style="table-layout: fixed;"  {{!-- class="table table-hover" style="table-layout: fixed; word-wrap:break-all" --}}>
+                    <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Image</th>
+                            <th>Configurations</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each products}}
+                        <tr>
+                            <td>{{this.product_name}}</td>
+                            <td>{{this.category.category_name}}</td>                            
+                            <td>{{this.description}}</td>
+                            <td>{{this.price}}</td>
+                            <td><img src="img/products/{{this.image}}" alt="Image for {{this.product_name}}"></td>
+                            <td style="word-wrap:break-word; white-space:normal;">
+                                {{#each this.configurations}}
+                                    Color: {{this.color}}
+                                    Stock: {{this.stock}}
+                                    <br>
+                                {{/each}}
+                            </td>
+                            <td><a href="">Edit</a> <a href="">Delete</a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+        </div>
+    </div>
+</div>

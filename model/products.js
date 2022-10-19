@@ -4,7 +4,7 @@ const categories = require("./categories");
 
 const productSchema = new Schema({
     product_name: { type: String, required: true, unique: true },
-    category: { type: Schema.Types.ObjectId, required: true, ref: 'categories' },
+    category: { type: Schema.Types.ObjectId, required: true, ref: 'Category' },
     description: { type: String, required: true },
     price: { type: Number, required: true, min: [0, 'The toy cannot be free'] },
     image: { type: String, required: true },

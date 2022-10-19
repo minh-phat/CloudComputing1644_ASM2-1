@@ -160,9 +160,10 @@ router.post( "/newProduct" , upload.single("image"), (request, response, next) =
 router.get( "/viewProducts" , viewProducts);
 async function viewProducts(request, response) {
     try {
-        let categoriesList = await Product.find({}).populate('Category');
-        console.log(categoriesList);
-        //response.render("adminPage/newProduct", {categories: categoriesList});
+        let productsList = await Product.find({}).populate('category');
+
+        console.log(productsList);
+        response.render("adminPage/viewProducts", { products: productsList } );
     } catch (error) {
         console.log(error);
     }
