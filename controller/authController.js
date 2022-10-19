@@ -27,7 +27,7 @@ exports.newAccount = async (req, res) => {
     if (!validateEmail(newAccount.email)) {
         var errorMsg = 'email "' + newAccount.email + '" is not in the correct format.';
         console.log(errorMsg);
-        req.session.message = errorMsg;
+        req.session.message = errorMsg + " i.e: demo@mail.net";
         return res.redirect('/signup');
     }
 
@@ -115,7 +115,14 @@ exports.accountAuth = async (req, res) => {                       //TODO: Add se
             console.log('user ' + user.username + ' logged in successfully');
             req.session.message = undefined;
             req.session.username = user.username;
-            return res.redirect('/');
+            req.session.class = user.account_class;
+            if (req.session.class === "User") {
+                return res.redirect('/');
+            } else if (req.session.class === "Director"
+                || req.session.class === "Manager"
+                || req.session.class === "Staff") {
+                return res.redirect('dashboard');
+            }
         }
     });
 }
