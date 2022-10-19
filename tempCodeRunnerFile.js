@@ -13,6 +13,4 @@ appServer.set("view engine", "hbs"); //setting view engine as handlebars
 hbs.registerPartials('view/userPage');
 hbs.registerPartials('view/adminPage');
 
-//Config|============================================================================
-
-appServer.use(express.static("public"));
+//Config|=====================================================================
