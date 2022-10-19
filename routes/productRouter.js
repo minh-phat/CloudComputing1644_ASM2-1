@@ -16,7 +16,7 @@ async function loadCategories(request, response) {
 }
 
 //Save product to database
-//Setting storage engine
+//Setting storage engine and save image to server
 const storageEngine = multer.diskStorage({
     destination: "public/img/products",
     filename: (req, file, cb) => {
@@ -44,7 +44,6 @@ const upload = multer({
     },
 })
 
-//Save product to database
 router.post( "/newProduct" , upload.single("image"), (request, response, next) => {
     console.log("\n BODY: ", request.body);
     console.log("\n File: ", request.file);
