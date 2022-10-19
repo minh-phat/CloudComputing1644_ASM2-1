@@ -95,22 +95,6 @@ router.get( "/categoryDelete/:id" , (yeucau, trave) => {
 //----------------------Delete one Category>>
 
 
-// router.get( "/categoryUpdate/:id" , (yeucau, trave) => {
-
-//     var updateId= yeucau.params.id; //take id on link http
-
-//     //use to delete item have id like which id on http
-//     Category.findByIdAndUpdate({_id: updateId}, function(err){
-//         if(err) {
-//             console.log(err);
-//             return trave.status(500).send();
-//         }
-//         return trave.status(200).send();
-//     });
-
-//     trave.redirect('../categoryView');
-// });
-
 // SHOW EDIT USER FORM
 router.get('/categoryEdit:id', async (yeucau, trave) => {
    
@@ -128,29 +112,6 @@ router.get('/categoryEdit:id', async (yeucau, trave) => {
     }
 
 });
-
-
-// router.post( "/categoryEdit:id" , (yeucau, trave) => {
-
-
-//     console.log("\n BODY: ", yeucau.body);
-//     console.log("\n Params: ", yeucau.params);
-//     console.log("\n Query: ", yeucau.query);
-
-//     var updateId= yeucau.params.id; //take id on link http
-
-//     //use to delete item have id like which id on http
-//     Category.findByIdAndUpdate(updateId, {category_name:yeucau.query.category_name} ,{image:yeucau.query.image}, function(err){
-//         if(err) {
-//             console.log(err);
-//             return trave.status(500).send();
-//         }
-//         return trave.status(200).send();
-//     });
-
-//     trave.redirect('../categoryView');
-// });
-
 
 router.post( "/categoryUpdate:id" , upload.single("image"), (yeucau, trave, ketiep) =>  {
 
@@ -177,23 +138,54 @@ router.post( "/categoryUpdate:id" , upload.single("image"), (yeucau, trave, keti
 
     trave.redirect('../categoryView');
 });
-router.get("/categorySearch:")
 
-router.get( "/view/:name" , async (yeucau, trave) => {
-    console.log("\n BODY: ", yeucau.body);
-    console.log("\n Params: ", yeucau.params);
-    console.log("\n Query: ", yeucau.query);
 
-    try {
-        let CategoryList = await Category.findOne({ category_name: yeucau.params.name });
-        console.log(sp);
-        trave.render("showProduct", {categories: sp});
-    } catch (error) {
-        console.log(error);
-    }
+// router.get( "/view/:name" , async (yeucau, trave) => {
+//     console.log("\n BODY: ", yeucau.body);
+//     console.log("\n Params: ", yeucau.params);
+//     console.log("\n Query: ", yeucau.query);
 
-});
+//     try {
+//         let CategoryList = await Category.findOne({ category_name: yeucau.params.name });
+//         console.log(sp);
+//         trave.render("showProduct", {categories: sp});
+//     } catch (error) {
+//         console.log(error);
+//     }
 
+// });
+
+// router.get( "/categoryView:category_name" , async (yeucau, trave) => {
+//     console.log("\n BODY: ", yeucau.body);
+//     console.log("\n Params: ", yeucau.params);
+//     console.log("\n Query: ", yeucau.query);
+
+//     //var name = yeucau.params.category_name;
+//     const name = "Doll";
+//     try {
+//         let CategoryList = await Category.find({ category_name: /name/ });
+//         console.log(CategoryList);
+//         trave.render("adminPage/categoryView", {Categories: CategoryList});
+//     } catch (error) {
+//         console.log(error);
+//     }
+
+// });
+
+// router.get( "/categorySearch" , async (yeucau, trave) => {
+
+//     const filters = yeucau.query;
+//     const filteredUsers = Category.filter(category_name => {
+//     let isValid = true;
+//     for (key in filters) {
+//       console.log(key, category_name[key], filters[key]);
+//       isValid = isValid && category_name[key] == filters[key];
+//     }
+//     return isValid;
+//   });
+//   trave.send(filteredUsers);
+
+// });
 
 //-------------------------------------------
 exports.categoryController = router;
