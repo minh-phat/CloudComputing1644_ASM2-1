@@ -6,13 +6,25 @@ const fs = require("fs");
 const path = require('path');
 const mongoose = require("mongoose");
 const hbs = require("hbs");
-var session = require('express-session');
+const session = require('express-session');
 
 
 //Middleware|=======================================================================
 
 const bodyParser = require("body-parser");
 const { CLIENT_RENEG_LIMIT } = require("tls");
+appServer.use(bodyParser.json());
+
+//Sessions|==========================================================================
+//!SESSION ALWAYS STAYS ON TOP BEFORE OTHER STUFFS, IT IS LIKE THAT NO QUESTION ASKED.
+var appSession = {
+    secret: 'atnSecret',
+    resave: true,
+    saveUninitialized: true,
+    cookie: {},
+}
+
+appServer.use(session(appSession));
 
 //View engine setup|=================================================================
 
@@ -47,7 +59,7 @@ db.once("open", _ => {
 //Middleware|========================================================================
 
 router.use((req, res, next) => {
-    console.log("REQ: ", Date.now(), req.url);
+    console.log("SESSION: "+req.session.message+"||USER: "+req.session.username+"| REQ: ", Date.now(), req.url);
     next();
 });
 
@@ -84,16 +96,6 @@ appServer.use("/", categoryController);
 appServer.use("/", router);
 appServer.use(bodyParser.json());
 appServer.use(bodyParser.urlencoded({ extended: true }));
-
-//Sessions|==========================================================================
-
-var appSession = {
-    secret: 'atnSecret',
-    resave: false,
-    saveUninitialized: false
-}
-
-appServer.use(session(appSession));
 
 //Controller routers|==============================================================
 

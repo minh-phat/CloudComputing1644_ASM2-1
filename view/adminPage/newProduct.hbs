@@ -51,6 +51,7 @@
                 </div>
 
                 <hr style="height: 2px;color:gray;background-color:gray;border-width:0;">
+                <input type="hidden" name="counter" id="counter">
                 <div class="form-group">
                 <label for="color">Color 1</label>
                 <input type="text" class="form-control" name="color1" placeholder="Enter color 1">
@@ -91,6 +92,7 @@
             $(this).parent().append(html);
             element.remove();
             count++;
+            document.getElementById("counter").setAttribute('value', count-1);
         }else {
             document.getElementById("addColor").disabled = true;
             $(this).parent().append("<h4 style='color:red;'><i class='fa-solid fa-triangle-exclamation'></i> You can only insert 5 colors</h4>");
