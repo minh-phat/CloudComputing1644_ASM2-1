@@ -7,25 +7,6 @@ const hbs = require("hbs");
 ////// - Model
 const Category = require("../model/categories");
 
-//Middleware|=======================================================================
-
-const bodyParser = require("body-parser");
-const { CLIENT_RENEG_LIMIT } = require("tls");
-
-//View engine setup|=================================================================
-
-
-appServer.set("view engine", "hbs"); //setting view engine as handlebars
-
-//Page partials|==========================================================================
-
-hbs.registerPartials('view/userPage');
-hbs.registerPartials('view/adminPage');
-
-//Config|============================================================================
-
-appServer.use(express.static("public"));
-
 
 //-------------------------------------<<handle upload file img
 // Upload - https://www.npmjs.com/package/multer 
@@ -196,7 +177,22 @@ router.post( "/categoryUpdate:id" , upload.single("image"), (yeucau, trave, keti
 
     trave.redirect('../categoryView');
 });
+router.get("/categorySearch:")
 
+router.get( "/view/:name" , async (yeucau, trave) => {
+    console.log("\n BODY: ", yeucau.body);
+    console.log("\n Params: ", yeucau.params);
+    console.log("\n Query: ", yeucau.query);
+
+    try {
+        let CategoryList = await Category.findOne({ category_name: yeucau.params.name });
+        console.log(sp);
+        trave.render("showProduct", {categories: sp});
+    } catch (error) {
+        console.log(error);
+    }
+
+});
 
 
 //-------------------------------------------
