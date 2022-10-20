@@ -33,13 +33,13 @@
                 <div class="form-group">
                     <label for="des">Description</label>
                     <input type="text" class="form-control" id="description" name="description"
-                        placeholder="Enter description" value="{{product.description}}" oninput="removeMessage()">
+                        placeholder="Enter description" value="{{product.description}}">
                 </div>
 
                 <div class="form-group">
                     <label for="price">Price</label>
                     <input type="number" class="form-control" id="price" name="price" placeholder="Enter price"
-                        value="{{product.price}}" oninput="removeMessage()">
+                        value="{{product.price}}">
                 </div>
 
                 {{!-- Image upload and preview --}}
@@ -74,7 +74,7 @@
                 {{#each product.configurations}}
                 <hr style="height: 2px;color:gray;background-color:gray;border-width:0;">
                 <div class="form-group">
-                    <label for="color">Color
+                    <label for="color" id="lcolor">Color
                         <script type="text/javascript">document.write(count)</script>
                     </label>
                     <input type="text" class="form-control" name="color" id="color"
@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="stock">Stock
+                    <label for="stock" id="lstock">Stock
                         <script type="text/javascript">document.write(count)</script>
                     </label>
                     <input type="number" class="form-control" name="stock" id="stock"
@@ -98,6 +98,11 @@
                     document.getElementById('color').id = 'color' + count;
                     document.getElementById('stock').id = 'stock' + count;
 
+                    document.getElementById('lcolor').name = 'lcolor' + count;
+                    document.getElementById('lstock').name = 'lstock' + count;
+                    document.getElementById('lcolor').id = 'lcolor' + count;
+                    document.getElementById('lstock').id = 'lstock' + count;
+
                     count++;
                 </script>
                 {{/each}}
@@ -111,6 +116,7 @@
                 </div>
 
                 <div>
+                    <button type="button" class="remove btn btn-warning mr-2" onclick="remove()" style="padding:12px 10px"><i class="fa-solid fa-circle-minus"></i> Remove a color</button>
                     <button type="submit" class="btn btn-success mr-2" style="padding:12px 10px"><i
                             class="fa-solid fa-circle-check"></i> Submit</button>
                     <a href="/viewProducts" class="btn btn-danger mr-2" style="padding:12px 10px"
@@ -127,8 +133,8 @@
     $(document).on('click', '.addColor', function () {
         if (count <= 5) {
             var html = '<hr style="height: 2px;color:gray;background-color:gray;border-width:0;">'
-                + '<div class="form-group"><label for="color">Color ' + count + '</label><input type="text" class="form-control" name="color' + count + '" placeholder="Enter color">'
-                + '</div><div class="form-group"><label for="stock">Stock ' + count + '</label><input type="number" class="form-control" name="stock' + count + '" placeholder="Enter stock">'
+                + '<div class="form-group"><label for="color" id="lcolor' + count + '">Color ' + count + '</label><input type="text" class="form-control" name="color' + count + '" id="color' + count + '" placeholder="Enter color">'
+                + '</div><div class="form-group"><label for="stock" id="lstock' + count + '">Stock ' + count + '</label><input type="number" class="form-control" name="stock' + count + '" id="stock' + count + '" placeholder="Enter stock">'
                 + '</div><div class="form-group"><button type="button" class="addColor file-upload-browse btn btn-info" id="addColor" style="padding:12px 10px">'
                 + '<i class="fa-solid fa-circle-plus"></i> Add more color</button></div>';
             var element = document.getElementById("addColor");
@@ -142,13 +148,23 @@
         }
     });
 
-    function removeMessage() {
-        document.getElementById('message').remove();
-    }
-
     function updated() {
         document.getElementById('not-updated').name = "updated";
     }
     //Choose category based on database
     document.getElementById("{{product.category}}").setAttribute('selected', 'selected');
+
+    var tempCounter
+    function remove() {
+        tempCounter = document.getElementById("counter").value;
+        document.getElementById("color" + tempCounter).remove();
+        document.getElementById("stock" + tempCounter).remove();
+        document.getElementById("lcolor" + tempCounter).remove();
+        document.getElementById("lstock" + tempCounter).remove();
+        const hrs = document.getElementsByTagName('hr');
+        hrs[tempCounter - 1].remove();
+        tempCounter--;
+        document.getElementById("counter").setAttribute('value', tempCounter);
+        count--;
+    }
 </script>

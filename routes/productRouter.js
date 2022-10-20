@@ -241,10 +241,10 @@ async function updateProduct(request, response) {
         const categoriesList = await Category.find({});
         if(request.session.message) {
             response.render( "adminPage/updateProduct", { categories: categoriesList, product: document, message: request.session.message } )
+            request.sesison.message = null;
         }else {
             response.render( "adminPage/updateProduct", { categories: categoriesList, product: document } )
         }
-        request.sesison.message = null;
     } catch(error) {
         console.log(error);
     }

@@ -67,13 +67,13 @@
                 <input type="hidden" name="counter" id="counter" value="1">
                 
                 <div class="form-group">
-                    <label for="color">Color 1</label>
-                    <input type="text" class="form-control" name="color1" placeholder="Enter color 1">
+                    <label for="color" id="lcolor1">Color 1</label>
+                    <input type="text" class="form-control" name="color1" id="color1" placeholder="Enter color 1">
                 </div>
 
                 <div class="form-group">
-                    <label for="stock">Stock 1</label>
-                    <input type="number" class="form-control" name="stock1" placeholder="Enter stock 1">
+                    <label for="stock" id="lstock1">Stock 1</label>
+                    <input type="number" class="form-control" name="stock1" id="stock1" placeholder="Enter stock 1">
                 </div>
 
                 {{!-- Add more color button --}}
@@ -85,6 +85,7 @@
                 </div>
 
                 <div>
+                    <button type="button" disabled id="removeColor" class="remove btn btn-warning mr-2" onclick="remove()" style="padding:12px 10px"><i class="fa-solid fa-circle-minus"></i> Remove a color</button>
                     <button type="submit" class="btn btn-success mr-2" style="padding:12px 10px"><i
                             class="fa-solid fa-circle-check"></i> Submit</button>
                     <a href="/viewProducts" class="btn btn-danger mr-2" style="padding:12px 10px"
@@ -102,8 +103,8 @@
     $(document).on('click', '.addColor', function () {
         if (count <= 5) {
             var html = '<hr style="height: 2px;color:gray;background-color:gray;border-width:0;">'
-                + '<div class="form-group"><label for="color">Color ' + count + '</label><input type="text" class="form-control" name="color' + count + '" placeholder="Enter color">'
-                + '</div><div class="form-group"><label for="stock">Stock ' + count + '</label><input type="number" class="form-control" name="stock' + count + '" placeholder="Enter stock">'
+                + '<div class="form-group"><label for="color" id="lcolor' + count + '">Color ' + count + '</label><input type="text" class="form-control" id="color' + count + '" name="color' + count + '" placeholder="Enter color">'
+                + '</div><div class="form-group"><label for="stock" id="lstock' + count + '">Stock ' + count + '</label><input type="number" class="form-control" id="stock' + count + '" name="stock' + count + '" placeholder="Enter stock">'
                 + '</div><div class="form-group"><button type="button" class="addColor file-upload-browse btn btn-info" id="addColor" style="padding:12px 10px">'
                 + '<i class="fa-solid fa-circle-plus"></i> Add more color</button></div>';
             var element = document.getElementById("addColor");
@@ -111,9 +112,28 @@
             element.remove();
             document.getElementById("counter").setAttribute('value', count);
             count++;
+            document.getElementById("removeColor").disabled = false;
         } else {
             document.getElementById("addColor").disabled = true;
             $(this).parent().append("<h4 style='color:red;'><i class='fa-solid fa-triangle-exclamation'></i> You can only insert 5 colors</h4>");
         }
     });
+
+    var tempCounter
+    function remove() {
+        tempCounter = document.getElementById("counter").value;
+        if(tempCounter < 3){
+            document.getElementById("removeColor").disabled = true;
+        }
+
+        document.getElementById("color" + tempCounter).remove();
+        document.getElementById("stock" + tempCounter).remove();
+        document.getElementById("lcolor" + tempCounter).remove();
+        document.getElementById("lstock" + tempCounter).remove();
+        const hrs = document.getElementsByTagName('hr');
+        hrs[tempCounter - 1].remove();
+        tempCounter--;
+        document.getElementById("counter").setAttribute('value', tempCounter);
+        count--;
+    }
 </script>
