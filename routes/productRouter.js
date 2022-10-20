@@ -38,7 +38,7 @@ const checkFileType = function (file, cb) {
     if (mimeType && extName) {
         return cb(null, true);
     } else {
-        cb("Error: You can only Upload Images!!");
+        cb("Please upload images only");
     }
 };
 const upload = multer({

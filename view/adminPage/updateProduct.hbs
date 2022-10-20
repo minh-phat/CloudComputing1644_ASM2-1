@@ -44,12 +44,12 @@
 
                 {{!-- Image upload and preview --}}
                 <div class="form-group">
-                    <label for="image">Upload image</label>
+                    <label for="image" id="limage">Upload image</label>
                     <div class="input-group col-xs-12">
                         <input type="file" name="image" id="image" class="default" onchange="loadFile(event)">
                     </div>
                     <br>
-                    <h4>Image preview here</h4>
+                    <h4 id="h4">Image preview here</h4>
                     <img id="output" src="img/products/{{product.image}}" width="100%">
                     <br>
                     <script>
