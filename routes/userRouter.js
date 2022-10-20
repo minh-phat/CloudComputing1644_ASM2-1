@@ -1,9 +1,11 @@
+const { Console } = require("console");
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 
-////// - Model
+////// - Model Call
 const Category = require("../model/categories");
+const Product = require("../model/products");
 
 //Setting routes in module|================================================
 
@@ -24,9 +26,28 @@ async function home(request, response) {
 }
 
 
-router.get("/shop", (req, res) => {
-    res.render("userPage/shop");
-});
+// router.get("/shop", (req, res) => {
+//     res.render("userPage/shop");
+// });
+
+router.get("/shop",shop);
+async function shop(request, response) {
+    try {
+        let CategoryList = await Category.find({});
+        let ProductList = await Product.find({});
+        if (request.session.username) {
+            console.log("/n Category : " +CategoryList);
+            console.log("/n Product : " +ProductList);
+            response.render("userPage/shop", { username: request.session.username , Categories: CategoryList, Products: ProductList })
+        } else {
+            console.log("/n Category : " + CategoryList);
+            console.log("/n Product : " + ProductList);
+            response.render("userPage/shop",{ Categories: CategoryList, Products: ProductList });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 // router.get( "/shop" , shop);
 // async function shop(request, response) {
 //     try {
