@@ -55,9 +55,14 @@ async function categoryView(yeucau, trave) {
     }
 }
 
-router.get( "/categoryInsert" , (yeucau, trave) => {
-    trave.render("adminPage/categoryInsert");
-});
+router.get( "/categoryInsert" , categoryInsert); 
+async function categoryInsert(yeucau, trave) {
+    try {
+        trave.render("adminPage/categoryInsert", {messageError: yeucau.session.messageError ,messageSuccess: yeucau.session.messageSuccess });  
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 router.post( "/categoryInsert" , upload.single("image"), (request, response, ketiep) => {
 
@@ -66,25 +71,47 @@ router.post( "/categoryInsert" , upload.single("image"), (request, response, ket
     console.log("\n Query: ", request.query);
     console.log("\n File: ", request.file);
 
-    
+    //Validate required for some fields
+    if( 
+        !request.body.category_name 
+    ) {
+        request.session.messageError = "Please fill in all the fields";
+        request.session.messageSuccess = null; //destroy session 
+        return response.redirect("/categoryInsert");
+    }
+
+    //Validate image is uploaded
+    if(!request.file) {
+        request.session.messageError = "Please upload an image";
+        request.session.messageSuccess = null; //destroy session
+        return response.redirect("/categoryInsert");
+    }
+
     request.body.image = request.file.filename; //gán Imagelink bằng đường link tới ảnh trong document
 
     //Validate if product name is unique
     Category.findOne({ category_name: request.body.category_name }).exec((error, category) => {
+        
+        //error of system
         if(error){
             console.log(error);
             return response.redirect("/categoryInsert");
         }
+
         if(category){
-            request.session.message = "There can only be one category " + request.body.category_name;
-            console.log("There can only be one product " + request.body.category_name);
+            request.session.messageError = "There can only be one category " + request.body.category_name;
+            request.session.messageSuccess = null; //destroy session
+            console.log(" *Error for user: There can only be one product " + request.body.category_name);
             return response.redirect("/categoryInsert");
         }
+
 
         oneCategory = new Category(request.body);
         oneCategory.save(); //save data into database
     
-        response.redirect('./categoryView');
+        request.session.messageError = null; //destroy session
+        request.session.messageSuccess = "Add successful";
+        response.redirect('./categoryInsert');
         
     })
     
@@ -152,54 +179,6 @@ router.post( "/categoryUpdate:id" , upload.single("image"), (yeucau, trave, keti
 
     trave.redirect('../categoryView');
 });
-
-
-// router.get( "/view/:name" , async (yeucau, trave) => {
-//     console.log("\n BODY: ", yeucau.body);
-//     console.log("\n Params: ", yeucau.params);
-//     console.log("\n Query: ", yeucau.query);
-
-//     try {
-//         let CategoryList = await Category.findOne({ category_name: yeucau.params.name });
-//         console.log(sp);
-//         trave.render("showProduct", {categories: sp});
-//     } catch (error) {
-//         console.log(error);
-//     }
-
-// });
-
-// router.get( "/categoryView:category_name" , async (yeucau, trave) => {
-//     console.log("\n BODY: ", yeucau.body);
-//     console.log("\n Params: ", yeucau.params);
-//     console.log("\n Query: ", yeucau.query);
-
-//     var name = yeucau.params.category_name;
-//     //const name = "Doll";
-//     try {
-//         let CategoryList = await Category.find({ category_name: /name/ });
-//         console.log(CategoryList);
-//         trave.render("adminPage/categoryView", {Categories: CategoryList});
-//     } catch (error) {
-//         console.log(error);
-//     }
-
-// });
-
-// router.get( "/categorySearch" , async (yeucau, trave) => {
-
-//     const filters = yeucau.query;
-//     let filteredUsers = await Category.filter(Category => {
-//     let isValid = true;
-//     for (key in filters) {
-//       console.log(key, Category[key], filters[key]);
-//       isValid = isValid && Category[key] == filters[key];
-//     }
-//     return isValid;
-//   });
-//   trave.send(filteredUsers);
-
-// });
 
 router.get( "/categorySearch?" , async (yeucau, trave) => {
 
