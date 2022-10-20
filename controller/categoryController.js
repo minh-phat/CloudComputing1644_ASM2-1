@@ -59,20 +59,34 @@ router.get( "/categoryInsert" , (yeucau, trave) => {
     trave.render("adminPage/categoryInsert");
 });
 
-router.post( "/categoryInsert" , upload.single("image"), (yeucau, trave, ketiep) => {
+router.post( "/categoryInsert" , upload.single("image"), (request, response, ketiep) => {
 
-    console.log("\n BODY: ", yeucau.body);
-    console.log("\n Params: ", yeucau.params);
-    console.log("\n Query: ", yeucau.query);
-    console.log("\n File: ", yeucau.file);
+    console.log("\n BODY: ", request.body);
+    console.log("\n Params: ", request.params);
+    console.log("\n Query: ", request.query);
+    console.log("\n File: ", request.file);
 
     
-    yeucau.body.image = yeucau.file.filename; //gán Imagelink bằng đường link tới ảnh trong document
+    request.body.image = request.file.filename; //gán Imagelink bằng đường link tới ảnh trong document
 
-    oneCategory = new Category(yeucau.body);
-    oneCategory.save(); //save data into database
+    //Validate if product name is unique
+    Category.findOne({ category_name: request.body.category_name }).exec((error, category) => {
+        if(error){
+            console.log(error);
+            return response.redirect("/categoryInsert");
+        }
+        if(category){
+            request.session.message = "There can only be one category " + request.body.category_name;
+            console.log("There can only be one product " + request.body.category_name);
+            return response.redirect("/categoryInsert");
+        }
 
-    trave.redirect('./categoryView');
+        oneCategory = new Category(request.body);
+        oneCategory.save(); //save data into database
+    
+        response.redirect('./categoryView');
+        
+    })
     
 });
 

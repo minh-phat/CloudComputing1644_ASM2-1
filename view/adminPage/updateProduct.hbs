@@ -8,7 +8,7 @@
             {{#if message}}
             <div class="form-group">
                 <h5 style="width: 100%;background-color:#e45052;color:#fff;border-radius: 0.25rem; height:auto; padding: 10px; font-weight: 50px"
-                    id="message">
+                    id="message" onclick="this.remove();">
                     <i class="fa-solid fa-triangle-exclamation fa-lg"></i> {{message}}
                 </h5>
             </div>
@@ -64,21 +64,12 @@
                     </script>
                 </div>
 
-
                 <input type="hidden" name="counter" id="counter" value="1">
                 <input type="hidden" name="_id" id="_id" value="{{product._id}}">
                 <input type="hidden" name="not-updated" id="not-updated">
 
                 <script> let count = 1; </script>
                 {{#each product.configurations}}
-
-                <script>
-                        //var help = '<hr style="height: 2px;color:gray;background-color:gray;border-width:0;"><div class="form-group"><label for="color">Color' + count + '</label><input type="text" class="form-control" name="color' + count + '" placeholder="Enter color' + count + '" value="{{this.color}}"></div><div class="form-group"><label for="stock">Stock ' + count + '</label><input type="number" class="form-control" name="stock' + count + '" placeholder="Enter stock' + count + '" value="{{this.stock}}"></div>'
-                        //document.getElementById("_id").parent().append(help);
-                        //document.getElementById('counter').setAttribute('value', count);
-                        //count++;
-                </script>
-
                 <hr style="height: 2px;color:gray;background-color:gray;border-width:0;">
                 <div class="form-group">
                     <label for="color">Color
@@ -160,7 +151,4 @@
     }
     //Choose category based on database
     document.getElementById("{{product.category}}").setAttribute('selected', 'selected');
-    //Load image from database
-    fileInput = document.getElementById("image");
-    
 </script>

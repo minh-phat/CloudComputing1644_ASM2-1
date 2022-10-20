@@ -222,7 +222,7 @@ async function deleteProducts(request, response) {
             if(deleted) {
                 console.log("Deleted one document: \n" + document);
                 request.session.message = "Deleted product " + document.product_name;
-                return response.redirect("/viewProducts")
+                return response.redirect("/viewProducts");
             }
         } );
     } catch(error) {
