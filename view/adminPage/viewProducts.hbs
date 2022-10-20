@@ -14,11 +14,20 @@
                         </form>
                         <p>
                         <div style="width: 100%; height: 30px;">
-                            <button type="button" class="btn btn-primary" style="position: absolute; right: 16px">
+                            <button type="button" class="btn btn-primary" style="position: absolute; right: 30px; height: 35px; background-color: #78aa2d; border-color: #749445; border-width:2px;">
                                 <a href="/newProduct" style="text-decoration: none; color: inherit;">Add more toy</a>
                             </button>
                         </div>
                         </p>
+
+                        {{!-- Show error message --}}
+                        {{#if message}}
+                        <div class="form-group">
+                            <h5 style="width: 100%;background-color:#33A2B8;color:#fff;border-radius: 0.25rem; height:auto; padding: 10px; font-weight: 50px" id="message">
+                                <i class="fa-solid fa-circle-info"></i> {{message}}
+                            </h5>
+                        </div>
+                        {{/if}}
 
                         <table class="table table-hover" style="text-align: center;">
                             <thead style="background-color: #264653;">
@@ -49,10 +58,10 @@
                                         {{/each}}
                                     </td>
                                     <td>
-                                        <a href="/productEdit{{this._id}}" class="btn btn-info">
+                                        <a href="/updateProduct?id={{this._id}}" class="btn btn-info">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <a href="/productDelete/{{this._id}}" class="btn btn-danger"
+                                        <a href="/deleteProduct?id={{this._id}}" class="btn btn-danger"
                                             onclick="return confirm('Are you sure you want to delete this toy?')">
                                             <i class="fas fa-trash-alt"></i>
                                         </a>
