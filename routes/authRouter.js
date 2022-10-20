@@ -11,6 +11,7 @@ router.get("/signup", (req, res) => {
     } else {
         res.render("signup");
     }
+    req.session.message = null;
 });
 
 router.get("/login", (req, res) => {
@@ -24,6 +25,7 @@ router.get("/login", (req, res) => {
     } else {
         res.render("login");
     }
+    req.session.message = null;
 });
 
 router.post("/signup/newAccount", controller.newAccount);   //signup

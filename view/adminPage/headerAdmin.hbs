@@ -56,8 +56,10 @@
   <div class="container-scroller">
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       {{!-- Header with logo --}}
-      <div class="text-center-lg navbar-brand-wrapper d-flex align-items-top justify-content-center">
-        <button style="width: 240px; margin-right: 5px;background-color: inherit;border: none;" onclick="location.href = '/dashboard';">
+      <div class="text-center-lg navbar-brand-wrapper d-flex align-items-top justify-content-center"
+        style="background-color: #fff;">
+        <button style="width: 240px; margin-right: 5px;background-color: #fff;border: none;"
+          onclick="location.href = '/dashboard';">
           <a style="color: #f94144; font-size:40px">A</a>
           <a style="color: #f8961e; font-size:40px">T</a>
           <a style="color:#f9c74f; font-size:40px">N</a>
@@ -77,13 +79,11 @@
         <ul class="nav">
           <li class="nav-item nav-profile">
             {{!-- Admin account information --}}
-            <a href="#" class="nav-link">
-              <div class="text-wrapper">
-                {{#if username}}
-                <p class="profile-name">Account: {{username}}</p>
-                {{/if}}
-              </div>
-            </a>
+            <div class="text-wrapper">
+              {{#if username}}
+              <p class="profile-name">Account: {{username}}</p>
+              {{/if}}
+            </div>
           </li>
 
           {{!-- Menu list --}}

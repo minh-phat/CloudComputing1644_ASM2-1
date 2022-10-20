@@ -1,0 +1,67 @@
+{{>headerAdmin}}
+<div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">New Manager</h4>
+            <p class="card-description"> Add New ATN Manager </p>
+            <form class="forms-sample" action="#" method="POST">
+                <div class="form-group">
+                    <label for="exampleInputName1">Manager Username</label>
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputName1">Manager Fullname</label>
+                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Full name">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputName1">Manager Email</label>
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputName1">Manager Birthday</label>
+                    <input type="date" class="form-control" id="birthday" name="birthday" placeholder="birthday">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputName1">Manager gender</label>
+                    <input type="text" class="form-control" id="gender" name="gender" placeholder="Gender">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputName1">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputName1">Confirm password</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password"
+                        placeholder="Confirm password">
+                </div>
+                <input type="submit" class="btn btn-success mr-2" value="Add manager">
+                <input type="button" class="btn btn-light" onclick="location.href = '/managerView';" value="Cancel">
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- main-panel ends -->
+</div>
+<!-- page-body-wrapper ends -->
+</div>
+<script>
+    var password = document.getElementById("password")
+        , confirm_password = document.getElementById("confirm_password");
+
+    function validatePassword() {
+        if (password.value != confirm_password.value) {
+            confirm_password.setCustomValidity("Passwords Don't Match");
+        } else {
+            confirm_password.setCustomValidity('');
+        }
+    }
+    password.onchange = validatePassword;
+    confirm_password.onkeyup = validatePassword;
+</script>
+</body>
+
+</html>
