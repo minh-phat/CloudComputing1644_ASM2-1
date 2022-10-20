@@ -346,7 +346,7 @@
 /* Navbar */
 .navbar.default-layout {
   font-family: "roboto", sans-serif;
-  background: #fff;
+  background: #7fad39;
   transition: background 0.25s ease;
   -webkit-transition: background 0.25s ease;
   -moz-transition: background 0.25s ease;
@@ -772,7 +772,7 @@
 }
 
 .sidebar>.nav:not(.sub-menu)>.nav-item:hover:not(.nav-profile):not(.hover-open)>.nav-link:not([aria-expanded="true"]) {
-  background: #0f25d5;
+  background: #688f2e;
   padding-left: 65px;
 }
 

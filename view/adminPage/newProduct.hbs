@@ -7,7 +7,7 @@
             {{!-- Show error message --}}
             {{#if message}}
             <div class="form-group">
-                <h5 style="width: 100%;background-color:#e45052;color:#fff;border-radius: 0.25rem; height:auto; padding: 10px; font-weight: 50px" id="message">
+                <h5 style="width: 100%;background-color:#e45052;color:#fff;border-radius: 0.25rem; height:auto; padding: 10px; font-weight: 50px" id="message" onclick="this.remove()">
                     <i class="fa-solid fa-triangle-exclamation fa-lg"></i> {{message}}
                 </h5>
             </div>
@@ -17,7 +17,7 @@
                 <div class="form-group">
                     <label for="name">Product Name</label>
                     <input type="text" class="form-control" id="product_name" name="product_name"
-                        placeholder="Enter product name" oninput="removeMessage()">
+                        placeholder="Enter product name">
                 </div>
 
                 <div class="form-group">
@@ -32,12 +32,12 @@
                 <div class="form-group">
                     <label for="des">Description</label>
                     <input type="text" class="form-control" id="description" name="description"
-                        placeholder="Enter description" oninput="removeMessage()">
+                        placeholder="Enter description">
                 </div>
 
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input type="number" class="form-control" id="price" name="price" placeholder="Enter price" oninput="removeMessage()">
+                    <input type="number" class="form-control" id="price" name="price" placeholder="Enter price">
                 </div>
 
                 {{!-- Image upload and preview --}}
@@ -48,7 +48,7 @@
                     </div>
                     <br>
                     <h4>Image preview here</h4>
-                    <img id="output" width="100%"">
+                    <img id="output" width="100%">
                     <br>
                     <script>
                         //JS to preview image when uploaded 
