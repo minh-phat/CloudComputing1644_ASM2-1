@@ -36,12 +36,12 @@ async function shop(request, response) {
         let CategoryList = await Category.find({});
         let ProductList = await Product.find({});
         if (request.session.username) {
-            console.log("/n Category : " +CategoryList);
-            console.log("/n Product : " +ProductList);
+            console.log(" Category : " +CategoryList);
+            console.log(" Product : " +ProductList);
             response.render("userPage/shop", { username: request.session.username , Categories: CategoryList, Products: ProductList })
         } else {
-            console.log("/n Category : " + CategoryList);
-            console.log("/n Product : " + ProductList);
+            console.log(" Category : " + CategoryList);
+            console.log(" Product : " + ProductList);
             response.render("userPage/shop",{ Categories: CategoryList, Products: ProductList });
         }
     } catch (error) {
