@@ -199,7 +199,7 @@ router.get( "/categorySearch?" , async (yeucau, trave) => {
     try {
         // "{ $regex : category_name }" -- "$regex" that mean search the things relative element is filterd. cateroy_name taken from "let category_name"
         // "find({ category_name:...})" that mean find catetory_name in query 
-        let CategoryList = await Category.find({ category_name: { $regex : category_name } }); 
+        let CategoryList = await Category.find({ category_name: { $regex : category_name, '$options':'i'} }); 
         console.log(CategoryList);
         trave.render("adminPage/categoryView", {Categories: CategoryList});
     } catch (error) {
