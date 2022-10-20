@@ -63,9 +63,24 @@ async function shop(request, response) {
 //     }
 // }
 
-router.get("/shopDetail", (req, res) => {
-    res.render("userPage/shopDetail");
-});
+router.get("/shopDetail/?",shopDetail);
+async function shopDetail(request, response) {
+
+    try {
+        console.log(" Query : " + request.query)
+        productID = request.query.productID;
+        let ProductList = await Product.findOne({ _id: productID }); 
+        if (request.session.username) {
+            console.log(" Product : " +ProductList);
+            response.render("userPage/shopDetail", { username: request.session.username , Products: ProductList })
+        } else {
+            console.log(" Product : " + ProductList);
+            response.render("userPage/shopDetail",{ Products: ProductList });
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 router.get("/cart", (req, res) => {
     res.render("userPage/cart");
