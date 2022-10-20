@@ -18,7 +18,7 @@
                 <div class="form-group">
                     <label for="name">Product Name</label>
                     <input type="text" class="form-control" id="product_name" name="product_name"
-                        placeholder="Enter product name" value="{{product.product_name}}" onchange="updated()">
+                        placeholder="Enter product name" value="{{product.product_name}}" oninput="updated()">
                 </div>
 
                 <div class="form-group">
@@ -66,7 +66,9 @@
 
                 <input type="hidden" name="counter" id="counter" value="1">
                 <input type="hidden" name="_id" id="_id" value="{{product._id}}">
-                <input type="hidden" name="not-updated" id="not-updated">
+                <input type="hidden" name="not-updated" id="not-updated" value="updated">
+                <input type="hidden" name="link" id="link" value="{{product.image}}">
+
 
                 <script> let count = 1; </script>
                 {{#each product.configurations}}
@@ -145,9 +147,7 @@
     }
 
     function updated() {
-        document.getElementById('message').remove();
-        document.getElementById('not-updated').name = 'updated';
-        document.getElementById('not-updated').id = 'updated';
+        document.getElementById('not-updated').name = "updated";
     }
     //Choose category based on database
     document.getElementById("{{product.category}}").setAttribute('selected', 'selected');

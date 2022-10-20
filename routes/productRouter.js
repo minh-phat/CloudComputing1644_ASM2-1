@@ -14,6 +14,7 @@ async function loadCategories(request, response) {
         }else {
             response.render("adminPage/newProduct", {categories: categoriesList});
         }
+        request.session.message = null;
     } catch (error) {
         console.log(error);
     }
@@ -28,7 +29,6 @@ const storageEngine = multer.diskStorage({
     },
 });
 const path = require("path");
-const { error } = require("console");
 const checkFileType = function (file, cb) {
     //Allowed file extensions
     const fileTypes = /jpeg|jpg|png|gif|svg/;
@@ -48,6 +48,7 @@ const upload = multer({
         checkFileType(file, cb);
     },
 })
+
 
 router.post( "/newProduct" , upload.single("image"), (request, response, next) => {
     console.log("\n BODY: ", request.body);
@@ -203,6 +204,7 @@ async function viewProducts(request, response) {
         }else {
             response.render("adminPage/viewProducts", { products: productsList } );
         }
+        request.session.message = null;
     } catch (error) {
         console.log(error);
     }
@@ -225,6 +227,7 @@ async function deleteProducts(request, response) {
                 return response.redirect("/viewProducts");
             }
         } );
+        request.session.message = null;
     } catch(error) {
         console.log(error);
     }
@@ -241,6 +244,7 @@ async function updateProduct(request, response) {
         }else {
             response.render( "adminPage/updateProduct", { categories: categoriesList, product: document } )
         }
+        request.sesison.message = null;
     } catch(error) {
         console.log(error);
     }
@@ -262,8 +266,8 @@ router.post( "/updateProduct?:id" , upload.single("image"), (request, response, 
         request.session.message = "Please fill in all the fields";
         return response.redirect("/updateProduct?id=" + request.body._id);
     }
+
     request.body.image = request.file.filename; //make image link the filename
-    let toy = {};
 
     //If product name is updated then check if it is duplicated or not
     if(request.body.updated){
@@ -277,218 +281,113 @@ router.post( "/updateProduct?:id" , upload.single("image"), (request, response, 
                 console.log("There can only be one product " + request.body.product_name);
                 return response.redirect("/updateProduct?id=" + request.body._id);
             }
-    
-            //If product name is indeed unique then save to database
-    
-            if(request.body.counter == 1){
-                toy = {
-                    product_name: request.body.product_name,
-                    category: request.body.category,
-                    description: request.body.description,
-                    price: request.body.price,
-                    image: request.body.image,
-                    configurations: [{
-                        color: request.body.color1,
-                        stock: request.body.stock1
-                    }]
-                }
-            }else if(request.body.counter == 2){
-                toy = {
-                    product_name: request.body.product_name,
-                    category: request.body.category,
-                    description: request.body.description,
-                    price: request.body.price,
-                    image: request.body.image,
-                    configurations: [{
-                        color: request.body.color1,
-                        stock: request.body.stock1
-                    }, {
-                        color: request.body.color2,
-                        stock: request.body.stock2
-                    }]
-                }
-            }else if(request.body.counter == 3){
-                toy = {
-                    product_name: request.body.product_name,
-                    category: request.body.category,
-                    description: request.body.description,
-                    price: request.body.price,
-                    image: request.body.image,
-                    configurations: [{
-                        color: request.body.color1,
-                        stock: request.body.stock1
-                    }, {
-                        color: request.body.color2,
-                        stock: request.body.stock2
-                    }, {
-                        color: request.body.color3,
-                        stock: request.body.stock3
-                    }]
-                }
-            }else if(request.body.counter == 4){
-                toy = {
-                    product_name: request.body.product_name,
-                    category: request.body.category,
-                    description: request.body.description,
-                    price: request.body.price,
-                    image: request.body.image,
-                    configurations: [{
-                        color: request.body.color1,
-                        stock: request.body.stock1
-                    }, {
-                        color: request.body.color2,
-                        stock: request.body.stock2
-                    }, {
-                        color: request.body.color3,
-                        stock: request.body.stock3
-                    },{
-                        color: request.body.color4,
-                        stock: request.body.stock4
-                    }]
-                }
-            }else {
-                toy = {
-                    product_name: request.body.product_name,
-                    category: request.body.category,
-                    description: request.body.description,
-                    price: request.body.price,
-                    image: request.body.image,
-                    configurations: [{
-                        color: request.body.color1,
-                        stock: request.body.stock1
-                    }, {
-                        color: request.body.color2,
-                        stock: request.body.stock2
-                    }, {
-                        color: request.body.color3,
-                        stock: request.body.stock3
-                    },{
-                        color: request.body.color4,
-                        stock: request.body.stock4
-                    }, {
-                        color: request.body.color5,
-                        stock: request.body.stock5
-                    }]
-                }
-            }
-    
-            Product.updateOne( {_id: request.body._id}, { $set: toy },function (error, document) {
-                if (error) {
-                    console.error(error)
-                }
-                
-                if ( document ) {
-                    console.log("Updated " + document.product_name + "\n" + document)
-                    request.session.message = "Updated " + document.product_name;
-                    response.redirect("/updateProduct?:id")
-                }
-            })
-        })
-    }else{
-        if(request.body.counter == 1){
-            toy = {
-                product_name: request.body.product_name,
-                category: request.body.category,
-                description: request.body.description,
-                price: request.body.price,
-                image: request.body.image,
-                configurations: [{
-                    color: request.body.color1,
-                    stock: request.body.stock1
-                }]
-            }
-        }else if(request.body.counter == 2){
-            toy = {
-                product_name: request.body.product_name,
-                category: request.body.category,
-                description: request.body.description,
-                price: request.body.price,
-                image: request.body.image,
-                configurations: [{
-                    color: request.body.color1,
-                    stock: request.body.stock1
-                }, {
-                    color: request.body.color2,
-                    stock: request.body.stock2
-                }]
-            }
-        }else if(request.body.counter == 3){
-            toy = {
-                product_name: request.body.product_name,
-                category: request.body.category,
-                description: request.body.description,
-                price: request.body.price,
-                image: request.body.image,
-                configurations: [{
-                    color: request.body.color1,
-                    stock: request.body.stock1
-                }, {
-                    color: request.body.color2,
-                    stock: request.body.stock2
-                }, {
-                    color: request.body.color3,
-                    stock: request.body.stock3
-                }]
-            }
-        }else if(request.body.counter == 4){
-            toy = {
-                product_name: request.body.product_name,
-                category: request.body.category,
-                description: request.body.description,
-                price: request.body.price,
-                image: request.body.image,
-                configurations: [{
-                    color: request.body.color1,
-                    stock: request.body.stock1
-                }, {
-                    color: request.body.color2,
-                    stock: request.body.stock2
-                }, {
-                    color: request.body.color3,
-                    stock: request.body.stock3
-                },{
-                    color: request.body.color4,
-                    stock: request.body.stock4
-                }]
-            }
-        }else {
-            toy = {
-                product_name: request.body.product_name,
-                category: request.body.category,
-                description: request.body.description,
-                price: request.body.price,
-                image: request.body.image,
-                configurations: [{
-                    color: request.body.color1,
-                    stock: request.body.stock1
-                }, {
-                    color: request.body.color2,
-                    stock: request.body.stock2
-                }, {
-                    color: request.body.color3,
-                    stock: request.body.stock3
-                },{
-                    color: request.body.color4,
-                    stock: request.body.stock4
-                }, {
-                    color: request.body.color5,
-                    stock: request.body.stock5
-                }]
-            }
-        }
-
-        Product.updateOne( {_id: request.body._id}, { $set: toy },function (error, document) {
-            if (error) {
-                console.error(error)
-            }
-            
-            if ( document ) {
-                console.log("Updated " + document.product_name + "\n" + document)
-                request.session.message = "Updated " + document.product_name;
-                response.redirect("/updateProduct?:id")
-            }
         })
     }
+    let toy = {};
+    //If product name is indeed unique then save to database
+    if(request.body.counter == 1){
+        toy = {
+            product_name: request.body.product_name,
+            category: request.body.category,
+            description: request.body.description,
+            price: request.body.price,
+            image: request.body.image,
+            configurations: [{
+                color: request.body.color1,
+                stock: request.body.stock1
+            }]
+        }
+    }else if(request.body.counter == 2){
+        toy = {
+            product_name: request.body.product_name,
+            category: request.body.category,
+            description: request.body.description,
+            price: request.body.price,
+            image: request.body.image,
+            configurations: [{
+                color: request.body.color1,
+                stock: request.body.stock1
+            }, {
+                color: request.body.color2,
+                stock: request.body.stock2
+            }]
+        }
+    }else if(request.body.counter == 3){
+        toy = {
+            product_name: request.body.product_name,
+            category: request.body.category,
+            description: request.body.description,
+            price: request.body.price,
+            image: request.body.image,
+            configurations: [{
+                color: request.body.color1,
+                stock: request.body.stock1
+            }, {
+                color: request.body.color2,
+                stock: request.body.stock2
+            }, {
+                color: request.body.color3,
+                stock: request.body.stock3
+            }]
+        }
+    }else if(request.body.counter == 4){
+        toy = {
+            product_name: request.body.product_name,
+            category: request.body.category,
+            description: request.body.description,
+            price: request.body.price,
+            image: request.body.image,
+            configurations: [{
+                color: request.body.color1,
+                stock: request.body.stock1
+            }, {
+                color: request.body.color2,
+                stock: request.body.stock2
+            }, {
+                color: request.body.color3,
+                stock: request.body.stock3
+            },{
+                color: request.body.color4,
+                stock: request.body.stock4
+            }]
+        }
+    }else {
+        toy = {
+            product_name: request.body.product_name,
+            category: request.body.category,
+            description: request.body.description,
+            price: request.body.price,
+            image: request.body.image,
+            configurations: [{
+                color: request.body.color1,
+                stock: request.body.stock1
+            }, {
+                color: request.body.color2,
+                stock: request.body.stock2
+            }, {
+                color: request.body.color3,
+                stock: request.body.stock3
+            },{
+                color: request.body.color4,
+                stock: request.body.stock4
+            }, {
+                color: request.body.color5,
+                stock: request.body.stock5
+            }]
+        }
+    }
+    
+    Product.updateOne( {_id: request.body._id}, { $set: toy },function (error, document) {
+        if (error) {
+            console.error(error)
+        }
+        
+        if ( document ) {
+            console.log("Updated " + toy.product_name + "\n" + toy)
+            request.session.message = "Updated " + toy.product_name;
+            response.redirect("/viewProducts")
+        }
+    })
 });
 
 //!Exporting router module|================================================
