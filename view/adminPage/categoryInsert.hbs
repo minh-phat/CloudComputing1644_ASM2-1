@@ -3,6 +3,19 @@
                 <div class="card">
                   <div class="card-body">
                     <h4 class="card-title">New Category</h4>
+
+                    {{#if messageSuccess}}
+                    <div class="alert alert-success">
+                      <strong>Success!</strong> Indicates a successful or positive action.
+                    </div>
+                    {{/if}}
+
+                    {{#if messageError}}
+                    <div class="alert alert-danger">
+                      <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+                    </div>
+                    {{/if}}
+                    
                     <p class="card-description"> Add New Toy Category </p>
                     <form class="forms-sample" action="" enctype="multipart/form-data" name="newXProduct" id="newXProduct"  method="POST">
                         <div class="form-group">
