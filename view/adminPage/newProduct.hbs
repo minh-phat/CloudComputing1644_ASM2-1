@@ -2,30 +2,42 @@
 <div class="col-md-9 grid-margin" style="margin: auto;">
     <div class="card">
         <div class="card-body">
-            <h2 style="text-align: center;">New ATN Toy</h4>
-            <form class="forms-sample" enctype="multipart/form-data" method="post">
+            <h1 style="text-align: center; font-family: 'Lobster', cursive;">New ATN Toy</h1>
+
+            {{!-- Show error message --}}
+            {{#if message}}
+            <div class="form-group">
+                <h5 style="width: 100%;background-color:#e45052;color:#fff;border-radius: 0.25rem; height:auto; padding: 10px; font-weight: 50px" id="message">
+                    <i class="fa-solid fa-triangle-exclamation fa-lg"></i> {{message}}
+                </h5>
+            </div>
+            {{/if}}
+
+            <form class="forms-sample" enctype="multipart/form-data" method="post" >
                 <div class="form-group">
-                <label for="name">Product Name</label>
-                <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Enter product name">
+                    <label for="name">Product Name</label>
+                    <input type="text" class="form-control" id="product_name" name="product_name"
+                        placeholder="Enter product name" oninput="removeMessage()">
                 </div>
 
                 <div class="form-group">
-                <label for="name">Category</label>
-                <select name="category" id="category" class="form-control">
-                    {{#each categories}}
+                    <label for="name">Category</label>
+                    <select name="category" id="category" class="form-control">
+                        {{#each categories}}
                         <option value="{{this._id}}">{{this.category_name}}</option>
-                    {{/each}}
-                </select>
+                        {{/each}}
+                    </select>
                 </div>
 
                 <div class="form-group">
-                <label for="des">Description</label>
-                <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
+                    <label for="des">Description</label>
+                    <input type="text" class="form-control" id="description" name="description"
+                        placeholder="Enter description" oninput="removeMessage()">
                 </div>
 
                 <div class="form-group">
-                <label for="price">Price</label>
-                <input type="number" class="form-control" id="price" name="price" placeholder="Enter price">
+                    <label for="price">Price</label>
+                    <input type="number" class="form-control" id="price" name="price" placeholder="Enter price" oninput="removeMessage()">
                 </div>
 
                 {{!-- Image upload and preview --}}
@@ -39,39 +51,42 @@
                     <img id="output">
                     <br>
                     <script>
-                        //Disable input URL if file is uploaded
-                        var loadFile = function(event) {
+                        //JS to preview image when uploaded 
+                        var loadFile = function (event) {
                             var output = document.getElementById('output');
                             output.src = URL.createObjectURL(event.target.files[0]);
-                            output.onload = function() {
-                                URL.revokeObjectURL(output.src) // free memory
+                            output.onload = function () {
+                                URL.revokeObjectURL(output.src) //Free memory
                             }
                         };
                     </script>
                 </div>
 
                 <hr style="height: 2px;color:gray;background-color:gray;border-width:0;">
-                <input type="hidden" name="counter" id="counter">
+                <input type="hidden" name="counter" id="counter" value="1">
                 <div class="form-group">
-                <label for="color">Color 1</label>
-                <input type="text" class="form-control" name="color1" placeholder="Enter color 1">
+                    <label for="color">Color 1</label>
+                    <input type="text" class="form-control" name="color1" placeholder="Enter color 1">
                 </div>
 
                 <div class="form-group">
-                <label for="stock">Stock 1</label>
-                <input type="number" class="form-control" name="stock1" placeholder="Enter stock 1">
+                    <label for="stock">Stock 1</label>
+                    <input type="number" class="form-control" name="stock1" placeholder="Enter stock 1">
                 </div>
 
-                {{!-- Add more color button  --}}
+                {{!-- Add more color button --}}
                 <div class="form-group">
-                <button type="button" class="addColor file-upload-browse btn btn-info" id="addColor" style="padding:12px 10px">
-                    <i class="fa-solid fa-circle-plus"></i> Add more color
-                </button>
+                    <button type="button" class="addColor file-upload-browse btn btn-info" id="addColor"
+                        style="padding:12px 10px">
+                        <i class="fa-solid fa-circle-plus"></i> Add more color
+                    </button>
                 </div>
 
                 <div>
-                    <button type="submit" class="btn btn-success mr-2" style="padding:12px 10px"><i class="fa-solid fa-circle-check"></i> Submit</button>
-                    <button class="btn btn-danger mr-2" style="padding:12px 10px"><i class="fa-solid fa-circle-xmark"></i> Cancel</button>
+                    <button type="submit" class="btn btn-success mr-2" style="padding:12px 10px"><i
+                            class="fa-solid fa-circle-check"></i> Submit</button>
+                    <button class="btn btn-danger mr-2" style="padding:12px 10px"><i
+                            class="fa-solid fa-circle-xmark"></i> Cancel</button>
                 </div>
             </form>
         </div>
@@ -81,21 +96,25 @@
 {{!-- Click to add more color --}}
 <script>
     let count = 2
-    $(document).on('click', '.addColor', function(){
-        if(count<=5){            
+    $(document).on('click', '.addColor', function () {
+        if (count <= 5) {
             var html = '<hr style="height: 2px;color:gray;background-color:gray;border-width:0;">'
-            + '<div class="form-group"><label for="color">Color ' + count + '</label><input type="text" class="form-control" name="color' + count + '" placeholder="Enter color">'
-            + '</div><div class="form-group"><label for="stock">Stock ' + count + '</label><input type="number" class="form-control" name="stock' + count + '" placeholder="Enter stock">'
-            + '</div><div class="form-group"><button type="button" class="addColor file-upload-browse btn btn-info" id="addColor" style="padding:12px 10px">'
-            + '<i class="fa-solid fa-circle-plus"></i> Add more color</button></div>';
+                + '<div class="form-group"><label for="color">Color ' + count + '</label><input type="text" class="form-control" name="color' + count + '" placeholder="Enter color">'
+                + '</div><div class="form-group"><label for="stock">Stock ' + count + '</label><input type="number" class="form-control" name="stock' + count + '" placeholder="Enter stock">'
+                + '</div><div class="form-group"><button type="button" class="addColor file-upload-browse btn btn-info" id="addColor" style="padding:12px 10px">'
+                + '<i class="fa-solid fa-circle-plus"></i> Add more color</button></div>';
             var element = document.getElementById("addColor");
             $(this).parent().append(html);
             element.remove();
+            document.getElementById("counter").setAttribute('value', count);
             count++;
-            document.getElementById("counter").setAttribute('value', count-1);
-        }else {
+        } else {
             document.getElementById("addColor").disabled = true;
             $(this).parent().append("<h4 style='color:red;'><i class='fa-solid fa-triangle-exclamation'></i> You can only insert 5 colors</h4>");
         }
     });
+
+    function removeMessage() {
+        document.getElementById('message').remove();
+    }
 </script>
