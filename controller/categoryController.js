@@ -160,8 +160,8 @@ router.post( "/categoryUpdate:id" , upload.single("image"), (yeucau, trave, keti
 //     console.log("\n Params: ", yeucau.params);
 //     console.log("\n Query: ", yeucau.query);
 
-//     //var name = yeucau.params.category_name;
-//     const name = "Doll";
+//     var name = yeucau.params.category_name;
+//     //const name = "Doll";
 //     try {
 //         let CategoryList = await Category.find({ category_name: /name/ });
 //         console.log(CategoryList);
@@ -175,17 +175,40 @@ router.post( "/categoryUpdate:id" , upload.single("image"), (yeucau, trave, keti
 // router.get( "/categorySearch" , async (yeucau, trave) => {
 
 //     const filters = yeucau.query;
-//     const filteredUsers = Category.filter(category_name => {
+//     let filteredUsers = await Category.filter(Category => {
 //     let isValid = true;
 //     for (key in filters) {
-//       console.log(key, category_name[key], filters[key]);
-//       isValid = isValid && category_name[key] == filters[key];
+//       console.log(key, Category[key], filters[key]);
+//       isValid = isValid && Category[key] == filters[key];
 //     }
 //     return isValid;
 //   });
 //   trave.send(filteredUsers);
 
 // });
+
+router.get( "/categorySearch?" , async (yeucau, trave) => {
+
+    console.log("\n BODY: ", yeucau.body);
+    console.log("\n Params: ", yeucau.params);
+    console.log("\n Query: ", yeucau.query);
+
+    let category_name = yeucau.query.category_name;
+    console.log("\n Search : " + category_name); // respond category name in console log to check category name
+
+    try {
+        // "{ $regex : category_name }" -- "$regex" that mean search the things relative element is filterd. cateroy_name taken from "let category_name"
+        // "find({ category_name:...})" that mean find catetory_name in query 
+        let CategoryList = await Category.find({ category_name: { $regex : category_name } }); 
+        console.log(CategoryList);
+        trave.render("adminPage/categoryView", {Categories: CategoryList});
+    } catch (error) {
+        console.log(error);
+    }
+    
+});
+
+
 
 //-------------------------------------------
 exports.categoryController = router;

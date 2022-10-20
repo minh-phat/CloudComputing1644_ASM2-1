@@ -9,14 +9,18 @@ router.get( "/newProduct" , loadCategories);
 async function loadCategories(request, response) {
     try {
         let categoriesList = await Category.find({});
-        response.render("adminPage/newProduct", {categories: categoriesList});
+        if(request.session.message){
+            response.render("adminPage/newProduct", {categories: categoriesList, message: request.session.message});
+        }else {
+            response.render("adminPage/newProduct", {categories: categoriesList});
+        }
     } catch (error) {
         console.log(error);
     }
 }
 
 //Save product to database
-//Setting storage engine
+//Setting storage engine and save image to server
 const storageEngine = multer.diskStorage({
     destination: "public/img/products",
     filename: (req, file, cb) => {
@@ -44,115 +48,140 @@ const upload = multer({
     },
 })
 
-//Save product to database
 router.post( "/newProduct" , upload.single("image"), (request, response, next) => {
     console.log("\n BODY: ", request.body);
     console.log("\n File: ", request.file);
 
-    request.body.image = request.file.filename; //gán Imagelink bằng đường link tới ảnh trong document
-
-    //This is stupid
-    let toy = {};
-    if(request.body.counter == 1){
-        toy = {
-            product_name: request.body.product_name,
-            category: request.body.category,
-            description: request.body.description,
-            price: request.body.price,
-            image: request.body.image,
-            configurations: [{
-                color: request.body.color1,
-                stock: request.body.stock1
-            }]
-        }
-    }else if(request.body.counter == 2){
-        toy = {
-            product_name: request.body.product_name,
-            category: request.body.category,
-            description: request.body.description,
-            price: request.body.price,
-            image: request.body.image,
-            configurations: [{
-                color: request.body.color1,
-                stock: request.body.stock1
-            }, {
-                color: request.body.color2,
-                stock: request.body.stock2
-            }]
-        }
-    }else if(request.body.counter == 3){
-        toy = {
-            product_name: request.body.product_name,
-            category: request.body.category,
-            description: request.body.description,
-            price: request.body.price,
-            image: request.body.image,
-            configurations: [{
-                color: request.body.color1,
-                stock: request.body.stock1
-            }, {
-                color: request.body.color2,
-                stock: request.body.stock2
-            }, {
-                color: request.body.color3,
-                stock: request.body.stock3
-            }]
-        }
-    }else if(request.body.counter == 4){
-        toy = {
-            product_name: request.body.product_name,
-            category: request.body.category,
-            description: request.body.description,
-            price: request.body.price,
-            image: request.body.image,
-            configurations: [{
-                color: request.body.color1,
-                stock: request.body.stock1
-            }, {
-                color: request.body.color2,
-                stock: request.body.stock2
-            }, {
-                color: request.body.color3,
-                stock: request.body.stock3
-            },{
-                color: request.body.color4,
-                stock: request.body.stock4
-            }]
-        }
-    }else {
-        toy = {
-            product_name: request.body.product_name,
-            category: request.body.category,
-            description: request.body.description,
-            price: request.body.price,
-            image: request.body.image,
-            configurations: [{
-                color: request.body.color1,
-                stock: request.body.stock1
-            }, {
-                color: request.body.color2,
-                stock: request.body.stock2
-            }, {
-                color: request.body.color3,
-                stock: request.body.stock3
-            },{
-                color: request.body.color4,
-                stock: request.body.stock4
-            }, {
-                color: request.body.color5,
-                stock: request.body.stock5
-            }]
-        }
+    //Validate required for some fields
+    if( 
+        !request.body.product_name ||
+        !request.body.category ||
+        !request.body.description ||
+        !request.body.price ||
+        !request.file ||
+        !request.body.color1 ||
+        !request.body.stock1
+    ) {
+        request.session.message = "Please fill in all the fields";
+        return response.redirect("/newProduct");
     }
 
-    const newToy = new Product(toy)
-    newToy.save(function (error, document) {
-        if (error) {
-            console.error(error)
-        }else{
-            console.log(document)
-            response.redirect("./newProduct")
+    //Validate if product name is unique
+    Product.findOne({ product_name: request.body.product_name }).exec((error, product) => {
+        if(error){
+            console.log(error);
+            return response.redirect("/newProduct");
         }
+        if(product){
+            request.session.message = "There can only be one " + request.body.product_name;
+            console.log("There can only be one " + request.body.product_name);
+            return response.redirect("/newProduct");
+        }
+
+        //If product name is indeed unique then save to database
+        request.body.image = request.file.filename; //make image link the filename
+        let toy = {};
+        if(request.body.counter == 1){
+            toy = {
+                product_name: request.body.product_name,
+                category: request.body.category,
+                description: request.body.description,
+                price: request.body.price,
+                image: request.body.image,
+                configurations: [{
+                    color: request.body.color1,
+                    stock: request.body.stock1
+                }]
+            }
+        }else if(request.body.counter == 2){
+            toy = {
+                product_name: request.body.product_name,
+                category: request.body.category,
+                description: request.body.description,
+                price: request.body.price,
+                image: request.body.image,
+                configurations: [{
+                    color: request.body.color1,
+                    stock: request.body.stock1
+                }, {
+                    color: request.body.color2,
+                    stock: request.body.stock2
+                }]
+            }
+        }else if(request.body.counter == 3){
+            toy = {
+                product_name: request.body.product_name,
+                category: request.body.category,
+                description: request.body.description,
+                price: request.body.price,
+                image: request.body.image,
+                configurations: [{
+                    color: request.body.color1,
+                    stock: request.body.stock1
+                }, {
+                    color: request.body.color2,
+                    stock: request.body.stock2
+                }, {
+                    color: request.body.color3,
+                    stock: request.body.stock3
+                }]
+            }
+        }else if(request.body.counter == 4){
+            toy = {
+                product_name: request.body.product_name,
+                category: request.body.category,
+                description: request.body.description,
+                price: request.body.price,
+                image: request.body.image,
+                configurations: [{
+                    color: request.body.color1,
+                    stock: request.body.stock1
+                }, {
+                    color: request.body.color2,
+                    stock: request.body.stock2
+                }, {
+                    color: request.body.color3,
+                    stock: request.body.stock3
+                },{
+                    color: request.body.color4,
+                    stock: request.body.stock4
+                }]
+            }
+        }else {
+            toy = {
+                product_name: request.body.product_name,
+                category: request.body.category,
+                description: request.body.description,
+                price: request.body.price,
+                image: request.body.image,
+                configurations: [{
+                    color: request.body.color1,
+                    stock: request.body.stock1
+                }, {
+                    color: request.body.color2,
+                    stock: request.body.stock2
+                }, {
+                    color: request.body.color3,
+                    stock: request.body.stock3
+                },{
+                    color: request.body.color4,
+                    stock: request.body.stock4
+                }, {
+                    color: request.body.color5,
+                    stock: request.body.stock5
+                }]
+            }
+        }
+        const newToy = new Product(toy)
+        newToy.save(function (error, document) {
+            if (error) {
+                console.error(error)
+            }else{
+                console.log("\nInserted one document: \n" + document)
+                request.session.message = ""
+                response.redirect("./newProduct")
+            }
+        })
     })
 });
 
@@ -161,8 +190,7 @@ router.get( "/viewProducts" , viewProducts);
 async function viewProducts(request, response) {
     try {
         let productsList = await Product.find({}).populate('category');
-
-        console.log(productsList);
+        console.log("Products currently in database are: \n" + productsList);
         response.render("adminPage/viewProducts", { products: productsList } );
     } catch (error) {
         console.log(error);
