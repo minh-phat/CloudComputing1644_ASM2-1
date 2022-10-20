@@ -262,22 +262,129 @@ router.post( "/updateProduct?:id" , upload.single("image"), (request, response, 
         request.session.message = "Please fill in all the fields";
         return response.redirect("/updateProduct?id=" + request.body._id);
     }
+    request.body.image = request.file.filename; //make image link the filename
+    let toy = {};
 
-    //Validate if product name is unique
-    Product.findOne({ product_name: request.body.product_name }).exec((error, product) => {
-        if(error){
-            console.log(error);
-            return response.redirect("/updateProduct?id=" + request.body._id);
-        }
-        if(product){
-            request.session.message = "There can only be one product " + request.body.product_name;
-            console.log("There can only be one product " + request.body.product_name);
-            return response.redirect("/updateProduct?id=" + request.body._id);
-        }
-
-        //If product name is indeed unique then save to database
-        request.body.image = request.file.filename; //make image link the filename
-        let toy = Product.findOne({ _id: request.query.id });
+    //If product name is updated then check if it is duplicated or not
+    if(request.body.updated){
+        Product.findOne({ product_name: request.body.product_name }).exec((error, product) => {
+            if(error){
+                console.log(error);
+                return response.redirect("/updateProduct?id=" + request.body._id);
+            }
+            if(product){
+                request.session.message = "There can only be one product " + request.body.product_name;
+                console.log("There can only be one product " + request.body.product_name);
+                return response.redirect("/updateProduct?id=" + request.body._id);
+            }
+    
+            //If product name is indeed unique then save to database
+    
+            if(request.body.counter == 1){
+                toy = {
+                    product_name: request.body.product_name,
+                    category: request.body.category,
+                    description: request.body.description,
+                    price: request.body.price,
+                    image: request.body.image,
+                    configurations: [{
+                        color: request.body.color1,
+                        stock: request.body.stock1
+                    }]
+                }
+            }else if(request.body.counter == 2){
+                toy = {
+                    product_name: request.body.product_name,
+                    category: request.body.category,
+                    description: request.body.description,
+                    price: request.body.price,
+                    image: request.body.image,
+                    configurations: [{
+                        color: request.body.color1,
+                        stock: request.body.stock1
+                    }, {
+                        color: request.body.color2,
+                        stock: request.body.stock2
+                    }]
+                }
+            }else if(request.body.counter == 3){
+                toy = {
+                    product_name: request.body.product_name,
+                    category: request.body.category,
+                    description: request.body.description,
+                    price: request.body.price,
+                    image: request.body.image,
+                    configurations: [{
+                        color: request.body.color1,
+                        stock: request.body.stock1
+                    }, {
+                        color: request.body.color2,
+                        stock: request.body.stock2
+                    }, {
+                        color: request.body.color3,
+                        stock: request.body.stock3
+                    }]
+                }
+            }else if(request.body.counter == 4){
+                toy = {
+                    product_name: request.body.product_name,
+                    category: request.body.category,
+                    description: request.body.description,
+                    price: request.body.price,
+                    image: request.body.image,
+                    configurations: [{
+                        color: request.body.color1,
+                        stock: request.body.stock1
+                    }, {
+                        color: request.body.color2,
+                        stock: request.body.stock2
+                    }, {
+                        color: request.body.color3,
+                        stock: request.body.stock3
+                    },{
+                        color: request.body.color4,
+                        stock: request.body.stock4
+                    }]
+                }
+            }else {
+                toy = {
+                    product_name: request.body.product_name,
+                    category: request.body.category,
+                    description: request.body.description,
+                    price: request.body.price,
+                    image: request.body.image,
+                    configurations: [{
+                        color: request.body.color1,
+                        stock: request.body.stock1
+                    }, {
+                        color: request.body.color2,
+                        stock: request.body.stock2
+                    }, {
+                        color: request.body.color3,
+                        stock: request.body.stock3
+                    },{
+                        color: request.body.color4,
+                        stock: request.body.stock4
+                    }, {
+                        color: request.body.color5,
+                        stock: request.body.stock5
+                    }]
+                }
+            }
+    
+            Product.updateOne( {_id: request.body._id}, { $set: toy },function (error, document) {
+                if (error) {
+                    console.error(error)
+                }
+                
+                if ( document ) {
+                    console.log("Updated " + document.product_name + "\n" + document)
+                    request.session.message = "Updated " + document.product_name;
+                    response.redirect("/updateProduct?:id")
+                }
+            })
+        })
+    }else{
         if(request.body.counter == 1){
             toy = {
                 product_name: request.body.product_name,
@@ -369,8 +476,8 @@ router.post( "/updateProduct?:id" , upload.single("image"), (request, response, 
                 }]
             }
         }
-        const newToy = new Product(toy)
-        newToy.update(function (error, document) {
+
+        Product.updateOne( {_id: request.body._id}, { $set: toy },function (error, document) {
             if (error) {
                 console.error(error)
             }
@@ -381,7 +488,7 @@ router.post( "/updateProduct?:id" , upload.single("image"), (request, response, 
                 response.redirect("/updateProduct?:id")
             }
         })
-    })
+    }
 });
 
 //!Exporting router module|================================================

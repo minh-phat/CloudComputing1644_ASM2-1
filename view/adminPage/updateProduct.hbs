@@ -18,7 +18,7 @@
                 <div class="form-group">
                     <label for="name">Product Name</label>
                     <input type="text" class="form-control" id="product_name" name="product_name"
-                        placeholder="Enter product name" value="{{product.product_name}}" oninput="removeMessage()">
+                        placeholder="Enter product name" value="{{product.product_name}}" onchange="updated()">
                 </div>
 
                 <div class="form-group">
@@ -67,40 +67,45 @@
 
                 <input type="hidden" name="counter" id="counter" value="1">
                 <input type="hidden" name="_id" id="_id" value="{{product._id}}">
+                <input type="hidden" name="not-updated" id="not-updated">
 
                 <script> let count = 1; </script>
                 {{#each product.configurations}}
 
-                    <script>
-                        var help = '<hr style="height: 2px;color:gray;background-color:gray;border-width:0;"><div class="form-group"><label for="color">Color' + count + '</label><input type="text" class="form-control" name="color' + count + '" placeholder="Enter color' + count + '" value="{{this.color}}"></div><div class="form-group"><label for="stock">Stock ' + count + '</label><input type="number" class="form-control" name="stock' + count + '" placeholder="Enter stock' + count + '" value="{{this.stock}}"></div>'
-                        document.getElementById("_id").parent().append(help);
-                        document.getElementById('counter').setAttribute('value', count);
-                        count++;
-                    </script>
+                <script>
+                        //var help = '<hr style="height: 2px;color:gray;background-color:gray;border-width:0;"><div class="form-group"><label for="color">Color' + count + '</label><input type="text" class="form-control" name="color' + count + '" placeholder="Enter color' + count + '" value="{{this.color}}"></div><div class="form-group"><label for="stock">Stock ' + count + '</label><input type="number" class="form-control" name="stock' + count + '" placeholder="Enter stock' + count + '" value="{{this.stock}}"></div>'
+                        //document.getElementById("_id").parent().append(help);
+                        //document.getElementById('counter').setAttribute('value', count);
+                        //count++;
+                </script>
 
-                {{!-- <hr style="height: 2px;color:gray;background-color:gray;border-width:0;">
+                <hr style="height: 2px;color:gray;background-color:gray;border-width:0;">
                 <div class="form-group">
                     <label for="color">Color
-                        <script type="text/javascript">//document.write(count)</script>
+                        <script type="text/javascript">document.write(count)</script>
                     </label>
-                    <input type="text" class="form-control"
-                        name="color"
-                        placeholder="Enter color <script type='text/javascript'>document.write(count)</script>"
+                    <input type="text" class="form-control" name="color" id="color"
+                        placeholder="Enter color"
                         value="{{this.color}}">
                 </div>
 
                 <div class="form-group">
                     <label for="stock">Stock
-                        <script type="text/javascript">//document.write(count)</script>
+                        <script type="text/javascript">document.write(count)</script>
                     </label>
-                    <input type="number" class="form-control"
-                        name="stock"
-                        placeholder="Enter stock <script type='text/javascript'>document.write(count)</script>"
+                    <input type="number" class="form-control" name="stock" id="stock"
+                        placeholder="Enter stock"
                         value="{{this.stock}}">
-                </div> --}}
+                </div>
                 <script>
-                    //document.getElementById('counter').setAttribute('value', count);
-                    //count++;
+                    document.getElementById('counter').setAttribute('value', count);
+
+                    document.getElementById('color').name = 'color' + count;
+                    document.getElementById('stock').name = 'stock' + count;
+                    document.getElementById('color').id = 'color' + count;
+                    document.getElementById('stock').id = 'stock' + count;
+
+                    count++;
                 </script>
                 {{/each}}
 
@@ -148,5 +153,14 @@
         document.getElementById('message').remove();
     }
 
+    function updated() {
+        document.getElementById('message').remove();
+        document.getElementById('not-updated').name = 'updated';
+        document.getElementById('not-updated').id = 'updated';
+    }
+    //Choose category based on database
     document.getElementById("{{product.category}}").setAttribute('selected', 'selected');
+    //Load image from database
+    fileInput = document.getElementById("image");
+    
 </script>
