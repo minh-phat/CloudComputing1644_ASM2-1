@@ -2,29 +2,30 @@
 <div class="col-md-9 grid-margin" style="margin: auto;">
     <div class="card">
         <div class="card-body">
-            <h1 style="text-align: center; font-family: 'Lobster', cursive;">New ATN Toy</h1>
+            <h1 style="text-align: center; font-family: 'Lobster', cursive;">Update {{product.product_name}}</h1>
 
             {{!-- Show error message --}}
             {{#if message}}
             <div class="form-group">
-                <h5 style="width: 100%;background-color:#e45052;color:#fff;border-radius: 0.25rem; height:auto; padding: 10px; font-weight: 50px" id="message">
+                <h5 style="width: 100%;background-color:#e45052;color:#fff;border-radius: 0.25rem; height:auto; padding: 10px; font-weight: 50px"
+                    id="message">
                     <i class="fa-solid fa-triangle-exclamation fa-lg"></i> {{message}}
                 </h5>
             </div>
             {{/if}}
 
-            <form class="forms-sample" enctype="multipart/form-data" method="post" >
+            <form class="forms-sample" enctype="multipart/form-data" method="post">
                 <div class="form-group">
                     <label for="name">Product Name</label>
                     <input type="text" class="form-control" id="product_name" name="product_name"
-                        placeholder="Enter product name" oninput="removeMessage()">
+                        placeholder="Enter product name" value="{{product.product_name}}" oninput="removeMessage()">
                 </div>
 
                 <div class="form-group">
                     <label for="name">Category</label>
                     <select name="category" id="category" class="form-control">
                         {{#each categories}}
-                        <option value="{{this._id}}">{{this.category_name}}</option>
+                        <option value="{{this._id}}" id="{{this._id}}">{{this.category_name}}</option>
                         {{/each}}
                     </select>
                 </div>
@@ -32,12 +33,13 @@
                 <div class="form-group">
                     <label for="des">Description</label>
                     <input type="text" class="form-control" id="description" name="description"
-                        placeholder="Enter description" oninput="removeMessage()">
+                        placeholder="Enter description" value="{{product.description}}" oninput="removeMessage()">
                 </div>
 
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input type="number" class="form-control" id="price" name="price" placeholder="Enter price" oninput="removeMessage()">
+                    <input type="number" class="form-control" id="price" name="price" placeholder="Enter price"
+                        value="{{product.price}}" oninput="removeMessage()">
                 </div>
 
                 {{!-- Image upload and preview --}}
@@ -48,7 +50,7 @@
                     </div>
                     <br>
                     <h4>Image preview here</h4>
-                    <img id="output" width="100%"">
+                    <img id="output" src="img/products/{{product.image}}" width="100%">
                     <br>
                     <script>
                         //JS to preview image when uploaded 
@@ -62,17 +64,45 @@
                     </script>
                 </div>
 
-                <hr style="height: 2px;color:gray;background-color:gray;border-width:0;">
+
                 <input type="hidden" name="counter" id="counter" value="1">
+                <input type="hidden" name="_id" id="_id" value="{{product._id}}">
+
+                <script> let count = 1; </script>
+                {{#each product.configurations}}
+
+                    <script>
+                        var help = '<hr style="height: 2px;color:gray;background-color:gray;border-width:0;"><div class="form-group"><label for="color">Color' + count + '</label><input type="text" class="form-control" name="color' + count + '" placeholder="Enter color' + count + '" value="{{this.color}}"></div><div class="form-group"><label for="stock">Stock ' + count + '</label><input type="number" class="form-control" name="stock' + count + '" placeholder="Enter stock' + count + '" value="{{this.stock}}"></div>'
+                        document.getElementById("_id").parent().append(help);
+                        document.getElementById('counter').setAttribute('value', count);
+                        count++;
+                    </script>
+
+                {{!-- <hr style="height: 2px;color:gray;background-color:gray;border-width:0;">
                 <div class="form-group">
-                    <label for="color">Color 1</label>
-                    <input type="text" class="form-control" name="color1" placeholder="Enter color 1">
+                    <label for="color">Color
+                        <script type="text/javascript">//document.write(count)</script>
+                    </label>
+                    <input type="text" class="form-control"
+                        name="color"
+                        placeholder="Enter color <script type='text/javascript'>document.write(count)</script>"
+                        value="{{this.color}}">
                 </div>
 
                 <div class="form-group">
-                    <label for="stock">Stock 1</label>
-                    <input type="number" class="form-control" name="stock1" placeholder="Enter stock 1">
-                </div>
+                    <label for="stock">Stock
+                        <script type="text/javascript">//document.write(count)</script>
+                    </label>
+                    <input type="number" class="form-control"
+                        name="stock"
+                        placeholder="Enter stock <script type='text/javascript'>document.write(count)</script>"
+                        value="{{this.stock}}">
+                </div> --}}
+                <script>
+                    //document.getElementById('counter').setAttribute('value', count);
+                    //count++;
+                </script>
+                {{/each}}
 
                 {{!-- Add more color button --}}
                 <div class="form-group">
@@ -86,7 +116,7 @@
                     <button type="submit" class="btn btn-success mr-2" style="padding:12px 10px"><i
                             class="fa-solid fa-circle-check"></i> Submit</button>
                     <a href="/viewProducts" class="btn btn-danger mr-2" style="padding:12px 10px"
-                        onclick="return confirm('Cancel adding this toy?')"><i class="fa-solid fa-circle-xmark"></i>
+                        onclick="return confirm('Cancel updating this toy?')"><i class="fa-solid fa-circle-xmark"></i>
                         Cancel</button></a>
                 </div>
             </form>
@@ -96,7 +126,6 @@
 
 {{!-- Click to add more color --}}
 <script>
-    let count = 2
     $(document).on('click', '.addColor', function () {
         if (count <= 5) {
             var html = '<hr style="height: 2px;color:gray;background-color:gray;border-width:0;">'
@@ -118,4 +147,6 @@
     function removeMessage() {
         document.getElementById('message').remove();
     }
+
+    document.getElementById("{{product.category}}").setAttribute('selected', 'selected');
 </script>
