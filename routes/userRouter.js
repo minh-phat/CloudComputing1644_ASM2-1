@@ -2,6 +2,7 @@ const { Console } = require("console");
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
+const cartController = require('../controller/cartController');
 
 ////// - Model Call
 const Category = require("../model/categories");
@@ -70,24 +71,25 @@ async function shopDetail(request, response) {
 //     res.render("userPage/cart");
 // });
 
-router.get("/cart/?",cart);
-async function cart(request, response) {
+// router.get("/cart/?",cart);
+// async function cart(request, response) {
 
-    // try {
-    //     console.log(" Query : " + request.query)
-    //     productID = request.query.productID;
-    //     let ProductList = await Product.findOne({ _id: productID }); 
-    //     if (request.session.username) {
-    //         console.log(" Product : " +ProductList);
-    //         response.render("userPage/shopDetail", { username: request.session.username , Products: ProductList })
-    //     } else {
-    //         console.log(" Product : " + ProductList);
-    //         response.render("userPage/shopDetail",{ Products: ProductList });
-    //     }
-    // } catch (error) {
-    //     console.log(error);
-    // }
-}
+//     try {
+//         console.log(" Query : " + request.query)
+//         productID = request.query.productID;
+//         let ProductList = await Product.findOne({ _id: productID }); 
+//         if (request.session.username) {
+//             console.log(" Product : " +ProductList);
+//             response.render("userPage/shopDetail", { username: request.session.username , Products: ProductList })
+//         } else {
+//             console.log(" Product : " + ProductList);
+//             response.render("userPage/shopDetail",{ Products: ProductList });
+//         }
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
+router.post('/add-to-cart', cartController.addToCart);
 
 router.get("/checkout", (req, res) => {
     res.render("userPage/checkout");
