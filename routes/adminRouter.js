@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const sessions = require('express-session');
 const fs = require("fs");
 const accounts = require("../model/accounts");
 const controller = require("../controller/userController");

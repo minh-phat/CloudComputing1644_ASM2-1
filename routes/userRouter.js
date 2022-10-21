@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 const cartController = require('../controller/cartController');
+const authMiddleware = require('../middleware/authMiddleware');
 
 ////// - Model Call
 const Category = require("../model/categories");
