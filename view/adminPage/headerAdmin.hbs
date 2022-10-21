@@ -52,19 +52,19 @@
     import ChartsEmbedSDK from '@mongodb-js/charts-embed-dom';
 
     const sdk = new ChartsEmbedSDK({
-    baseUrl: 'https://charts.mongodb.com/charts-cloud-computing---assignm-qeqsh',
+      baseUrl: 'https://charts.mongodb.com/charts-cloud-computing---assignm-qeqsh',
     });
 
     // embed a chart
     const chart = sdk.createChart({
-    chartId: '63517735-1e8f-47d9-8a09-ebcc7ae5fad0',
+      chartId: '63517735-1e8f-47d9-8a09-ebcc7ae5fad0',
     });
 
     // render the chart into a container
     chart
-    .render(document.getElementById('chart'))
-    .catch(() => window.alert('Chart failed to initialise'));
-</script>
+      .render(document.getElementById('chart'))
+      .catch(() => window.alert('Chart failed to initialise'));
+  </script>
 
   {{!-- Fonts --}}
   <style>
@@ -80,9 +80,12 @@
       {{!-- Header with logo --}}
       <div class="text-center-lg navbar-brand-wrapper d-flex align-items-top justify-content-center"
         style="background-color: #7fad39;">
-        <button style="width: 280px;background-color: #fff;border-radius: 0.25rem; margin-top: 0.25rem; padding: 0; overflow: hidden"
+        <button
+          style="width: 280px;background-color: #fff;border-radius: 0.25rem; margin-top: 0.25rem; padding: 0; overflow: hidden"
           onclick="location.href = '/dashboard';">
-          <a style="color: #f94144; font-size:40px">A</a><a style="color: #f8961e; font-size:40px">T</a><a style="color:#f9c74f; font-size:40px">N</a> <a style="color:#43aa8b; font-size:40px">T</a><a style="color: #577590; font-size:40px">o</a><a style="color: #277da1; font-size:40px">y</a>
+          <a style="color: #f94144; font-size:40px">A</a><a style="color: #f8961e; font-size:40px">T</a><a
+            style="color:#f9c74f; font-size:40px">N</a> <a style="color:#43aa8b; font-size:40px">T</a><a
+            style="color: #577590; font-size:40px">o</a><a style="color: #277da1; font-size:40px">y</a>
         </button>
 
       </div>
@@ -94,11 +97,13 @@
       <!-- partial:partials/_sidebar.html -->
       <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
-          <li class="nav-item nav-profile">
+          <li class="nav-item nav-profile" style="padding: 0;margin: 30px auto 0 auto;">
             {{!-- Admin account information --}}
             <div class="text-wrapper">
               {{#if username}}
-              <p class="profile-name">Account: {{username}}</p>
+              <p class="profile-name" style="color: #fff; font-size: 1rem"><i class="fa fa-user"></i> <u>{{username}}</u> <i
+                  class="fa-solid fa-right-from-bracket" title="Log out" style="cursor:pointer; margin-left: 5px"
+                  onclick="location.href = '/login';"></i></p>
               {{/if}}
             </div>
           </li>

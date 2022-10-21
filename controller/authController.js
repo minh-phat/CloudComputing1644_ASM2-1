@@ -128,9 +128,13 @@ exports.accountAuth = async (req, res) => {
 
         if (user.password === req.body.password) {
             console.log('user ' + user.username + ' logged in successfully');
+
             req.session.message = undefined;
             req.session.username = user.username;
+            res.locals.username = req.session.username;
+            req.session.loggedIn = true;
             req.session.class = user.account_class;
+
             if (req.session.class === "User") {
                 return res.redirect('/');
             } else if (req.session.class === "Director"

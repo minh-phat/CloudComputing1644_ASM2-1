@@ -6,14 +6,14 @@ const authMiddleware = require("../middleware/authMiddleware");
 const multer = require("multer");
 
 //Direct to create product page
-router.get( "/newProduct" , authMiddleware.hasClass(['Director', 'Manager']), loadCategories);
+router.get("/newProduct", authMiddleware.hasClass(['Director', 'Manager']), loadCategories);
 async function loadCategories(request, response) {
     try {
         let categoriesList = await Category.find({});
         if (request.session.message) {
-            response.render("adminPage/newProduct", { categories: categoriesList, message: request.session.message });
+            response.render("adminPage/newProduct", { categories: categoriesList, message: request.session.message, username: request.session.username });
         } else {
-            response.render("adminPage/newProduct", { categories: categoriesList });
+            response.render("adminPage/newProduct", { categories: categoriesList, username: request.session.username });
         }
         request.session.message = null;
     } catch (error) {
@@ -52,7 +52,7 @@ const upload = multer({
 })
 
 
-router.post( "/newProduct" , upload.single("image"), authMiddleware.hasClass(['Director', 'Manager']), (request, response, next) => {
+router.post("/newProduct", upload.single("image"), authMiddleware.hasClass(['Director', 'Manager']), (request, response, next) => {
     console.log("\n BODY: ", request.body);
     console.log("\n File: ", request.file);
 
@@ -196,17 +196,25 @@ router.post( "/newProduct" , upload.single("image"), authMiddleware.hasClass(['D
 });
 
 //Direct to product view page
-router.get( "/viewProducts" , authMiddleware.hasClass(['Director', 'Manager']), viewProducts);
+router.get("/viewProducts", authMiddleware.hasClass(['Director', 'Manager']), viewProducts);
 async function viewProducts(request, response) {
     try {
         let productsList = await Product.find({}).populate('category');
         console.log("Products currently in database are: \n" + productsList);
         if (request.session.messageError) {
-            response.render("adminPage/viewProducts", { products: productsList, messageError: request.session.messageError });
-        } else if(request.session.messageSuccess) {
-            response.render("adminPage/viewProducts", { products: productsList, messageSuccess: request.session.messageSuccess });
+            response.render("adminPage/viewProducts", {
+                products: productsList,
+                messageError: request.session.messageError,
+                username: request.session.username
+            });
+        } else if (request.session.messageSuccess) {
+            response.render("adminPage/viewProducts", {
+                products: productsList,
+                messageSuccess: request.session.messageSuccess,
+                username: request.session.username
+            });
         } else {
-            response.render("adminPage/viewProducts", { products: productsList });
+            response.render("adminPage/viewProducts", { products: productsList, username: request.session.username });
         }
         request.session.message = null;
     } catch (error) {
@@ -244,10 +252,19 @@ async function updateProduct(request, response) {
         const document = await Product.findOne({ _id: request.query.id });
         const categoriesList = await Category.find({});
         if (request.session.message) {
-            response.render("adminPage/updateProduct", { categories: categoriesList, product: document, message: request.session.message })
+            response.render("adminPage/updateProduct", {
+                categories: categoriesList,
+                product: document,
+                message: request.session.message,
+                username: request.session.username,
+            })
             request.sesison.message = null;
         } else {
-            response.render("adminPage/updateProduct", { categories: categoriesList, product: document })
+            response.render("adminPage/updateProduct", {
+                categories: categoriesList,
+                product: document,
+                username: request.session.username,
+            })
         }
     } catch (error) {
         console.log(error);
@@ -255,7 +272,7 @@ async function updateProduct(request, response) {
 }
 
 //Save updated information to database
-router.post( "/updateProduct?:id" , upload.single("image"), authMiddleware.hasClass(['Director', 'Manager']), (request, response, next) => {
+router.post("/updateProduct?:id", upload.single("image"), authMiddleware.hasClass(['Director', 'Manager']), (request, response, next) => {
     console.log("\n BODY: ", request.body);
     console.log("\n File: ", request.file);
 
@@ -398,12 +415,16 @@ router.get("/searchProduct?", authMiddleware.hasClass(['Director', 'Manager']), 
     try {
         if (request.query.search) {
             let productsList = await Product.find({ product_name: { $regex: request.query.search, '$options': 'i' } }).populate('category')
-            if(productsList.length > 0){
+            if (productsList.length > 0) {
                 request.session.messageSuccess = "Showing results for " + request.query.search;
-                response.render("adminPage/viewProducts", { products: productsList, messageSuccess: request.session.messageSuccess });
+                response.render("adminPage/viewProducts", {
+                    products: productsList,
+                    messageSuccess: request.session.messageSuccess,
+                    username: request.session.username,
+                });
                 request.session.messageError = null;
                 request.session.messageSuccess = null;
-            }else {
+            } else {
                 request.session.messageError = "No results for " + request.query.search;
                 response.redirect("/viewProducts");
                 request.session.messageError = null;
