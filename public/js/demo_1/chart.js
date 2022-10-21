@@ -10,4 +10,4 @@ const chart1 = sdk.createChart({
     chartId: '63517735-1e8f-47d9-8a09-ebcc7ae5fad0'
 })
 
-chart.render(document.getElementById("chart"));
+chart1.render(document.getElementById("chart"));
