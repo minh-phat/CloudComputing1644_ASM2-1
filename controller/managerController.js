@@ -7,7 +7,6 @@ exports.managerAdd = async (req, res) => {
 
     console.log('REQ BODY: '+ req.body);
     return res.redirect('/managerView');
-    // if (req.body) {
         newAccount = new accounts({
             username: req.body.username,
             password: req.body.password,
