@@ -15,6 +15,9 @@ const { CLIENT_RENEG_LIMIT } = require("tls");
 const { send } = require("process");
 appServer.use(bodyParser.json());
 
+//must be have to get request.body
+appServer.use(bodyParser.urlencoded({extended: true}));
+
 //Sessions|==========================================================================
 //!SESSION ALWAYS STAYS ON TOP BEFORE OTHER STUFFS, IT IS LIKE THAT NO QUESTION ASKED.
 var appSession = {
