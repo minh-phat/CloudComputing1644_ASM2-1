@@ -3,8 +3,10 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 
-exports.managerAdd = (req, res) => {
+exports.managerAdd = async (req, res) => {
 
+    console.log('REQ BODY: '+ req.body);
+    return res.redirect('/managerView');
     // if (req.body) {
         newAccount = new accounts({
             username: req.body.username,
@@ -64,10 +66,7 @@ exports.managerAdd = (req, res) => {
                             return res.redirect('/managerInsert');
                         } else {
                             console.log("Data:", document);
-                            req.session.message = undefined;
-                            req.session.username = newAccount.username;     //*signin manager and return to homepage
-                            req.session.class = "Manager";
-                            return res.redirect('/dashboard');
+                            return res.redirect('/managerInsert');
                         }
                     }
                 );
