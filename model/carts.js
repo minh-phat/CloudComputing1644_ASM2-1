@@ -3,10 +3,10 @@ let cart = null;
 
 module.exports = class Cart{
 
-    // constructor(productID, quantity) {
-    //     this.productID = productID;
-    //     this.quantity = quantity;
-    // }
+    constructor(productID, quantity) {
+        this.productID = productID;
+        this.quantity = quantity;
+    }
 
     static save(product){
         if (cart === null) {

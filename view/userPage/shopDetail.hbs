@@ -107,7 +107,7 @@
                         </div>
                         <div class="product__details__price">${{Products.price}}</div>
                         <p>{{Products.description}}</p>
-                        <form action="/add-to-cart" method="POST"></form>
+                        <form action="/addToCart?productID={{Products._id}}" method="post">
                             <div class="product__details__quantity">
                                 <div class="quantity">
                                     <div class="pro-qty">

@@ -85,7 +85,10 @@ async function shopDetail(request, response) {
 //         console.log(error);
 //     }
 // }
-router.post('/add-to-cart', cartController.addToCart);
+
+router.post('/addToCart?', cartController.addToCart);
+
+
 router.get('/cart', Cart.getCart);
 
 router.get("/checkout", authMiddleware.isLoggedIn, (req, res) => {
