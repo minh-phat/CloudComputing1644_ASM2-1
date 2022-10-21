@@ -31,10 +31,16 @@ appServer.use(session(appSession));
 appServer.set("views", path.join(__dirname, "view")); //setting views directory for views.
 appServer.set("view engine", "hbs"); //setting view engine as handlebars
 
-//Page partials|==========================================================================
+//Handlebars(Partials, helper)|==========================================================================
 
 hbs.registerPartials('view/userPage');
 hbs.registerPartials('view/adminPage');
+
+// limit an array to a maximum of elements (from the start)
+hbs.registerHelper('limit', function (arr, limit) {                 //* {{#each (limit cart.products 5)}}
+    if (!Array.isArray(arr)) { return []; }                         //* <li>Index is {{@index}} - element is {{this}}</li>
+    return arr.slice(0, limit);                                     //* {{/each}}
+});
 
 //Config|============================================================================
 
