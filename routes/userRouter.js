@@ -1,9 +1,7 @@
-const { Console } = require("console");
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
-
-////// - Model Call
+const authMiddleware = require("../middleware/authMiddleware");
 const Category = require("../model/categories");
 const Product = require("../model/products");
 
@@ -13,51 +11,45 @@ router.get("/", home);
 async function home(request, response) {
     try {
         let CategoryList = await Category.find({});
-        if (request.session.username) {
-            console.log(CategoryList);
-            response.render("userPage/home", { username: request.session.username , Categories: CategoryList })
-        } else {
-            console.log(CategoryList);
-            response.render("userPage/home",{Categories: CategoryList});
-        }
+        console.log(CategoryList);
+        response.render("userPage/home", request.session.username ? { username: request.session.username, Categories: CategoryList } : { Categories: CategoryList });
     } catch (error) {
         console.log(error);
     }
 }
 
-
-router.get("/shop",shop);
+router.get("/shop", shop);
 async function shop(request, response) {
     try {
         let CategoryList = await Category.find({});
         let ProductList = await Product.find({});
         if (request.session.username) {
-            console.log(" Category : " +CategoryList);
-            console.log(" Product : " +ProductList);
-            response.render("userPage/shop", { username: request.session.username , Categories: CategoryList, Products: ProductList })
+            console.log(" Category : " + CategoryList);
+            console.log(" Product : " + ProductList);
+            response.render("userPage/shop", { username: request.session.username, Categories: CategoryList, Products: ProductList })
         } else {
             console.log(" Category : " + CategoryList);
             console.log(" Product : " + ProductList);
-            response.render("userPage/shop",{ Categories: CategoryList, Products: ProductList });
+            response.render("userPage/shop", { Categories: CategoryList, Products: ProductList });
         }
     } catch (error) {
         console.log(error);
     }
 }
 
-router.get("/shopDetail/?",shopDetail);
+router.get("/shopDetail/?", shopDetail);
 async function shopDetail(request, response) {
 
     try {
         console.log(" Query : " + request.query)
         productID = request.query.productID;
-        let ProductList = await Product.findOne({ _id: productID }); 
+        let ProductList = await Product.findOne({ _id: productID });
         if (request.session.username) {
-            console.log(" Product : " +ProductList);
-            response.render("userPage/shopDetail", { username: request.session.username , Products: ProductList })
+            console.log(" Product : " + ProductList);
+            response.render("userPage/shopDetail", { username: request.session.username, Products: ProductList })
         } else {
             console.log(" Product : " + ProductList);
-            response.render("userPage/shopDetail",{ Products: ProductList });
+            response.render("userPage/shopDetail", { Products: ProductList });
         }
     } catch (error) {
         console.log(error);
@@ -70,7 +62,7 @@ async function shopDetail(request, response) {
 //     res.render("userPage/cart");
 // });
 
-router.get("/cart/?",cart);
+router.get("/cart/?", authMiddleware.isLoggedIn, cart);
 async function cart(request, response) {
 
     // try {
@@ -89,7 +81,7 @@ async function cart(request, response) {
     // }
 }
 
-router.get("/checkout", (req, res) => {
+router.get("/checkout", authMiddleware.isLoggedIn, (req, res) => {
     res.render("userPage/checkout");
 });
 
