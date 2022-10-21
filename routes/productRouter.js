@@ -2,10 +2,11 @@ const express = require("express");
 const router = express.Router();
 const Category = require("../model/categories");
 const Product = require("../model/products");
+const authMiddleware = require("../middleware/authMiddleware");
 const multer = require("multer");
 
 //Direct to create product page
-router.get("/newProduct", loadCategories);
+router.get( "/newProduct" , authMiddleware.hasClass(['Director', 'Manager']), loadCategories);
 async function loadCategories(request, response) {
     try {
         let categoriesList = await Category.find({});
@@ -51,7 +52,7 @@ const upload = multer({
 })
 
 
-router.post("/newProduct", upload.single("image"), (request, response, next) => {
+router.post( "/newProduct" , upload.single("image"), authMiddleware.hasClass(['Director', 'Manager']), (request, response, next) => {
     console.log("\n BODY: ", request.body);
     console.log("\n File: ", request.file);
 
@@ -195,7 +196,7 @@ router.post("/newProduct", upload.single("image"), (request, response, next) => 
 });
 
 //Direct to product view page
-router.get("/viewProducts", viewProducts);
+router.get( "/viewProducts" , authMiddleware.hasClass(['Director', 'Manager']), viewProducts);
 async function viewProducts(request, response) {
     try {
         let productsList = await Product.find({}).populate('category');
@@ -214,7 +215,7 @@ async function viewProducts(request, response) {
 }
 
 //Delete product
-router.get("/deleteProduct?:id", deleteProducts);
+router.get("/deleteProduct?:id", authMiddleware.hasClass(['Director', 'Manager']), deleteProducts);
 async function deleteProducts(request, response) {
     try {
         const document = await Product.findOne({ _id: request.query.id });
@@ -237,7 +238,7 @@ async function deleteProducts(request, response) {
 }
 
 //Update product
-router.get("/updateProduct?:id", updateProduct);
+router.get("/updateProduct?:id", authMiddleware.hasClass(['Director', 'Manager']), updateProduct);
 async function updateProduct(request, response) {
     try {
         const document = await Product.findOne({ _id: request.query.id });
@@ -254,7 +255,7 @@ async function updateProduct(request, response) {
 }
 
 //Save updated information to database
-router.post("/updateProduct?:id", upload.single("image"), (request, response, next) => {
+router.post( "/updateProduct?:id" , upload.single("image"), authMiddleware.hasClass(['Director', 'Manager']), (request, response, next) => {
     console.log("\n BODY: ", request.body);
     console.log("\n File: ", request.file);
 
