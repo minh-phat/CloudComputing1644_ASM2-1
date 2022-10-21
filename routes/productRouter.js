@@ -61,8 +61,7 @@ router.post("/newProduct", upload.single("image"), authMiddleware.hasClass(['Dir
         !request.body.product_name ||
         !request.body.description ||
         !request.body.price ||
-        !request.body.color1 ||
-        !request.body.stock1
+        !request.body.stock
     ) {
         request.session.message = "Please fill in all the fields";
         return response.redirect("/newProduct");
@@ -88,97 +87,13 @@ router.post("/newProduct", upload.single("image"), authMiddleware.hasClass(['Dir
 
         //If product name is indeed unique then save to database
         request.body.image = request.file.filename; //make image link the filename
-        let toy = {};
-        if (request.body.counter == 1) {
-            toy = {
-                product_name: request.body.product_name,
-                category: request.body.category,
-                description: request.body.description,
-                price: request.body.price,
-                image: request.body.image,
-                configurations: [{
-                    color: request.body.color1,
-                    stock: request.body.stock1
-                }]
-            }
-        } else if (request.body.counter == 2) {
-            toy = {
-                product_name: request.body.product_name,
-                category: request.body.category,
-                description: request.body.description,
-                price: request.body.price,
-                image: request.body.image,
-                configurations: [{
-                    color: request.body.color1,
-                    stock: request.body.stock1
-                }, {
-                    color: request.body.color2,
-                    stock: request.body.stock2
-                }]
-            }
-        } else if (request.body.counter == 3) {
-            toy = {
-                product_name: request.body.product_name,
-                category: request.body.category,
-                description: request.body.description,
-                price: request.body.price,
-                image: request.body.image,
-                configurations: [{
-                    color: request.body.color1,
-                    stock: request.body.stock1
-                }, {
-                    color: request.body.color2,
-                    stock: request.body.stock2
-                }, {
-                    color: request.body.color3,
-                    stock: request.body.stock3
-                }]
-            }
-        } else if (request.body.counter == 4) {
-            toy = {
-                product_name: request.body.product_name,
-                category: request.body.category,
-                description: request.body.description,
-                price: request.body.price,
-                image: request.body.image,
-                configurations: [{
-                    color: request.body.color1,
-                    stock: request.body.stock1
-                }, {
-                    color: request.body.color2,
-                    stock: request.body.stock2
-                }, {
-                    color: request.body.color3,
-                    stock: request.body.stock3
-                }, {
-                    color: request.body.color4,
-                    stock: request.body.stock4
-                }]
-            }
-        } else {
-            toy = {
-                product_name: request.body.product_name,
-                category: request.body.category,
-                description: request.body.description,
-                price: request.body.price,
-                image: request.body.image,
-                configurations: [{
-                    color: request.body.color1,
-                    stock: request.body.stock1
-                }, {
-                    color: request.body.color2,
-                    stock: request.body.stock2
-                }, {
-                    color: request.body.color3,
-                    stock: request.body.stock3
-                }, {
-                    color: request.body.color4,
-                    stock: request.body.stock4
-                }, {
-                    color: request.body.color5,
-                    stock: request.body.stock5
-                }]
-            }
+        let toy = {
+            product_name: request.body.product_name,
+            category: request.body.category,
+            description: request.body.description,
+            price: request.body.price,
+            image: request.body.image,
+            stock: request.body.stock
         }
         const newToy = new Product(toy)
         newToy.save(function (error, document) {
@@ -281,8 +196,7 @@ router.post("/updateProduct?:id", upload.single("image"), authMiddleware.hasClas
         !request.body.product_name ||
         !request.body.description ||
         !request.body.price ||
-        !request.body.color1 ||
-        !request.body.stock1
+        !request.body.stock
     ) {
         request.session.message = "Please fill in all the fields";
         return response.redirect("/updateProduct?id=" + request.body._id);
@@ -304,98 +218,14 @@ router.post("/updateProduct?:id", upload.single("image"), authMiddleware.hasClas
             }
         })
     }
-    let toy = {};
-    //If product name is indeed unique then save to database
-    if (request.body.counter == 1) {
-        toy = {
-            product_name: request.body.product_name,
-            category: request.body.category,
-            description: request.body.description,
-            price: request.body.price,
-            image: request.body.image,
-            configurations: [{
-                color: request.body.color1,
-                stock: request.body.stock1
-            }]
-        }
-    } else if (request.body.counter == 2) {
-        toy = {
-            product_name: request.body.product_name,
-            category: request.body.category,
-            description: request.body.description,
-            price: request.body.price,
-            image: request.body.image,
-            configurations: [{
-                color: request.body.color1,
-                stock: request.body.stock1
-            }, {
-                color: request.body.color2,
-                stock: request.body.stock2
-            }]
-        }
-    } else if (request.body.counter == 3) {
-        toy = {
-            product_name: request.body.product_name,
-            category: request.body.category,
-            description: request.body.description,
-            price: request.body.price,
-            image: request.body.image,
-            configurations: [{
-                color: request.body.color1,
-                stock: request.body.stock1
-            }, {
-                color: request.body.color2,
-                stock: request.body.stock2
-            }, {
-                color: request.body.color3,
-                stock: request.body.stock3
-            }]
-        }
-    } else if (request.body.counter == 4) {
-        toy = {
-            product_name: request.body.product_name,
-            category: request.body.category,
-            description: request.body.description,
-            price: request.body.price,
-            image: request.body.image,
-            configurations: [{
-                color: request.body.color1,
-                stock: request.body.stock1
-            }, {
-                color: request.body.color2,
-                stock: request.body.stock2
-            }, {
-                color: request.body.color3,
-                stock: request.body.stock3
-            }, {
-                color: request.body.color4,
-                stock: request.body.stock4
-            }]
-        }
-    } else {
-        toy = {
-            product_name: request.body.product_name,
-            category: request.body.category,
-            description: request.body.description,
-            price: request.body.price,
-            image: request.body.image,
-            configurations: [{
-                color: request.body.color1,
-                stock: request.body.stock1
-            }, {
-                color: request.body.color2,
-                stock: request.body.stock2
-            }, {
-                color: request.body.color3,
-                stock: request.body.stock3
-            }, {
-                color: request.body.color4,
-                stock: request.body.stock4
-            }, {
-                color: request.body.color5,
-                stock: request.body.stock5
-            }]
-        }
+
+    let toy = {
+        product_name: request.body.product_name,
+        category: request.body.category,
+        description: request.body.description,
+        price: request.body.price,
+        image: request.body.image,
+        stock: request.body.stock
     }
 
     Product.updateOne({ _id: request.body._id }, { $set: toy }, function (error, document) {

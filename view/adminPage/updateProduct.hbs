@@ -64,59 +64,17 @@
                     </script>
                 </div>
 
-                <input type="hidden" name="counter" id="counter" value="1">
                 <input type="hidden" name="_id" id="_id" value="{{product._id}}">
                 <input type="hidden" name="not-updated" id="not-updated" value="updated">
-                <input type="hidden" name="link" id="link" value="{{product.image}}">
-
-
-                <script> let count = 1; </script>
-                {{#each product.configurations}}
-                <hr style="height: 2px;color:gray;background-color:gray;border-width:0;">
-                <div class="form-group">
-                    <label for="color" id="lcolor">Color
-                        <script type="text/javascript">document.write(count)</script>
-                    </label>
-                    <input type="text" class="form-control" name="color" id="color"
-                        placeholder="Enter color"
-                        value="{{this.color}}">
-                </div>
 
                 <div class="form-group">
-                    <label for="stock" id="lstock">Stock
-                        <script type="text/javascript">document.write(count)</script>
-                    </label>
+                    <label for="stock" id="stock">Stock</label>
                     <input type="number" class="form-control" name="stock" id="stock"
                         placeholder="Enter stock"
-                        value="{{this.stock}}">
-                </div>
-                <script>
-                    document.getElementById('counter').setAttribute('value', count);
-
-                    document.getElementById('color').name = 'color' + count;
-                    document.getElementById('stock').name = 'stock' + count;
-                    document.getElementById('color').id = 'color' + count;
-                    document.getElementById('stock').id = 'stock' + count;
-
-                    document.getElementById('lcolor').name = 'lcolor' + count;
-                    document.getElementById('lstock').name = 'lstock' + count;
-                    document.getElementById('lcolor').id = 'lcolor' + count;
-                    document.getElementById('lstock').id = 'lstock' + count;
-
-                    count++;
-                </script>
-                {{/each}}
-
-                {{!-- Add more color button --}}
-                <div class="form-group">
-                    <button type="button" class="addColor file-upload-browse btn btn-info" id="addColor"
-                        style="padding:12px 10px">
-                        <i class="fa-solid fa-circle-plus"></i> Add more color
-                    </button>
+                        value="{{product.stock}}">
                 </div>
 
                 <div>
-                    <button type="button" class="remove btn btn-warning mr-2" onclick="remove()" style="padding:12px 10px"><i class="fa-solid fa-circle-minus"></i> Remove a color</button>
                     <button type="submit" class="btn btn-success mr-2" style="padding:12px 10px"><i
                             class="fa-solid fa-circle-check"></i> Submit</button>
                     <a href="/viewProducts" class="btn btn-danger mr-2" style="padding:12px 10px"
@@ -130,41 +88,9 @@
 
 {{!-- Click to add more color --}}
 <script>
-    $(document).on('click', '.addColor', function () {
-        if (count <= 5) {
-            var html = '<hr style="height: 2px;color:gray;background-color:gray;border-width:0;">'
-                + '<div class="form-group"><label for="color" id="lcolor' + count + '">Color ' + count + '</label><input type="text" class="form-control" name="color' + count + '" id="color' + count + '" placeholder="Enter color">'
-                + '</div><div class="form-group"><label for="stock" id="lstock' + count + '">Stock ' + count + '</label><input type="number" class="form-control" name="stock' + count + '" id="stock' + count + '" placeholder="Enter stock">'
-                + '</div><div class="form-group"><button type="button" class="addColor file-upload-browse btn btn-info" id="addColor" style="padding:12px 10px">'
-                + '<i class="fa-solid fa-circle-plus"></i> Add more color</button></div>';
-            var element = document.getElementById("addColor");
-            $(this).parent().append(html);
-            element.remove();
-            document.getElementById("counter").setAttribute('value', count);
-            count++;
-        } else {
-            document.getElementById("addColor").disabled = true;
-            $(this).parent().append("<h4 style='color:red;'><i class='fa-solid fa-triangle-exclamation'></i> You can only insert 5 colors</h4>");
-        }
-    });
-
     function updated() {
         document.getElementById('not-updated').name = "updated";
     }
     //Choose category based on database
     document.getElementById("{{product.category}}").setAttribute('selected', 'selected');
-
-    var tempCounter
-    function remove() {
-        tempCounter = document.getElementById("counter").value;
-        document.getElementById("color" + tempCounter).remove();
-        document.getElementById("stock" + tempCounter).remove();
-        document.getElementById("lcolor" + tempCounter).remove();
-        document.getElementById("lstock" + tempCounter).remove();
-        const hrs = document.getElementsByTagName('hr');
-        hrs[tempCounter - 1].remove();
-        tempCounter--;
-        document.getElementById("counter").setAttribute('value', tempCounter);
-        count--;
-    }
 </script>

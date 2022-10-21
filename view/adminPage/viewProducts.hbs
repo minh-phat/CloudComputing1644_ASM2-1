@@ -38,7 +38,7 @@
                         </div>
                         {{/if}}
 
-                        <table class="table table-hover" style="text-align: center;">
+                        <table class="table table-hover" style="text-align: center; table-layout: fixed">
                             <thead style="background-color: #264653;">
                                 <tr>
                                     <th style="color: #f1faee; font-weight: bold">Product Name</th>
@@ -46,26 +46,20 @@
                                     <th style="color: #f1faee; font-weight: bold">Description</th>
                                     <th style="color: #f1faee; font-weight: bold">Price</th>
                                     <th style="color: #f1faee; font-weight: bold">Image</th>
-                                    <th style="color: #f1faee; font-weight: bold">Configurations</th>
-                                    <th style="width: 100px!important; color: #f1faee">Actions</th>
+                                    <th style="color: #f1faee; font-weight: bold">Stock</th>
+                                    <th style="width: 150px!important; color: #f1faee; font-weight: bold">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {{#each products}}
                                 <tr>
-                                    <td>{{this.product_name}}</td>
+                                    <td style="word-wrap: break-word; white-space: normal">{{this.product_name}}</td>
                                     <td>{{this.category.category_name}}</td>
-                                    <td>{{this.description}}</td>
+                                    <td style="word-wrap: break-word; white-space: normal">{{this.description}}</td>
                                     <td>{{this.price}}</td>
-                                    <td><img src="img/products/{{this.image}}" alt="Image for {{this.product_name}}" style="width:200px !important; height:200px !important; border-radius: 5% !important;" >
+                                    <td style="word-wrap: break-word; white-space: normal"><img src="img/products/{{this.image}}" alt="Image for {{this.product_name}}" style="width:200px !important; height:200px !important; border-radius: 5% !important;" >
                                     </td>
-                                    <td>
-                                        {{#each this.configurations}}
-                                        Color: {{this.color}} ||
-                                        Stock: {{this.stock}}
-                                        <br>
-                                        {{/each}}
-                                    </td>
+                                    <td>{{this.stock}}</td>
                                     <td>
                                         <a href="/updateProduct?id={{this._id}}" class="btn btn-info">
                                             <i class="fas fa-edit"></i>
