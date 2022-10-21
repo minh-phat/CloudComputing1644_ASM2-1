@@ -15,7 +15,7 @@ router.get("/", home);
 async function home(request, response) {
     try {
         let CategoryList = await Category.find({});
-        let ProductList = await Product.find({});
+        let ProductList = await Product.find({}).populate("category").limit(5);
         console.log(CategoryList);
         response.render("userPage/home", request.session.username ? { username: request.session.username, Categories: CategoryList, Products: ProductList } : { Categories: CategoryList, Products: ProductList });
     } catch (error) {
