@@ -5,8 +5,8 @@ class Product{
 
 
     ProductList =  ProductDatabase.findOne({ _id: productID }); 
-    constructor(_id) {
-        this._id = ProductList._id;
+    constructor(id) {
+        this.id = ProductList.id;
         
         
     }
