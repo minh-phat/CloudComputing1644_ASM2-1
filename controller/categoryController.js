@@ -50,7 +50,10 @@ async function categoryView(yeucau, trave) {
     try {
         let CategoryList = await Category.find({});
         console.log(CategoryList);
-        trave.render("adminPage/categoryView", { Categories: CategoryList });
+        trave.render("adminPage/categoryView", {
+            Categories: CategoryList,
+            username: yeucau.session.username
+        });
     } catch (error) {
         console.log(error);
     }
@@ -59,7 +62,11 @@ async function categoryView(yeucau, trave) {
 router.get("/categoryInsert", authMiddleware.hasClass(['Director', 'Manager']), categoryInsert);
 async function categoryInsert(yeucau, trave) {
     try {
-        trave.render("adminPage/categoryInsert", { messageError: yeucau.session.messageError, messageSuccess: yeucau.session.messageSuccess });
+        trave.render("adminPage/categoryInsert", {
+            messageError: yeucau.session.messageError,
+            messageSuccess: yeucau.session.messageSuccess,
+            username: yeucau.session.username,
+        });
     } catch (error) {
         console.log(error);
     }
@@ -148,7 +155,7 @@ router.get('/categoryEdit:id', authMiddleware.hasClass(['Director', 'Manager']),
     try {
         let CategoryID = await Category.findOne({ _id: yeucau.params.id });
         console.log(CategoryID);
-        trave.render("adminPage/categoryEdit", { Categories: CategoryID });
+        trave.render("adminPage/categoryEdit", { Categories: CategoryID, username: yeucau.session.username });
     } catch (error) {
         console.log(error);
     }
@@ -195,7 +202,7 @@ router.get("/categorySearch?", authMiddleware.hasClass(['Director', 'Manager']),
         // "find({ category_name:...})" that mean find catetory_name in query 
         let CategoryList = await Category.find({ category_name: { $regex: category_name, '$options': 'i' } });
         console.log(CategoryList);
-        trave.render("adminPage/categoryView", { Categories: CategoryList });
+        trave.render("adminPage/categoryView", { Categories: CategoryList, user: yeucau.session.username});
     } catch (error) {
         console.log(error);
     }

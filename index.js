@@ -12,6 +12,7 @@ const session = require('express-session');
 
 const bodyParser = require("body-parser");
 const { CLIENT_RENEG_LIMIT } = require("tls");
+const { send } = require("process");
 appServer.use(bodyParser.json());
 
 //Sessions|==========================================================================
@@ -67,6 +68,13 @@ router.use((err, req, res, next) => {
     console.log(err);
     res.status(500).send("Uh oh stinky error! No clue where it is from tho !");
 });
+
+router.use((req, res, next) => {
+    if (req.session.username === undefined && req.session.loggedIn === true) {
+        req.session.message = "Your login seems a bit wrong. Please login again"
+    }
+    next();
+});         //this for session along all pages more easily
 
 //Routing|============================================================================
 //! routes cannot have spaces in them else they will not be able to run

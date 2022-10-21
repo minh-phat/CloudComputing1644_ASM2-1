@@ -7,12 +7,12 @@ const controller = require("../controller/authController");
 
 router.get("/signup", (req, res) => {
     res.render("signup", req.session.message ? { message: req.session.message } : null);
-    req.session.message = null;
+    req.session.message = undefined;
 });
 
 router.get("/login", (req, res) => {
     res.render("login", req.session.message ? { message: req.session.message } : null);
-    req.session.message = null;
+    req.session.message = undefined;
 });
 
 router.post("/signup/newAccount", controller.newAccount);   //signup

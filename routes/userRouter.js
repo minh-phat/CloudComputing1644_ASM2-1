@@ -15,8 +15,9 @@ router.get("/", home);
 async function home(request, response) {
     try {
         let CategoryList = await Category.find({});
+        let ProductList = await Product.find({});
         console.log(CategoryList);
-        response.render("userPage/home", request.session.username ? { username: request.session.username, Categories: CategoryList } : { Categories: CategoryList });
+        response.render("userPage/home", request.session.username ? { username: request.session.username, Categories: CategoryList, Products: ProductList } : { Categories: CategoryList, Products: ProductList });
     } catch (error) {
         console.log(error);
     }
@@ -91,11 +92,11 @@ router.post('/addToCart?', cartController.addToCart);
 router.get('/cart', Cart.getCart);
 
 router.get("/checkout", authMiddleware.isLoggedIn, (req, res) => {
-    res.render("userPage/checkout");
+    res.render("userPage/checkout", req.session.username ? {username: req.session.username} : null);
 });
 
 router.get("/contact", (req, res) => {
-    res.render("userPage/contact");
+    res.render("userPage/contact", req.session.username ? {username: req.session.username} : null);
 });
 
 //!Exporting router module|================================================
