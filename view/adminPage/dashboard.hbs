@@ -7,7 +7,6 @@
                     <div class="card-body">
                         <h1 style="text-align: center; font-family: 'Lobster', cursive;">Dashboard</h1>
                         <div class="chart" id="chart">
-                            <iframe style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="720" src="https://charts.mongodb.com/charts-cloud-computing---assignm-qeqsh/embed/charts?id=63517735-1e8f-47d9-8a09-ebcc7ae5fad0&maxDataAge=60&theme=dark&autoRefresh=true"></iframe>
                         </div>
                     </div>
                 </div>
@@ -15,4 +14,16 @@
         </div>
     </div>
 </html>
-
+<script src="https://s3.amazonaws.com/stitch-sdks/js/bundles/4.6.0/stitch.js"></script>
+<script src="https://unpkg.com/@mongodb-js/charts-embed-dom"></script>
+<script>
+    const sdk = new ChartsEmbedSDK({
+        baseUrl: "https://charts.mongodb.com/charts-cloud-computing---assignm-qeqsh"
+    });
+    const chart = sdk.createChart({
+        chartId: "63517735-1e8f-47d9-8a09-ebcc7ae5fad0",
+        height: "700px",
+        theme: "dark"
+    });
+    chart.render(document.getElementById("chart"));
+</script>
