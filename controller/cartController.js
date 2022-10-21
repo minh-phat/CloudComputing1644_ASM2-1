@@ -28,3 +28,29 @@ exports.addToCart = async (request, respond , next) => {
     respond.redirect("/shop");
 
 }
+
+exports.cartView = async (request, respond , next) => {
+
+    try{
+        let carts = await Cart.getCart({});
+
+
+        // get all ids
+        var ids = Cart.products.map(x => x.survey_id)
+        console.log(ids)
+
+        // get first id
+        var id = Cart.products[0].survey_id;
+        console.log(id)
+
+        //JSON.stringify to show object array
+        const str = JSON.stringify(carts);
+        console.log("Products add cart: " + str);
+
+        respond.render('userPage/cart',{cartList: carts})
+    }
+    catch(error){
+        console.log(error);
+    }
+    
+}

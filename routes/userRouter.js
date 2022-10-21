@@ -89,7 +89,7 @@ async function shopDetail(request, response) {
 router.post('/addToCart?', cartController.addToCart);
 
 
-router.get('/cart', Cart.getCart);
+router.get('/cart', cartController.cartView);
 
 router.get("/checkout", authMiddleware.isLoggedIn, (req, res) => {
     res.render("userPage/checkout", req.session.username ? {username: req.session.username} : null);

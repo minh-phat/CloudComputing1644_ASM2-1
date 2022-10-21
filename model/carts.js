@@ -24,7 +24,6 @@ module.exports = class Cart{
         // cart.totalPrice += product.price;
     }
     static getCart(){
-
         return cart;
     }
 }
