@@ -26,10 +26,6 @@ async function home(request, response) {
 }
 
 
-// router.get("/shop", (req, res) => {
-//     res.render("userPage/shop");
-// });
-
 router.get("/shop",shop);
 async function shop(request, response) {
     try {
@@ -48,20 +44,6 @@ async function shop(request, response) {
         console.log(error);
     }
 }
-// router.get( "/shop" , shop);
-// async function shop(request, response) {
-//     try {
-//         let productsList = await Product.find({}).populate('category');
-//         console.log("Products currently in database are: \n" + productsList);
-//         if(request.session.message){
-//             response.render("adminPage/viewProducts", { products: productsList, message: request.session.message } );
-//         }else {
-//             response.render("adminPage/viewProducts", { products: productsList } );
-//         }
-//     } catch (error) {
-//         console.log(error);
-//     }
-// }
 
 router.get("/shopDetail/?",shopDetail);
 async function shopDetail(request, response) {
@@ -82,9 +64,30 @@ async function shopDetail(request, response) {
     }
 }
 
-router.get("/cart", (req, res) => {
-    res.render("userPage/cart");
-});
+// router.get("/cart", (req, res) => {
+
+
+//     res.render("userPage/cart");
+// });
+
+router.get("/cart/?",cart);
+async function cart(request, response) {
+
+    // try {
+    //     console.log(" Query : " + request.query)
+    //     productID = request.query.productID;
+    //     let ProductList = await Product.findOne({ _id: productID }); 
+    //     if (request.session.username) {
+    //         console.log(" Product : " +ProductList);
+    //         response.render("userPage/shopDetail", { username: request.session.username , Products: ProductList })
+    //     } else {
+    //         console.log(" Product : " + ProductList);
+    //         response.render("userPage/shopDetail",{ Products: ProductList });
+    //     }
+    // } catch (error) {
+    //     console.log(error);
+    // }
+}
 
 router.get("/checkout", (req, res) => {
     res.render("userPage/checkout");
