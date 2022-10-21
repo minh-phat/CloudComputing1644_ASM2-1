@@ -93,7 +93,7 @@ exports.newAccount = (req, res) => {
 }
 
 //login bits
-exports.accountAuth = async (req, res) => {                       //TODO: Add session to this. session[username, role, key(date & generated)]
+exports.accountAuth = async (req, res) => {
 
     req.session.message = 'empty';
 
@@ -141,4 +141,3 @@ exports.accountAuth = async (req, res) => {                       //TODO: Add se
         }
     });
 }
-

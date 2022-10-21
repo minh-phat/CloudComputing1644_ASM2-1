@@ -5,63 +5,57 @@ const fs = require("fs");
 const accounts = require("../model/accounts");
 const controller = require("../controller/userController");
 const managerController = require("../controller/managerController");
+const authMiddleware = require("../middleware/authMiddleware");
+const { GeoReplyWith } = require("redis");
 
 //Setting routes in module|================================================
 
-router.get("/dashboard", (req, res) => {
-    if (req.session.username && req.session.class === "Director" ||
-        req.session.username && req.session.class === "Manager") {
-        res.render("adminPage/dashboard", { username: req.session.username })   //check login class
-    } else {
-        res.redirect("/login");
-    }
-});
-router.get("/formImplement", (req, res) => {
+router.get("/formImplement", authMiddleware.hasClass(['Director', 'Manager']), (req, res) => {
     res.render("adminPage/formImplement");
 });
 
-router.get("/table", (req, res) => {
-    if (req.session.username && req.session.class === "Director" ||
-        req.session.username && req.session.class === "Manager") {
+router.get("/table", authMiddleware.hasClass(['Director', 'Manager']), (req, res) => {
+    if (req.session.username) {
         res.render("adminPage/table", { username: req.session.username })   //check login class
     } else {
         res.redirect("/login");
     }
 });
 
-router.get("/userView", async (req, res) => {
-    if (req.session.message) {
+router.get("/accountDelete/:id", authMiddleware.hasClass(['Director', 'Manager']), controller.delAccount);
+
+router.post("/managerAdd", authMiddleware.hasClass(['Director', 'Manager']), managerController.managerAdd);
+
+router.get("/dashboard", authMiddleware.hasClass(['Director', 'Manager']), (req, res) => {
+    req.session.username ? res.render("adminPage/dashboard", { username: req.session.username }) : res.redirect("/login")
+});
+
+router.get("/userView", authMiddleware.hasClass(['Director', 'Manager']), async (req, res) => {
+    if (req.session.username) {
         userList = await accounts.find({ account_class: 'User' });
-        res.render("adminPage/userView", { User: userList, message: req.session.message });
-    } else {
-        userList = await accounts.find({ account_class: "User" });
-        res.render("adminPage/userView", { User: userList });
-    }
-    req.session.message = null;
-});
-
-router.get("/managerView", async (req, res) => {
-    if (req.session.message) {
-        managerList = await accounts.find({ account_class: 'Manager' });
-        res.render("adminPage/managerView", { User: managerList, message: req.session.message });
-    } else {
-        managerList = await accounts.find({ account_class: "Manager" });
-        res.render("adminPage/managerView", { User: managerList });
-    }
-    req.session.message = null;
-});
-
-router.get("/managerInsert", (req, res) => {
-    if (req.session.username && req.session.class === "Director" ||
-        req.session.username && req.session.class === "Manager") {
-        res.render("adminPage/managerInsert", { username: req.session.username })   //check login class
+        res.render("adminPage/userView", req.session.message ? { User: userList, message: req.session.message } : { User: userList });
+        req.session.message = null;
     } else {
         res.redirect("/login");
     }
 });
 
-router.get("/accountDelete/:id", controller.delAccount);
+router.get("/managerView", authMiddleware.hasClass(['Director']), async (req, res) => {
+    if (req.session.username) {
+        managerList = await accounts.find({ account_class: 'Manager' });
+        res.render("adminPage/managerView", req.session.message ? { User: managerList, message: req.session.message } : { User: managerList });
+        req.session.message = null;
+    } else {
+        res.redirect("/login");
+    }
+});
 
-router.post("/managerAdd", managerController.managerAdd);
+router.get("/managerInsert", authMiddleware.hasClass(['Director']),  (req, res) => {
+    if (req.session.username) {
+        res.render("adminPage/managerInsert", { username: req.session.username })   //check login class
+    } else {
+        res.redirect("/login");
+    }
+});
 
 exports.AdminRouter = router;

@@ -13,7 +13,8 @@ exports.managerAdd = (req, res) => {
             fullname: req.body.fullname,
             email: req.body.email,
             gender: req.body.gender,
-            birthday: req.body.birthday
+            birthday: req.body.birthday,
+            account_class: "Manager"
         });
 
         function validateEmail(email) {
