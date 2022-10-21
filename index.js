@@ -8,8 +8,6 @@ const mongoose = require("mongoose");
 const hbs = require("hbs");
 const session = require('express-session');
 
-
-
 //Middleware|=======================================================================
 
 const bodyParser = require("body-parser");
