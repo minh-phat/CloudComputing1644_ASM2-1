@@ -394,7 +394,7 @@ router.post( "/updateProduct?:id" , upload.single("image"), authMiddleware.hasCl
     })
 });
 
-router.get("/searchProduct?", async (request, response) => {
+router.get("/searchProduct?", authMiddleware.hasClass(['Director', 'Manager']), async (request, response) => {
     try {
         if (request.query.search) {
             let productsList = await Product.find({ product_name: { $regex: request.query.search, '$options': 'i' } }).populate('category')
