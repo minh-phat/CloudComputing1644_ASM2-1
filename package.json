@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/mrshine4k/CloudComputing1644_ASM2#readme",
   "dependencies": {
+    "@mongodb-js/charts-embed-dom": "^2.3.0",
     "body-parser": "^1.20.1",
     "crypto": "^1.0.1",
     "dotenv": "^16.0.3",
