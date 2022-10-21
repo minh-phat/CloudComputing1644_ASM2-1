@@ -12,8 +12,8 @@ exports.addToCart = async (request, respond , next) => {
     console.log("\n Query: ", request.query);
     console.log("\n File: ", request.file);
 
-    const productID = request.query.productID;
-    const quantity= /* request.query.quantity */ "4646464";
+    const productID = request.body.id;
+    const quantity= request.body.quantity;;
 
     const addCart = new Cart(productID, quantity);
     Cart.save(addCart);
