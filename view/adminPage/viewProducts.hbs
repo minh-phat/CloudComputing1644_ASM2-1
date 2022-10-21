@@ -7,9 +7,9 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title" style="font-size: 30px; font-weight: bold;">Products List</h4>
-                        <form class="ml-auto search-form d-none d-md-block" style="width: 300px;" action="/categorySearch">
+                        <form class="ml-auto search-form d-none d-md-block" style="width: 300px;" action="/searchProduct?name=">
                             <div class="form-group">
-                                <input type="search" class="form-control" placeholder="Search for products">
+                                <input type="search" class="form-control" placeholder="Search for products" name="search">
                                 <button type="submit">Search</button>
                             </div>
                         </form>
@@ -22,10 +22,18 @@
                         </p>
 
                         {{!-- Show error message --}}
-                        {{#if message}}
+                        {{#if messageSuccess}}
                         <div class="form-group">
-                            <h5 style="width: 100%;background-color:#33A2B8;color:#fff;border-radius: 0.25rem; height:auto; padding: 10px; font-weight: 50px" id="message">
-                                <i class="fa-solid fa-circle-info"></i> {{message}}
+                            <h5 style="width: 100%;background-color:#33A2B8;color:#fff;border-radius: 0.25rem; height:auto; padding: 10px; font-weight: 50px" id="message" onclick="this.remove()">
+                                <i class="fa-solid fa-circle-info"></i> {{messageSuccess}}
+                            </h5>
+                        </div>
+                        {{/if}}
+
+                        {{#if messageError}}
+                        <div class="form-group">
+                            <h5 style="width: 100%;background-color:#e45052;color:#fff;border-radius: 0.25rem; height:auto; padding: 10px; font-weight: 50px" id="message" onclick="this.remove()">
+                                <i class="fa-solid fa-circle-info"></i> {{messageError}}
                             </h5>
                         </div>
                         {{/if}}
