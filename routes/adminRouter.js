@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const fs = require("fs");
 const accounts = require("../model/accounts");
-const controller = require("../controller/userController");
+const authController = require("../controller/userController");
 const managerController = require("../controller/managerController");
 const authMiddleware = require("../middleware/authMiddleware");
 const { GeoReplyWith } = require("redis");
@@ -21,9 +21,9 @@ router.get("/table", authMiddleware.hasClass(['Director', 'Manager']), (req, res
     }
 });
 
-router.get("/accountDelete/:id", authMiddleware.hasClass(['Director', 'Manager']), controller.delAccount);
+router.get("/accountDelete/:id", authMiddleware.hasClass(['Director', 'Manager']), authController.delAccount);
 
-router.post("/managerAdd", authMiddleware.hasClass(['Director', 'Manager']), managerController.managerAdd);
+router.post("/managerAdd", authMiddleware.hasClass('Director'), managerController.managerAdd);
 
 router.get("/dashboard", authMiddleware.hasClass(['Director', 'Manager']), (req, res) => {
     req.session.username ? res.render("adminPage/dashboard", { username: req.session.username }) : res.redirect("/login")
@@ -49,7 +49,7 @@ router.get("/managerView", authMiddleware.hasClass(['Director']), async (req, re
     }
 });
 
-router.get("/managerInsert", authMiddleware.hasClass(['Director']),  (req, res) => {
+router.get("/managerInsert", authMiddleware.hasClass(['Director']), (req, res) => {
     if (req.session.username) {
         res.render("adminPage/managerInsert", { username: req.session.username })   //check login class
     } else {
