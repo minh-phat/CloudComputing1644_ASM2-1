@@ -134,8 +134,7 @@ exports.accountAuth = async (req, res) => {
             if (req.session.class === "User") {
                 return res.redirect('/');
             } else if (req.session.class === "Director"
-                || req.session.class === "Manager"
-                || req.session.class === "Staff") {
+                || req.session.class === "Manager") {
                 return res.redirect('/dashboard');
             }
         }

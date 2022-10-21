@@ -6,25 +6,12 @@ const controller = require("../controller/authController");
 //Auth routes|==================================
 
 router.get("/signup", (req, res) => {
-    if (req.session.message) {
-        res.render("signup", { message: req.session.message });
-    } else {
-        res.render("signup");
-    }
+    res.render("signup", req.session.message ? { message: req.session.message } : null);
     req.session.message = null;
 });
 
 router.get("/login", (req, res) => {
-    if (req.session.message) {
-        res.render("login", {
-            message: req.session.message,
-            formData: {
-                username: "failtest",
-            }
-        });
-    } else {
-        res.render("login");
-    }
+    res.render("login", req.session.message ? { message: req.session.message } : null);
     req.session.message = null;
 });
 
