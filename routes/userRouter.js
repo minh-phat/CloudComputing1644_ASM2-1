@@ -7,6 +7,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 ////// - Model Call
 const Category = require("../model/categories");
 const Product = require("../model/products");
+const Cart = require("../model/carts");
 
 //Setting routes in module|================================================
 
@@ -84,6 +85,7 @@ async function shopDetail(request, response) {
 //     }
 // }
 router.post('/add-to-cart', cartController.addToCart);
+router.get('/cart', Cart.getCart);
 
 router.get("/checkout", authMiddleware.isLoggedIn, (req, res) => {
     res.render("userPage/checkout");

@@ -2,21 +2,29 @@ let cart = null;
 
 
 module.exports = class Cart{
+
+    // constructor(productID, quantity) {
+    //     this.productID = productID;
+    //     this.quantity = quantity;
+    // }
+
     static save(product){
         if (cart === null) {
             cart = { products: [], totalPrice: 0 };
         }
-
-        const existingProductIndex = cart.products.findIndex(p => p._id == products._id); // to check product is existing in cart
-        if (existingProductIndex >= 0) { // exist in cart already
-            const exsitingProduct = cart.products[existingProductIndex];
-            // exsitingProduct.qty += 1;
-            console.log("Product add cart: " + exsitingProduct);
-        } else { //not exist
-            // product.qty = 1;
             cart.products.push(product);
-        }
+            //const strProduct = JSON.stringify(product);
+            //console.log("find Product to add to cart: " + product);
+
+            //JSON.stringify to show object array
+            const str = JSON.stringify(cart);
+            console.log("Products add cart: " + str);
+        
 
         // cart.totalPrice += product.price;
+    }
+    static getCart(){
+
+        return cart;
     }
 }
