@@ -83,10 +83,7 @@ exports.newAccount = (req, res) => {
                         req.session.class = "User";
                         return res.redirect('/');
                     }
-                }       /*
-                        TODO: add check to see if account is in system already as well as email, etc,
-                        TODO: return the error to the signup page with the old content being parsed there as well. 
-                        */
+                }
             );
         });
     });
