@@ -88,11 +88,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{#each cartList}}
+                                {{#each cartList.products}}
                                 <tr>
                                     <td class="shoping__cart__item">
-                                        <img src="img/cart/cart-1.jpg" alt="">
-                                        <h5>{{this.productID}}</h5>
+                                        <img src="../img/products/{{this.image}}" alt="">
+                                        <h5>{{this.name}}</h5>
                                     </td>
                                     <td class="shoping__cart__price">
                                         $55.00

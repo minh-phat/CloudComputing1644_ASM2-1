@@ -49,7 +49,7 @@ router.get("/categoryView", authMiddleware.hasClass(['Director', 'Manager']), ca
 async function categoryView(yeucau, trave) {
     try {
         let CategoryList = await Category.find({});
-        console.log(CategoryList);
+        //console.log(CategoryList);
         trave.render("adminPage/categoryView", {
             Categories: CategoryList,
             username: yeucau.session.username
@@ -74,10 +74,10 @@ async function categoryInsert(yeucau, trave) {
 
 router.post("/categoryInsert", upload.single("image"), authMiddleware.hasClass(['Director', 'Manager']), (request, response, ketiep) => {
 
-    console.log("\n BODY: ", request.body);
-    console.log("\n Params: ", request.params);
-    console.log("\n Query: ", request.query);
-    console.log("\n File: ", request.file);
+    // console.log("\n BODY: ", request.body);
+    // console.log("\n Params: ", request.params);
+    // console.log("\n Query: ", request.query);
+    // console.log("\n File: ", request.file);
 
     //Validate required for some fields
     if (
@@ -147,9 +147,9 @@ router.get("/categoryDelete/:id", authMiddleware.hasClass(['Director', 'Manager'
 // SHOW EDIT USER FORM
 router.get('/categoryEdit:id', authMiddleware.hasClass(['Director', 'Manager']), async (yeucau, trave) => {
 
-    console.log("\n BODY: ", yeucau.body);
-    console.log("\n Params: ", yeucau.params);
-    console.log("\n Query: ", yeucau.query);
+    // console.log("\n BODY: ", yeucau.body);
+    // console.log("\n Params: ", yeucau.params);
+    // console.log("\n Query: ", yeucau.query);
 
 
     try {
@@ -165,10 +165,10 @@ router.get('/categoryEdit:id', authMiddleware.hasClass(['Director', 'Manager']),
 router.post("/categoryUpdate:id", upload.single("image"), authMiddleware.hasClass(['Director', 'Manager']), (yeucau, trave, ketiep) => {
 
 
-    console.log("\n BODY: ", yeucau.body);
-    console.log("\n Params: ", yeucau.params);
-    console.log("\n Query: ", yeucau.query);
-    console.log("\n File: ", yeucau.file);
+    // console.log("\n BODY: ", yeucau.body);
+    // console.log("\n Params: ", yeucau.params);
+    // console.log("\n Query: ", yeucau.query);
+    // console.log("\n File: ", yeucau.file);
 
     yeucau.body.image = yeucau.file.filename; //gán Imagelink bằng đường link tới ảnh trong documents
 
@@ -190,9 +190,9 @@ router.post("/categoryUpdate:id", upload.single("image"), authMiddleware.hasClas
 
 router.get("/categorySearch?", authMiddleware.hasClass(['Director', 'Manager']), async (yeucau, trave) => {
 
-    console.log("\n BODY: ", yeucau.body);
-    console.log("\n Params: ", yeucau.params);
-    console.log("\n Query: ", yeucau.query);
+    // console.log("\n BODY: ", yeucau.body);
+    // console.log("\n Params: ", yeucau.params);
+    // console.log("\n Query: ", yeucau.query);
 
     let category_name = yeucau.query.category_name;
     console.log("\n Search : " + category_name); // respond category name in console log to check category name

@@ -3,9 +3,10 @@ let cart = null;
 
 module.exports = class Cart{
 
-    constructor(productID, quantity) {
+    constructor(productID, quantity, image) {
         this.productID = productID;
         this.quantity = quantity;
+        this.image = image;
     }
 
     static save(product){
@@ -17,13 +18,13 @@ module.exports = class Cart{
             //console.log("find Product to add to cart: " + product);
 
             //JSON.stringify to show object array
-            const str = JSON.stringify(cart);
-            console.log("Products add cart: " + str);
+            // const str = JSON.stringify(cart);
+            // console.log("Products add cart: " + str);
         
 
         // cart.totalPrice += product.price;
     }
-    static getCart(){
+    getCart(){
         return cart;
     }
 }
