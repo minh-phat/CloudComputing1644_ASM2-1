@@ -22,6 +22,7 @@ const storageEngine = multer.diskStorage({
 });
 
 const path = require("path");
+const { log } = require("console");
 const checkFileType = function (file, cb) {
     //Allowed file extensions
     const fileTypes = /jpeg|jpg|png|gif|svg/;
@@ -50,7 +51,7 @@ async function categoryView(yeucau, trave) {
     try {
         let CategoryList = await Category.find({});
         console.log(CategoryList);
-        trave.render("adminPage/categoryView", {
+        trave.render("adminPage/CategoryView", {
             Categories: CategoryList,
             username: yeucau.session.username
         });
@@ -62,7 +63,7 @@ async function categoryView(yeucau, trave) {
 router.get("/categoryInsert", authMiddleware.hasClass(['Director', 'Manager']), categoryInsert);
 async function categoryInsert(yeucau, trave) {
     try {
-        trave.render("adminPage/categoryInsert", {
+        trave.render("adminPage/CategoryInsert", {
             messageError: yeucau.session.messageError,
             messageSuccess: yeucau.session.messageSuccess,
             username: yeucau.session.username,
@@ -202,10 +203,12 @@ router.get("/categorySearch?", authMiddleware.hasClass(['Director', 'Manager']),
         // "find({ category_name:...})" that mean find catetory_name in query 
         let CategoryList = await Category.find({ category_name: { $regex: category_name, '$options': 'i' } });
         console.log(CategoryList);
-        trave.render("adminPage/categoryView", { Categories: CategoryList, user: yeucau.session.username});
+        trave.render("adminPage/categoryView", { Categories: CategoryList, user: yeucau.session.username });
     } catch (error) {
         console.log(error);
     }
+
+    console.log(request.body);
 
 });
 
